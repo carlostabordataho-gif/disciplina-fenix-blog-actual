@@ -1,0 +1,98 @@
+export const liveMetrics = [
+  { label: 'DIAS DE RACHA', value: '47', unit: 'dias', status: 'active' },
+  { label: 'SESIONES GYM', value: '89', unit: 'sesiones', status: 'active' },
+  { label: 'LIBROS LEIDOS', value: '12', unit: 'libros', status: 'active' },
+  { label: 'HORAS CODIGO', value: '340', unit: 'h/mes', status: 'active' },
+]
+
+export const buildLogs = [
+  {
+    date: '2026-05-10',
+    day: 'DIA 134',
+    title: 'Sistema de tracking implementado',
+    body: 'Completé el MVP del tracker de hábitos. 3 horas de deep work. Gym sesión 89/90.',
+    tags: ['codigo', 'gym', 'disciplina'],
+    metrics: { gym: true, code: true, reading: true, noVices: true },
+  },
+  {
+    date: '2026-05-09',
+    day: 'DIA 133',
+    title: 'Contenido TikTok + Estudio de arquitectura',
+    body: 'Grabé 3 videos. Estudié arquitectura de microservicios 2h. Rachas intactas.',
+    tags: ['contenido', 'programacion'],
+    metrics: { gym: true, code: true, reading: false, noVices: true },
+  },
+  {
+    date: '2026-05-08',
+    day: 'DIA 132',
+    title: 'Día de recuperación y revisión semanal',
+    body: 'Review semanal completo. Ajusté el sistema de bloques. Sin gym (descanso programado).',
+    tags: ['sistema', 'review'],
+    metrics: { gym: false, code: true, reading: true, noVices: true },
+  },
+  {
+    date: '2026-05-07',
+    day: 'DIA 131',
+    title: 'Deep work 5h: módulo de autenticación',
+    body: 'Completé el módulo de auth con Supabase. Estado de flow alcanzado a los 22 min. La mejor sesión de la semana.',
+    tags: ['codigo', 'deep work'],
+    metrics: { gym: true, code: true, reading: true, noVices: true },
+  },
+]
+
+export const roadmilestones = [
+  {
+    id: 'physique',
+    category: 'FÍSICO',
+    goal: '85kg al 12% BF',
+    current: '73kg estimado 16% BF',
+    progress: 52,
+    deadline: '2026-12-31',
+    status: 'in-progress',
+  },
+  {
+    id: 'income',
+    category: 'INGRESOS',
+    goal: '2.000€/mes online',
+    current: '340€/mes',
+    progress: 17,
+    deadline: '2027-06-30',
+    status: 'in-progress',
+  },
+  {
+    id: 'audience',
+    category: 'AUDIENCIA',
+    goal: '100K seguidores TikTok',
+    current: '4.200 seguidores',
+    progress: 4,
+    deadline: '2027-12-31',
+    status: 'in-progress',
+  },
+  {
+    id: 'code',
+    category: 'CÓDIGO',
+    goal: 'Lanzar SaaS propio',
+    current: 'MVP en desarrollo',
+    progress: 35,
+    deadline: '2026-09-30',
+    status: 'in-progress',
+  },
+  {
+    id: 'discipline',
+    category: 'DISCIPLINA',
+    goal: '365 días de racha completa',
+    current: '47 días activos',
+    progress: 13,
+    deadline: '2026-12-31',
+    status: 'in-progress',
+  },
+  {
+    id: 'reading',
+    category: 'CONOCIMIENTO',
+    goal: '52 libros en 2026',
+    current: '12 libros leídos',
+    progress: 23,
+    deadline: '2026-12-31',
+    status: 'in-progress',
+  },
+]
