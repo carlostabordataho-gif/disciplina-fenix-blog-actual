@@ -1,5 +1,7 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import SectionHeader from '../ui/SectionHeader'
+import { synth } from '../../lib/synth'
 
 const timelineEvents = [
   {
@@ -33,6 +35,8 @@ const timelineEvents = [
 ]
 
 export default function TransformationSection() {
+  const [mode, setMode] = useState<'fisico' | 'sistemas'>('fisico')
+
   return (
     <section className="py-24 bg-bg-panel relative overflow-hidden">
       <div className="absolute inset-0 border-y border-bg-border pointer-events-none" />
@@ -95,29 +99,105 @@ export default function TransformationSection() {
             transition={{ duration: 0.6 }}
           >
             <div className="terminal-panel border border-bg-border p-6 bg-bg-base/50">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-bg-border">
+              <div className="flex items-center gap-3 mb-4 pb-4 border-b border-bg-border justify-between">
                 <div>
                   <div className="font-mono text-sm font-bold text-text-primary">CARLOS TAHO</div>
                   <div className="font-mono text-xs text-neon-primary mt-0.5">High-Performance Mentor & Software Dev</div>
                 </div>
               </div>
 
-              {/* CONTENEDOR DE LA IMAGEN EN ALTA DEFINICIÓN EMPAQUETADA */}
-              <div className="border border-neon-primary/30 bg-black/40 w-full overflow-hidden mb-6 rounded-sm">
-             <img 
-  src="/transformacion-fenix.jpg.png"
-  alt="Carlos Taho - Transformación Fénix"
-  className="w-full h-auto object-cover rounded-sm"
-/>
+              {/* Modo Selector Táctico */}
+              <div className="flex gap-2 mb-6 bg-bg-panel p-1 border border-bg-border rounded-sm select-none">
+                <button
+                  onClick={() => { setMode('fisico'); synth.playClick(); }}
+                  onMouseEnter={() => synth.playHover()}
+                  className={`flex-1 font-mono text-[10px] tracking-widest py-2 px-3 rounded-sm uppercase text-center transition-all ${
+                    mode === 'fisico' ? 'bg-neon-primary text-bg-base font-bold' : 'text-text-muted hover:text-text-primary'
+                  }`}
+                >
+                  [ 01 :: Físico Fénix ]
+                </button>
+                <button
+                  onClick={() => { setMode('sistemas'); synth.playClick(); }}
+                  onMouseEnter={() => synth.playHover()}
+                  className={`flex-1 font-mono text-[10px] tracking-widest py-2 px-3 rounded-sm uppercase text-center transition-all ${
+                    mode === 'sistemas' ? 'bg-neon-primary text-bg-base font-bold' : 'text-text-muted hover:text-text-primary'
+                  }`}
+                >
+                  [ 02 :: Zenith OS ]
+                </button>
+              </div>
+
+              {/* CONTENEDOR DE LA IMAGEN O MOCKUP DE SISTEMA */}
+              <div className="border border-neon-primary/30 bg-black/40 w-full min-h-[220px] flex items-center justify-center overflow-hidden mb-6 rounded-sm relative">
+                <AnimatePresence mode="wait">
+                  {mode === 'fisico' ? (
+                    <motion.div
+                      key="fisico"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-full h-full"
+                    >
+                      <img 
+                        src="/transformacion-fenix.jpg.png"
+                        alt="Carlos Taho - Transformación Fénix"
+                        className="w-full h-auto object-cover rounded-sm"
+                      />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="sistemas"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-full p-5 font-mono text-[10px] md:text-xs text-neon-secondary space-y-2 select-none"
+                    >
+                      <div className="flex justify-between border-b border-neon-dim pb-1.5">
+                        <span className="text-neon-primary font-bold">INFRAESTRUCTURA ZENITH OS</span>
+                        <span className="animate-pulse text-neon-primary">SYS::ACTIVE</span>
+                      </div>
+                      <div className="space-y-1.5 pt-1.5">
+                        <div className="flex justify-between">
+                          <span>CORE::DB_SERVICE</span>
+                          <span className="text-neon-primary">[ Supabase Connected ]</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>IA_ACCOUNTABILITY</span>
+                          <span className="text-neon-primary">[ Enabled ]</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>DOPAMINE_LIMITERS</span>
+                          <span className="text-neon-primary">[ Active ]</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>ACTIVE_OPERATORS</span>
+                          <span className="text-neon-primary">[ 479 Online ]</span>
+                        </div>
+                      </div>
+                      <div className="border-t border-neon-dim/40 pt-2 text-[9px] text-text-muted space-y-1">
+                        <div>&gt; sync_habits --user=carlostaho</div>
+                        <div className="text-neon-primary/70">&gt;&gt; Sync complete. Streak 47 days locked.</div>
+                        <div className="animate-blink">_</div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               <div className="space-y-4">
-                <div className="flex justify-between items-center bg-bg-panel p-3 border border-bg-border">
-                  <div className="font-mono text-xs text-text-primary">ASESORÍA 1-ON-1 DE ALTO RENDIMIENTO</div>
+                <div className="flex justify-between items-center bg-bg-panel p-3 border border-bg-border select-none">
+                  <div className="font-mono text-xs text-text-primary">
+                    {mode === 'fisico' ? 'ASESORÍA 1-ON-1 DE ALTO RENDIMIENTO' : 'DISEÑO DE SISTEMAS CONDUCTUALES'}
+                  </div>
                   <span className="tag-green">DISPONIBLE</span>
                 </div>
-                <p className="font-sans text-xs text-text-muted leading-relaxed">
-                  Te daré las herramientas exactas para hackear tu mente a través del entorno físico, optimizar tus hábitos con software táctico y construir un físico respetable.
+                <p className="font-sans text-xs text-text-muted leading-relaxed min-h-[48px]">
+                  {mode === 'fisico'
+                    ? 'Te daré las herramientas exactas para hackear tu mente a través del entorno físico, optimizar tus hábitos con software táctico y construir un físico respetable.'
+                    : 'Zenith OS es la infraestructura digital de Disciplina Fénix. Construido con React, Supabase y algoritmos de accountability en tiempo real para destruir las excusas con datos estructurados.'}
                 </p>
               </div>
 
@@ -128,6 +208,8 @@ export default function TransformationSection() {
                 href="https://www.tiktok.com/@carlostaho" 
                 target="_blank" 
                 rel="noopener noreferrer"
+                onClick={() => synth.playClick()}
+                onMouseEnter={() => synth.playHover()}
                 className="block text-center font-mono text-xs text-black bg-neon-primary font-bold py-3 hover:bg-neon-secondary transition-all uppercase tracking-widest"
               >
                 [ POSTULAR A MENTORÍA EXCLUSIVA ]

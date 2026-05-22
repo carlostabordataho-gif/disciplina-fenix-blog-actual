@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { synth } from '../../lib/synth'
 
 const typewriterLines = [
   'Renace desde la disciplina.',
@@ -50,18 +51,21 @@ function useTypewriter(lines: string[], speed = 60) {
   return displayed
 }
 
-const fakeDashboardData = [
-  { label: 'STREAK', value: '47d', status: 'OK' },
-  { label: 'GYM', value: '89/90', status: 'OK' },
-  { label: 'DEEP WORK', value: '5h 22m', status: 'OK' },
-  { label: 'VICES', value: '0', status: 'CLEAN' },
-  { label: 'SLEEP', value: '7h 45m', status: 'OK' },
-  { label: 'CALORIES', value: '3,200', status: 'ON_TARGET' },
-]
-
 export default function HeroSection() {
   const typedText = useTypewriter(typewriterLines)
   const [tick, setTick] = useState(0)
+
+  // Interactive OS Dashboard State
+  const [gymDone, setGymDone] = useState(true)
+  const [deepWorkDone, setDeepWorkDone] = useState(true)
+  const [lecturaDone, setLecturaDone] = useState(true)
+  const [sinViciosDone, setSinViciosDone] = useState(true)
+
+  const [logs, setLogs] = useState<string[]>([
+    'Racha de disciplina: ACTIVA',
+    'Protocolo diario: 4/4 completados',
+    'Road to 2030: 134 días en progreso'
+  ])
 
   useEffect(() => {
     const interval = setInterval(() => setTick((t) => t + 1), 1000)
@@ -71,6 +75,57 @@ export default function HeroSection() {
   const now = new Date()
   const timeStr = now.toTimeString().slice(0, 8)
   const dateStr = now.toISOString().slice(0, 10)
+
+  const totalCompleted = [gymDone, deepWorkDone, lecturaDone, sinViciosDone].filter(Boolean).length
+
+  const fakeDashboardData = [
+    { label: 'STREAK', value: totalCompleted === 4 ? '48d' : '47d', status: totalCompleted === 4 ? 'MAX' : 'OK' },
+    { label: 'GYM', value: gymDone ? '90/90' : '89/90', status: gymDone ? 'OK' : 'PENDING' },
+    { label: 'DEEP WORK', value: deepWorkDone ? '5h 22m' : '0h 00m', status: deepWorkDone ? 'OK' : 'PENDING' },
+    { label: 'VICES', value: sinViciosDone ? '0' : '1', status: sinViciosDone ? 'CLEAN' : 'WARNING' },
+    { label: 'SLEEP', value: '7h 45m', status: 'OK' },
+    { label: 'CALORIES', value: '3,200', status: 'ON_TARGET' },
+  ]
+
+  const handleToggle = (habit: 'gym' | 'deepWork' | 'lectura' | 'sinVicios', current: boolean, setter: (v: boolean) => void) => {
+    const nextState = !current
+    setter(nextState)
+    synth.playClick()
+
+    const habitNames = {
+      gym: 'Entrenamiento (Gym)',
+      deepWork: 'Enfoque Profundo (Deep Work)',
+      lectura: 'Lectura Diaria',
+      sinVicios: 'Cero Vicios (Dopamina)',
+    }
+
+    const logMsg = nextState 
+      ? `[✓] ${habitNames[habit]} registrado.`
+      : `[!] ${habitNames[habit]} cancelado.`
+    
+    // Compute future completed count
+    const willBeCompleted = {
+      gym: habit === 'gym' ? nextState : gymDone,
+      deepWork: habit === 'deepWork' ? nextState : deepWorkDone,
+      lectura: habit === 'lectura' ? nextState : lecturaDone,
+      sinVicios: habit === 'sinVicios' ? nextState : sinViciosDone,
+    }
+    const nextTotal = Object.values(willBeCompleted).filter(Boolean).length
+
+    let specialMsg = ''
+    if (nextTotal === 4) {
+      synth.playSuccess()
+      specialMsg = '[✓] SISTEMA AL 100%: Racha consolidada (+1 día)'
+    } else if (nextTotal === 3 && totalCompleted === 4) {
+      specialMsg = '[!] Alerta: Protocolo degradado (incompleto)'
+    }
+
+    setLogs(prev => {
+      const newLogs = [...prev, logMsg]
+      if (specialMsg) newLogs.push(specialMsg)
+      return newLogs.slice(-4) // Keep only 4 most recent logs
+    })
+  }
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
@@ -156,10 +211,20 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.8 }}
               className="flex flex-wrap gap-4"
             >
-              <Link to="/sistema" className="btn-primary">
+              <Link
+                to="/sistema"
+                onClick={() => synth.playClick()}
+                onMouseEnter={() => synth.playHover()}
+                className="btn-primary"
+              >
                 Entrar al Sistema
               </Link>
-              <Link to="/sistema" className="btn-secondary">
+              <Link
+                to="/sistema"
+                onClick={() => synth.playClick()}
+                onMouseEnter={() => synth.playHover()}
+                className="btn-secondary"
+              >
                 Ver el método
               </Link>
             </motion.div>
@@ -172,8 +237,8 @@ export default function HeroSection() {
               className="flex flex-wrap gap-6 mt-10 pt-8 border-t border-bg-border"
             >
               {[
-                { label: 'Días en racha', value: '47' },
-                { label: 'Sesiones gym', value: '89' },
+                { label: 'Días en racha', value: totalCompleted === 4 ? '48' : '47' },
+                { label: 'Sesiones gym', value: gymDone ? '90' : '89' },
                 { label: 'Horas código', value: '340/mes' },
               ].map((stat) => (
                 <div key={stat.label}>
@@ -199,7 +264,7 @@ export default function HeroSection() {
                   <div className="w-2 h-2 rounded-full bg-neon-dim" />
                   <div className="w-2 h-2 rounded-full bg-neon-primary" />
                 </div>
-                <span className="font-mono text-xs text-text-muted">PERSONAL_OS :: daily_review</span>
+                <span className="font-mono text-xs text-text-muted">PERSONAL_OS :: interactive_preview</span>
                 <span className="font-mono text-xs text-neon-primary/50">{timeStr}</span>
               </div>
 
@@ -208,59 +273,82 @@ export default function HeroSection() {
                 {/* System header */}
                 <div className="text-neon-primary mb-4">
                   <span className="text-text-dim">&gt; </span>
-                  personal_os --status --date {dateStr}
+                  personal_os --status --interactive --date {dateStr}
                 </div>
 
                 {/* Metrics grid */}
-                <div className="grid grid-cols-2 gap-2 mb-4">
+                <div className="grid grid-cols-2 gap-2 mb-4 select-none">
                   {fakeDashboardData.map((item) => (
                     <div
                       key={item.label}
-                      className="bg-bg-base border border-bg-border p-2.5 hover:border-neon-primary/20 transition-colors"
+                      className={`bg-bg-base border p-2.5 hover:border-neon-primary/20 transition-all duration-300 ${
+                        item.status === 'WARNING' ? 'border-accent-warn/30 bg-accent-warn/5' : 'border-bg-border'
+                      }`}
                     >
-                      <div className="text-text-dim uppercase text-xs mb-1">{item.label}</div>
-                      <div className="text-neon-primary text-sm font-bold">{item.value}</div>
-                      <div className="text-neon-dim text-xs mt-1">[ {item.status} ]</div>
+                      <div className="text-text-dim uppercase text-[10px] mb-1">{item.label}</div>
+                      <div className={`text-sm font-bold transition-all duration-300 ${
+                        item.status === 'WARNING' ? 'text-accent-warn animate-pulse' :
+                        item.status === 'MAX' ? 'text-neon-primary neon-text' : 'text-neon-primary'
+                      }`}>{item.value}</div>
+                      <div className={`text-[10px] mt-1 ${
+                        item.status === 'WARNING' ? 'text-accent-warn' : 'text-neon-dim'
+                      }`}>[ {item.status} ]</div>
                     </div>
                   ))}
                 </div>
 
-                {/* Progress bars */}
-                <div className="space-y-2 mb-4">
-                  <div className="text-text-dim uppercase text-xs mb-2">PROTOCOLO DIARIO</div>
+                {/* Progress bars (Now fully clickable checklist!) */}
+                <div className="space-y-2 mb-4 select-none">
+                  <div className="text-text-dim uppercase text-xs mb-2">PROTOCOLO DIARIO (Haz click para interactuar)</div>
                   {[
-                    { label: 'Gym', pct: 100 },
-                    { label: 'Deep Work', pct: 80 },
-                    { label: 'Lectura', pct: 60 },
-                    { label: 'Sin vicios', pct: 100 },
+                    { key: 'gym', label: 'Gym', done: gymDone, setter: setGymDone, pct: gymDone ? 100 : 0 },
+                    { key: 'deepWork', label: 'Deep Work', done: deepWorkDone, setter: setDeepWorkDone, pct: deepWorkDone ? 100 : 0 },
+                    { key: 'lectura', label: 'Lectura', done: lecturaDone, setter: setLecturaDone, pct: lecturaDone ? 100 : 0 },
+                    { key: 'sinVicios', label: 'Sin vicios', done: sinViciosDone, setter: setSinViciosDone, pct: sinViciosDone ? 100 : 0 },
                   ].map((item) => (
-                    <div key={item.label} className="flex items-center gap-2">
-                      <span className="text-text-dim w-24 text-xs">{item.label}</span>
-                      <div className="flex-1 h-0.5 bg-bg-border">
+                    <button
+                      key={item.key}
+                      onClick={() => handleToggle(item.key as any, item.done, item.setter)}
+                      onMouseEnter={() => synth.playHover()}
+                      className="w-full flex items-center gap-2 text-left group hover:bg-bg-panel/40 p-1.5 border border-transparent hover:border-bg-border rounded transition-all duration-200"
+                    >
+                      <span className="text-text-muted w-24 text-[11px] font-mono group-hover:text-neon-primary transition-colors flex items-center gap-1.5 shrink-0">
+                        <span className={`inline-block w-2.5 h-2.5 border rounded-sm transition-all duration-300 ${
+                          item.done ? 'bg-neon-primary border-neon-primary shadow-[0_0_6px_rgba(0,255,65,0.4)]' : 'border-text-dim'
+                        }`} />
+                        {item.label}
+                      </span>
+                      <div className="flex-1 h-1 bg-bg-border relative overflow-hidden rounded-sm">
                         <div
-                          className="h-full bg-neon-primary transition-all duration-1000"
-                          style={{ width: `${item.pct}%`, boxShadow: '0 0 6px rgba(0,255,65,0.5)' }}
+                          className="h-full bg-neon-primary transition-all duration-500 rounded-sm"
+                          style={{ width: `${item.pct}%`, boxShadow: item.done ? '0 0 6px rgba(0,255,65,0.5)' : 'none' }}
                         />
                       </div>
-                      <span className="text-neon-primary text-xs w-8">{item.pct}%</span>
-                    </div>
+                      <span className={`text-[11px] w-8 font-mono text-right transition-colors shrink-0 ${
+                        item.done ? 'text-neon-primary' : 'text-text-dim'
+                      }`}>
+                        {item.pct}%
+                      </span>
+                    </button>
                   ))}
                 </div>
 
                 {/* Terminal output */}
-                <div className="border-t border-bg-border pt-3 space-y-1">
-                  <div>
-                    <span className="text-neon-secondary">[✓]</span>
-                    <span className="text-text-muted ml-2">Racha de disciplina: ACTIVA</span>
-                  </div>
-                  <div>
-                    <span className="text-neon-secondary">[✓]</span>
-                    <span className="text-text-muted ml-2">Protocolo diario: 4/4 completados</span>
-                  </div>
-                  <div>
-                    <span className="text-accent-warn">[!]</span>
-                    <span className="text-text-muted ml-2">Road to 2030: 134 días en progreso</span>
-                  </div>
+                <div className="border-t border-bg-border pt-3 space-y-1 select-none">
+                  {logs.map((log, idx) => {
+                    const isError = log.includes('[!]');
+                    const isSpecial = log.includes('100%');
+                    return (
+                      <div key={idx} className="transition-all duration-300">
+                        <span className={isError ? 'text-accent-warn' : isSpecial ? 'text-neon-primary neon-text' : 'text-neon-secondary'}>
+                          {isError ? '[!]' : '[✓]'}
+                        </span>
+                        <span className={`ml-2 ${isError ? 'text-text-muted font-bold' : 'text-text-muted'}`}>
+                          {log.replace(/^[\[✓\!\]\s]*/, '')}
+                        </span>
+                      </div>
+                    );
+                  })}
                   <div className="mt-2 text-neon-primary">
                     <span className="animate-blink">_</span>
                   </div>
