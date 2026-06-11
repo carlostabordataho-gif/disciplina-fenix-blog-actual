@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import SectionHeader from '../ui/SectionHeader'
 import { synth } from '../../lib/synth'
@@ -140,9 +141,10 @@ export default function TransformationSection() {
                       transition={{ duration: 0.3 }}
                       className="w-full h-full"
                     >
-                      <img 
-                        src="/transformacion-fenix.jpg.png"
-                        alt="Carlos Taho - Transformación Fénix"
+                      <img
+                        src="/transformacion-fenix.jpg"
+                        alt="Carlos Taborda - Transformación Fénix: antes y después"
+                        loading="lazy"
                         className="w-full h-auto object-cover rounded-sm"
                       />
                     </motion.div>
@@ -165,21 +167,21 @@ export default function TransformationSection() {
                           <span className="text-neon-primary">[ Supabase Connected ]</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>IA_ACCOUNTABILITY</span>
-                          <span className="text-neon-primary">[ Enabled ]</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>DOPAMINE_LIMITERS</span>
+                          <span>HABIT_TRACKER</span>
                           <span className="text-neon-primary">[ Active ]</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>ACTIVE_OPERATORS</span>
-                          <span className="text-neon-primary">[ 479 Online ]</span>
+                          <span>STREAK_SYSTEM</span>
+                          <span className="text-neon-primary">[ Active ]</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>COHORTE_FUNDADORA</span>
+                          <span className="text-neon-primary">[ Abierta ]</span>
                         </div>
                       </div>
                       <div className="border-t border-neon-dim/40 pt-2 text-[9px] text-text-muted space-y-1">
                         <div>&gt; sync_habits --user=carlostaho</div>
-                        <div className="text-neon-primary/70">&gt;&gt; Sync complete. Streak 47 days locked.</div>
+                        <div className="text-neon-primary/70">&gt;&gt; Sync complete.</div>
                         <div className="animate-blink">_</div>
                       </div>
                     </motion.div>
@@ -203,17 +205,14 @@ export default function TransformationSection() {
 
               <div className="glow-line my-6" />
 
-              {/* Enlace corregido a tu usuario real de TikTok */}
-              <a 
-                href="https://www.tiktok.com/@carlostaho" 
-                target="_blank" 
-                rel="noopener noreferrer"
+              <Link
+                to="/protocolo"
                 onClick={() => synth.playClick()}
                 onMouseEnter={() => synth.playHover()}
                 className="block text-center font-mono text-xs text-black bg-neon-primary font-bold py-3 hover:bg-neon-secondary transition-all uppercase tracking-widest"
               >
-                [ POSTULAR A MENTORÍA EXCLUSIVA ]
-              </a>
+                [ VER LA COHORTE FUNDADORA ]
+              </Link>
             </div>
           </motion.div>
 

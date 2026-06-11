@@ -2,60 +2,12 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { synth } from '../../lib/synth'
-
-const typewriterLines = [
-  'Renace desde la disciplina.',
-  'Construye el sistema.',
-  'Elimina el ruido.',
-]
-
-function useTypewriter(lines: string[], speed = 60) {
-  const [displayed, setDisplayed] = useState('')
-  const [lineIndex, setLineIndex] = useState(0)
-  const [charIndex, setCharIndex] = useState(0)
-  const [deleting, setDeleting] = useState(false)
-  const [paused, setPaused] = useState(false)
-
-  useEffect(() => {
-    if (paused) {
-      const t = setTimeout(() => {
-        setPaused(false)
-        setDeleting(true)
-      }, 2000)
-      return () => clearTimeout(t)
-    }
-
-    const t = setTimeout(() => {
-      const currentLine = lines[lineIndex]
-      if (!deleting) {
-        if (charIndex < currentLine.length) {
-          setDisplayed(currentLine.slice(0, charIndex + 1))
-          setCharIndex((c) => c + 1)
-        } else {
-          setPaused(true)
-        }
-      } else {
-        if (charIndex > 0) {
-          setDisplayed(currentLine.slice(0, charIndex - 1))
-          setCharIndex((c) => c - 1)
-        } else {
-          setDeleting(false)
-          setLineIndex((l) => (l + 1) % lines.length)
-        }
-      }
-    }, deleting ? speed / 2 : speed)
-
-    return () => clearTimeout(t)
-  }, [charIndex, deleting, lineIndex, lines, paused, speed])
-
-  return displayed
-}
+import { cohortSpotsLeft, funnel } from '../../data/funnel'
 
 export default function HeroSection() {
-  const typedText = useTypewriter(typewriterLines)
-  const [tick, setTick] = useState(0)
+  const [, setTick] = useState(0)
 
-  // Interactive OS Dashboard State
+  // Interactive OS Dashboard State (demo etiquetada como simulación)
   const [gymDone, setGymDone] = useState(true)
   const [deepWorkDone, setDeepWorkDone] = useState(true)
   const [lecturaDone, setLecturaDone] = useState(true)
@@ -64,7 +16,7 @@ export default function HeroSection() {
   const [logs, setLogs] = useState<string[]>([
     'Racha de disciplina: ACTIVA',
     'Protocolo diario: 4/4 completados',
-    'Road to 2030: 134 días en progreso'
+    'Modo demo: interactúa con el protocolo',
   ])
 
   useEffect(() => {
@@ -78,13 +30,13 @@ export default function HeroSection() {
 
   const totalCompleted = [gymDone, deepWorkDone, lecturaDone, sinViciosDone].filter(Boolean).length
 
-  const fakeDashboardData = [
-    { label: 'STREAK', value: totalCompleted === 4 ? '48d' : '47d', status: totalCompleted === 4 ? 'MAX' : 'OK' },
-    { label: 'GYM', value: gymDone ? '90/90' : '89/90', status: gymDone ? 'OK' : 'PENDING' },
-    { label: 'DEEP WORK', value: deepWorkDone ? '5h 22m' : '0h 00m', status: deepWorkDone ? 'OK' : 'PENDING' },
+  const demoDashboardData = [
+    { label: 'STREAK', value: totalCompleted === 4 ? '21d' : '20d', status: totalCompleted === 4 ? 'MAX' : 'OK' },
+    { label: 'GYM', value: gymDone ? '21/21' : '20/21', status: gymDone ? 'OK' : 'PENDING' },
+    { label: 'DEEP WORK', value: deepWorkDone ? '2h 30m' : '0h 00m', status: deepWorkDone ? 'OK' : 'PENDING' },
     { label: 'VICES', value: sinViciosDone ? '0' : '1', status: sinViciosDone ? 'CLEAN' : 'WARNING' },
     { label: 'SLEEP', value: '7h 45m', status: 'OK' },
-    { label: 'CALORIES', value: '3,200', status: 'ON_TARGET' },
+    { label: 'CHECK-IN', value: '21/21', status: 'ON_TARGET' },
   ]
 
   const handleToggle = (habit: 'gym' | 'deepWork' | 'lectura' | 'sinVicios', current: boolean, setter: (v: boolean) => void) => {
@@ -99,10 +51,10 @@ export default function HeroSection() {
       sinVicios: 'Cero Vicios (Dopamina)',
     }
 
-    const logMsg = nextState 
+    const logMsg = nextState
       ? `[✓] ${habitNames[habit]} registrado.`
       : `[!] ${habitNames[habit]} cancelado.`
-    
+
     // Compute future completed count
     const willBeCompleted = {
       gym: habit === 'gym' ? nextState : gymDone,
@@ -162,18 +114,19 @@ export default function HeroSection() {
             >
               <div className="w-1.5 h-1.5 bg-neon-primary rounded-full animate-pulse" />
               <span className="font-mono text-xs text-neon-primary tracking-widest uppercase">
-                SISTEMA ACTIVO — DÍA 134
+                COHORTE FUNDADORA ABIERTA — {cohortSpotsLeft}/{funnel.cohortSpotsTotal} PLAZAS
               </span>
             </motion.div>
 
-            {/* Typewriter headline */}
+            {/* Headline */}
             <motion.h1
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.2 }}
               className="font-mono text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary leading-none mb-2"
             >
-              <span className="cursor-blink">{typedText}</span>
+              No te falta motivación.{' '}
+              <span className="text-neon-primary">Te falta un sistema con consecuencias.</span>
             </motion.h1>
 
             {/* Brand name */}
@@ -200,8 +153,10 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="font-sans text-text-muted text-base md:text-lg leading-relaxed mb-10 max-w-lg"
             >
-              Un sistema de reconstrucción personal basado en ejecución, protocolos y seguimiento real.{' '}
-              <span className="text-text-primary font-medium">No motivación. No excusas.</span>
+              El protocolo de reconstrucción para hombres cansados de prometerse lo mismo cada
+              lunes: deja los vicios, recupera tu físico y tu enfoque — con un sistema vigilado
+              donde fallar tiene costo.{' '}
+              <span className="text-text-primary font-medium">No motivación. No excusas. Sistemas.</span>
             </motion.p>
 
             {/* CTAs */}
@@ -212,24 +167,24 @@ export default function HeroSection() {
               className="flex flex-wrap gap-4"
             >
               <Link
-                to="/sistema"
+                to="/reset"
                 onClick={() => synth.playClick()}
                 onMouseEnter={() => synth.playHover()}
                 className="btn-primary"
               >
-                Entrar al Sistema
+                DESCARGAR PROTOCOLO RESET — GRATIS
               </Link>
               <Link
-                to="/sistema"
+                to="/protocolo"
                 onClick={() => synth.playClick()}
                 onMouseEnter={() => synth.playHover()}
                 className="btn-secondary"
               >
-                Ver el método
+                COHORTE · {cohortSpotsLeft}/{funnel.cohortSpotsTotal} PLAZAS
               </Link>
             </motion.div>
 
-            {/* Mini stats row */}
+            {/* Mini stats row: hechos verificables, no métricas infladas */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -237,9 +192,9 @@ export default function HeroSection() {
               className="flex flex-wrap gap-6 mt-10 pt-8 border-t border-bg-border"
             >
               {[
-                { label: 'Días en racha', value: totalCompleted === 4 ? '48' : '47' },
-                { label: 'Sesiones gym', value: gymDone ? '90' : '89' },
-                { label: 'Horas código', value: '340/mes' },
+                { label: 'Sin nicotina', value: '420+ días' },
+                { label: 'Entrenador certificado', value: 'Bodytech' },
+                { label: 'Developer', value: 'Empleado en tech' },
               ].map((stat) => (
                 <div key={stat.label}>
                   <div className="font-mono text-xl font-bold text-neon-primary">{stat.value}</div>
@@ -249,7 +204,7 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Right: Fake dashboard */}
+          {/* Right: dashboard demo (simulación etiquetada) */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -264,7 +219,7 @@ export default function HeroSection() {
                   <div className="w-2 h-2 rounded-full bg-neon-dim" />
                   <div className="w-2 h-2 rounded-full bg-neon-primary" />
                 </div>
-                <span className="font-mono text-xs text-text-muted">PERSONAL_OS :: interactive_preview</span>
+                <span className="font-mono text-xs text-text-muted">PERSONAL_OS :: SIMULACIÓN</span>
                 <span className="font-mono text-xs text-neon-primary/50">{timeStr}</span>
               </div>
 
@@ -273,12 +228,12 @@ export default function HeroSection() {
                 {/* System header */}
                 <div className="text-neon-primary mb-4">
                   <span className="text-text-dim">&gt; </span>
-                  personal_os --status --interactive --date {dateStr}
+                  personal_os --demo --interactive --date {dateStr}
                 </div>
 
                 {/* Metrics grid */}
                 <div className="grid grid-cols-2 gap-2 mb-4 select-none">
-                  {fakeDashboardData.map((item) => (
+                  {demoDashboardData.map((item) => (
                     <div
                       key={item.label}
                       className={`bg-bg-base border p-2.5 hover:border-neon-primary/20 transition-all duration-300 ${
@@ -297,7 +252,7 @@ export default function HeroSection() {
                   ))}
                 </div>
 
-                {/* Progress bars (Now fully clickable checklist!) */}
+                {/* Progress bars (checklist demo interactiva) */}
                 <div className="space-y-2 mb-4 select-none">
                   <div className="text-text-dim uppercase text-xs mb-2">PROTOCOLO DIARIO (Haz click para interactuar)</div>
                   {[

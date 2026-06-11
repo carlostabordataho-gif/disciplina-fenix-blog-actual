@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import TerminalPanel from '../components/ui/TerminalPanel'
 import SectionHeader from '../components/ui/SectionHeader'
+import { saveLead } from '../lib/leads'
+import { cohortSpotsLeft, funnel } from '../data/funnel'
 
 const rules = [
   {
@@ -42,71 +45,69 @@ const rules = [
   },
 ]
 
+// Retos del Escuadrón: se activan con la comunidad. Sin números inventados —
+// la prueba social de esta etapa es la cohorte fundadora con plazas reales.
 const challenges = [
   {
     id: 'CHG-001',
-    name: 'Sin redes sociales — 30 días',
-    participants: 47,
-    active: true,
-    difficulty: 'ALTO',
-    reward: 'Recalibración dopaminérgica certificada',
+    name: 'Sin vicios — 7 días',
+    difficulty: 'ENTRADA',
+    reward: 'Empieza hoy con el Protocolo RESET gratis',
+    cta: 'reset' as const,
   },
   {
     id: 'CHG-002',
-    name: 'Deep Work — 21 días consecutivos',
-    participants: 89,
-    active: true,
-    difficulty: 'MEDIO',
-    reward: 'Estado de flow consistente',
+    name: 'Protocolo Fénix — 21 días supervisados',
+    difficulty: 'ALTO',
+    reward: `Cohorte Fundadora · check-in diario · ${cohortSpotsLeft}/${funnel.cohortSpotsTotal} plazas`,
+    cta: 'protocolo' as const,
   },
   {
     id: 'CHG-003',
-    name: 'Gym — 90 días sin fallar',
-    participants: 34,
-    active: true,
-    difficulty: 'ALTO',
-    reward: 'Identidad física consolidada',
-  },
-  {
-    id: 'CHG-004',
-    name: 'Sin vicios — 7 días',
-    participants: 156,
-    active: true,
-    difficulty: 'ENTRADA',
-    reward: 'Primer reset del sistema nervioso',
+    name: 'Retos mensuales del Escuadrón',
+    difficulty: 'MEDIO',
+    reward: 'Disponibles para quienes completan la cohorte',
+    cta: 'protocolo' as const,
   },
 ]
 
 const tiers = [
   {
-    name: 'RECRUTA',
+    name: 'RECLUTA',
     level: '00',
-    desc: 'Acceso gratuito. Contenido público. Newsletter semanal.',
-    features: ['Blog completo', 'Newsletter semanal', 'Retos públicos'],
-    available: true,
+    desc: 'Acceso gratuito. El protocolo RESET de 7 días y el contenido público.',
+    features: ['Protocolo RESET (7 días)', 'Blog completo', 'Newsletter'],
     price: 'Gratis',
+    ctaLabel: 'Empezar con RESET',
+    ctaTo: '/reset',
+    disabled: false,
   },
   {
-    name: 'OPERATIVO',
+    name: 'COHORTE FÉNIX',
     level: '01',
-    desc: 'Comunidad privada. Tracker de hábitos. Accountability grupal.',
-    features: ['Todo en Recruta', 'Comunidad privada', 'Habit tracker', 'Retos exclusivos', 'Revisiones grupales'],
-    available: false,
-    price: 'Próximamente',
+    desc: 'El protocolo de 21 días supervisado. Check-in diario, llamadas grupales y reglas de expulsión.',
+    features: ['Protocolo día por día', 'Llamada 1:1 de arranque', 'Check-in diario revisado', '3 llamadas grupales', 'Sistema de puntos y rangos'],
+    price: `$${funnel.priceUsd} USD`,
+    ctaLabel: 'Ver la cohorte',
+    ctaTo: '/protocolo',
+    disabled: false,
   },
   {
-    name: 'ÉLITE',
+    name: 'ESCUADRÓN',
     level: '02',
-    desc: 'Acceso completo. Coaching directo. Protocolo personalizado.',
-    features: ['Todo en Operativo', 'Protocolo personalizado', 'Sesiones 1:1', 'Acceso prioritario', 'IA Coach'],
-    available: false,
-    price: 'Próximamente',
+    desc: 'Membresía para quienes completan la cohorte: retos mensuales, comunidad y la racha viva.',
+    features: ['Comunidad permanente', 'Reto mensual con puntos', 'Llamada grupal mensual', 'Prioridad en cohortes'],
+    price: 'Vía cohorte',
+    ctaLabel: 'Acceso vía cohorte',
+    ctaTo: '/protocolo',
+    disabled: false,
   },
 ]
 
 export default function Community() {
   const [email, setEmail] = useState('')
   const [joined, setJoined] = useState(false)
+  const [error, setError] = useState('')
 
   return (
     <div className="min-h-screen pt-16 bg-bg-base">
@@ -186,9 +187,6 @@ export default function Community() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="text-right">
-                    <div className="font-mono text-xs text-neon-primary">{c.participants} activos</div>
-                  </div>
                   <span className={`font-mono text-xs px-2 py-0.5 border ${
                     c.difficulty === 'ALTO' ? 'border-accent-warn/40 text-accent-warn' :
                     c.difficulty === 'MEDIO' ? 'border-neon-primary/40 text-neon-primary' :
@@ -196,9 +194,9 @@ export default function Community() {
                   }`}>
                     {c.difficulty}
                   </span>
-                  <button className="btn-primary text-xs py-1 px-3">
-                    Unirme
-                  </button>
+                  <Link to={c.cta === 'reset' ? '/reset' : '/protocolo'} className="btn-primary text-xs py-1 px-3">
+                    {c.cta === 'reset' ? 'Empezar gratis' : 'Ver cohorte'}
+                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -220,11 +218,11 @@ export default function Community() {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
               className={`terminal-panel border p-6 flex flex-col ${
-                tier.name === 'OPERATIVO'
+                tier.name === 'COHORTE FÉNIX'
                   ? 'border-neon-primary/30'
                   : 'border-bg-border'
               }`}
-              style={tier.name === 'OPERATIVO' ? { boxShadow: '0 0 20px rgba(0,255,65,0.05)' } : {}}
+              style={tier.name === 'COHORTE FÉNIX' ? { boxShadow: '0 0 20px rgba(0,255,65,0.05)' } : {}}
             >
               <div className="flex items-center justify-between mb-4">
                 <div>
@@ -244,12 +242,12 @@ export default function Community() {
                   </div>
                 ))}
               </div>
-              <button
-                className={tier.available ? 'btn-primary text-xs' : 'btn-secondary text-xs opacity-50 cursor-not-allowed'}
-                disabled={!tier.available}
+              <Link
+                to={tier.ctaTo}
+                className={tier.name === 'COHORTE FÉNIX' ? 'btn-primary text-xs text-center' : 'btn-secondary text-xs text-center'}
               >
-                {tier.available ? 'Acceder gratis' : 'Próximamente'}
-              </button>
+                {tier.ctaLabel}
+              </Link>
             </motion.div>
           ))}
         </div>
@@ -278,7 +276,12 @@ export default function Community() {
               </div>
             ) : (
               <form
-                onSubmit={(e) => { e.preventDefault(); if (email) setJoined(true) }}
+                onSubmit={async (e) => {
+                  e.preventDefault()
+                  const result = await saveLead(email, 'community')
+                  if (result.ok) setJoined(true)
+                  else setError(result.error ?? 'No se pudo registrar.')
+                }}
                 className="flex flex-col gap-3"
               >
                 <input
@@ -292,6 +295,9 @@ export default function Community() {
                 <button type="submit" className="btn-primary">
                   Avisar cuando abra
                 </button>
+                {error && (
+                  <p className="font-mono text-xs text-accent-warn">{error}</p>
+                )}
               </form>
             )}
           </div>

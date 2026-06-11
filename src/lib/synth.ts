@@ -2,7 +2,9 @@
 // No external assets required, pure mathematical synth.
 
 let audioCtx: AudioContext | null = null;
-let soundEnabled = true;
+// Apagado por defecto: el sonido no solicitado en móvil espanta visitantes.
+// El usuario puede activarlo con el toggle del navbar (se persiste en localStorage).
+let soundEnabled = false;
 
 // Initialize sound state from localStorage if available
 if (typeof window !== 'undefined') {

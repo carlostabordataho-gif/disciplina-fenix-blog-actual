@@ -1,18 +1,7 @@
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import ResetCapture from '../funnel/ResetCapture'
 
 export default function Footer() {
-  const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (email) {
-      setSubmitted(true)
-      setEmail('')
-    }
-  }
-
   return (
     <footer className="border-t border-bg-border bg-bg-base relative overflow-hidden">
       <div className="grid-bg absolute inset-0 opacity-30 pointer-events-none" />
@@ -64,33 +53,13 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Newsletter */}
+          {/* Captura: protocolo RESET gratis (mismo pipeline que /reset) */}
           <div>
-            <div className="hud-label mb-2">Newsletter</div>
+            <div className="hud-label mb-2">Protocolo RESET — Gratis</div>
             <p className="font-mono text-xs text-text-muted mb-4 leading-relaxed">
-              Protocolos reales. Sistemas reales. Ejecución documentada.
+              7 días para cortar el ciclo. Directo a tu correo.
             </p>
-            {submitted ? (
-              <div className="border border-neon-primary/30 bg-neon-primary/5 px-4 py-3">
-                <p className="font-mono text-xs text-neon-primary">
-                  &gt; Acceso concedido. Bienvenido al sistema.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="tu@email.com"
-                  required
-                  className="bg-bg-panel border border-bg-border text-text-primary font-mono text-xs px-4 py-2 focus:outline-none focus:border-neon-primary/50 placeholder-text-dim transition-colors"
-                />
-                <button type="submit" className="btn-primary text-xs py-2">
-                  Unirme a la lista
-                </button>
-              </form>
-            )}
+            <ResetCapture source="footer" compact />
           </div>
         </div>
 
@@ -100,8 +69,11 @@ export default function Footer() {
           <div className="font-mono text-xs text-text-dim tracking-widest uppercase">
             "Ejecución sobre motivación."
           </div>
-          <div className="font-mono text-xs text-text-dim">
-            © {new Date().getFullYear()} Disciplina Fénix — Carlos Taborda
+          <div className="font-mono text-xs text-text-dim flex flex-wrap items-center gap-x-4 gap-y-1">
+            <span>© {new Date().getFullYear()} Disciplina Fénix — Carlos Taborda</span>
+            <Link to="/legal" className="hover:text-neon-primary transition-colors uppercase tracking-wider">
+              Privacidad · Términos · Garantía
+            </Link>
           </div>
         </div>
       </div>

@@ -5,10 +5,10 @@ import { synth } from '../../lib/synth'
 
 const navLinks = [
   { label: 'Inicio', to: '/' },
+  { label: 'Cohorte', to: '/protocolo' },
   { label: 'Sistema', to: '/sistema' },
   { label: 'Blog', to: '/blog' },
   { label: 'Comunidad', to: '/comunidad' },
-  { label: 'Road to 2030', to: '/road-to-2030' },
 ]
 
 export default function Navbar() {
@@ -26,14 +26,6 @@ export default function Navbar() {
   useEffect(() => {
     setMobileOpen(false)
   }, [location.pathname])
-
-  useEffect(() => {
-    // Play cyberpunk system boot sequence
-    const timer = setTimeout(() => {
-      synth.playBoot()
-    }, 800)
-    return () => clearTimeout(timer)
-  }, [])
 
   const toggleSound = () => {
     const newVal = !sfxEnabled
@@ -97,12 +89,12 @@ export default function Navbar() {
               {sfxEnabled ? '[ 🔊 SONIDO: ON ]' : '[ 🔇 SONIDO: OFF ]'}
             </button>
             <Link
-              to="/sistema"
+              to="/reset"
               onClick={() => synth.playClick()}
               onMouseEnter={() => synth.playHover()}
               className="btn-primary text-xs py-2 px-4"
             >
-              Entrar al Sistema
+              [ RESET GRATIS ]
             </Link>
           </div>
 
@@ -158,12 +150,12 @@ export default function Navbar() {
                   {sfxEnabled ? '[ 🔊 SONIDO: ACTIVO ]' : '[ 🔇 SONIDO: MUTED ]'}
                 </button>
                 <Link
-                  to="/sistema"
+                  to="/reset"
                   onClick={() => synth.playClick()}
                   onMouseEnter={() => synth.playHover()}
                   className="btn-primary text-xs py-2 px-4 text-center"
                 >
-                  Entrar al Sistema
+                  [ RESET GRATIS ]
                 </Link>
               </div>
             </div>

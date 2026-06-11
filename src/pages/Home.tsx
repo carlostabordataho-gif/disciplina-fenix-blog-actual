@@ -1,36 +1,44 @@
 import HeroSection from '../components/home/HeroSection'
-import TransformationSection from '../components/home/TransformationSection' // Tu nueva sección de autoridad física
+import PainSection from '../components/home/PainSection'
+import TransformationSection from '../components/home/TransformationSection'
+import SystemStepsSection from '../components/home/SystemStepsSection'
+import OfferBanner from '../components/home/OfferBanner'
 import ContentHubSection from '../components/home/ContentHubSection'
-import FenixTerminal from '../components/home/FenixTerminal'
-import SectionHeader from '../components/ui/SectionHeader'
+import ResetCapture from '../components/funnel/ResetCapture'
+import FaqSection from '../components/home/FaqSection'
+import usePageMeta from '../lib/usePageMeta'
 
 export default function Home() {
+  usePageMeta(
+    'Disciplina Fénix — Carlos Taborda | Sistema de Reconstrucción Personal',
+    'No te falta motivación: te falta un sistema con consecuencias. Protocolo RESET gratis de 7 días y Cohorte Fénix de 21 días supervisados.'
+  )
+
   return (
     <div className="bg-bg-base min-h-screen">
-      {/* 1. EL GANCHO: Identidad agresiva y acceso a tu Zenith OS */}
+      {/* 1. GANCHO: headline de dolor + CTAs al funnel + dashboard demo */}
       <HeroSection />
-      
-      {/* 2. LA AUTORIDAD: Tu historia, el "Antes y Después", y tu experiencia en Bodytech */}
+
+      {/* 2. DOLOR: el visitante se ve descrito */}
+      <PainSection />
+
+      {/* 3. AUTORIDAD: historia y números verificables */}
       <TransformationSection />
-      
-      {/* 3. EL ADOCTRINAMIENTO: Tu contenido diario de TikTok @carlostaho */}
+
+      {/* 4. EL MAPA: RESET → Cohorte → Escuadrón */}
+      <SystemStepsSection />
+
+      {/* 5. OFERTA: cohorte fundadora con plazas reales */}
+      <OfferBanner />
+
+      {/* 6. PRUEBA: contenido y proceso documentado */}
       <ContentHubSection />
 
-      {/* 4. LA INTERACTIVIDAD: Terminal Fénix OS interactiva */}
-      <section className="py-24 bg-bg-panel border-t border-bg-border relative overflow-hidden">
-        <div className="grid-bg absolute inset-0 opacity-10 pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <SectionHeader
-            label="NÚCLEO ACTIVO"
-            title={<>Consola interactiva <span className="text-neon-primary">Fénix OS.</span></>}
-            subtitle="Accede al núcleo del sistema directamente. Prueba comandos reales como 'help', 'streak', 'vicios', 'mentor' o 'renacer'."
-            align="center"
-          />
-          <div className="mt-8">
-            <FenixTerminal />
-          </div>
-        </div>
-      </section>
+      {/* 7. CAPTURA: última oportunidad de conversión */}
+      <ResetCapture source="home" />
+
+      {/* 8. FAQ + CTA final */}
+      <FaqSection />
     </div>
   )
 }
