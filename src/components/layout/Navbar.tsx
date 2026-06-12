@@ -50,10 +50,10 @@ export default function Navbar() {
             className="flex flex-col leading-none group"
           >
             <span className="font-mono text-sm font-bold text-neon-primary tracking-widest uppercase flicker">
-              DISCIPLINA FÉNIX
+              TABORDA SYSTEM
             </span>
             <span className="font-mono text-xs text-text-muted tracking-wider uppercase mt-0.5">
-              Carlos Taborda
+              Disciplina Fénix · Carlos Taborda
             </span>
           </Link>
 
@@ -94,7 +94,7 @@ export default function Navbar() {
               onMouseEnter={() => synth.playHover()}
               className="btn-primary text-xs py-2 px-4"
             >
-              [ RESET GRATIS ]
+              [ INSTALAR — RESET GRATIS ]
             </Link>
           </div>
 

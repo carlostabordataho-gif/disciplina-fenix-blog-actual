@@ -10,8 +10,8 @@ import usePageMeta from '../lib/usePageMeta'
 
 export default function Home() {
   usePageMeta(
-    'Disciplina Fénix — Carlos Taborda | Sistema de Reconstrucción Personal',
-    'No te falta motivación: te falta un sistema con consecuencias. Protocolo RESET gratis de 7 días y Cohorte Fénix de 21 días supervisados.'
+    'TABORDA SYSTEM — El Sistema Operativo de Disciplina | Carlos Taborda',
+    'Deja de consumir motivación: instala un sistema operativo de disciplina. Protocolo RESET gratis de 7 días e instalación supervisada de 21 días (Cohorte Fénix).'
   )
 
   return (

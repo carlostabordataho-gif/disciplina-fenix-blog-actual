@@ -114,7 +114,7 @@ export default function HeroSection() {
             >
               <div className="w-1.5 h-1.5 bg-neon-primary rounded-full animate-pulse" />
               <span className="font-mono text-xs text-neon-primary tracking-widest uppercase">
-                COHORTE FUNDADORA ABIERTA — {cohortSpotsLeft}/{funnel.cohortSpotsTotal} PLAZAS
+                TABORDA_SYSTEM :: ONLINE — INSTALACIÓN SUPERVISADA: {cohortSpotsLeft}/{funnel.cohortSpotsTotal} PLAZAS
               </span>
             </motion.div>
 
@@ -125,8 +125,8 @@ export default function HeroSection() {
               transition={{ duration: 0.3, delay: 0.2 }}
               className="font-mono text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary leading-none mb-2"
             >
-              No te falta motivación.{' '}
-              <span className="text-neon-primary">Te falta un sistema con consecuencias.</span>
+              Deja de consumir motivación.{' '}
+              <span className="text-neon-primary">Instala un sistema operativo de disciplina.</span>
             </motion.h1>
 
             {/* Brand name */}
@@ -139,10 +139,10 @@ export default function HeroSection() {
               <span
                 className="font-mono text-lg md:text-xl font-bold tracking-widest text-neon-primary flicker"
               >
-                DISCIPLINA FÉNIX
+                TABORDA SYSTEM
               </span>
               <span className="font-mono text-sm text-text-muted ml-3 tracking-wider">
-                // Carlos Taborda
+                // Disciplina Fénix · Carlos Taborda
               </span>
             </motion.div>
 
@@ -153,10 +153,10 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="font-sans text-text-muted text-base md:text-lg leading-relaxed mb-10 max-w-lg"
             >
-              El protocolo de reconstrucción para hombres cansados de prometerse lo mismo cada
-              lunes: deja los vicios, recupera tu físico y tu enfoque — con un sistema vigilado
-              donde fallar tiene costo.{' '}
-              <span className="text-text-primary font-medium">No motivación. No excusas. Sistemas.</span>
+              Esto no es un blog de consejos: es un sistema operativo que instalas en tu vida.
+              Protocolos ejecutables, métricas diarias y consecuencias reales cuando fallas.
+              Para hombres cansados de prometerse lo mismo cada lunes.{' '}
+              <span className="text-text-primary font-medium">La motivación se agota. El sistema se ejecuta.</span>
             </motion.p>
 
             {/* CTAs */}
@@ -172,7 +172,7 @@ export default function HeroSection() {
                 onMouseEnter={() => synth.playHover()}
                 className="btn-primary"
               >
-                DESCARGAR PROTOCOLO RESET — GRATIS
+                INICIAR INSTALACIÓN — RESET GRATIS
               </Link>
               <Link
                 to="/protocolo"
@@ -180,7 +180,7 @@ export default function HeroSection() {
                 onMouseEnter={() => synth.playHover()}
                 className="btn-secondary"
               >
-                COHORTE · {cohortSpotsLeft}/{funnel.cohortSpotsTotal} PLAZAS
+                INSTALACIÓN SUPERVISADA · {cohortSpotsLeft}/{funnel.cohortSpotsTotal} PLAZAS
               </Link>
             </motion.div>
 
@@ -219,7 +219,7 @@ export default function HeroSection() {
                   <div className="w-2 h-2 rounded-full bg-neon-dim" />
                   <div className="w-2 h-2 rounded-full bg-neon-primary" />
                 </div>
-                <span className="font-mono text-xs text-text-muted">PERSONAL_OS :: SIMULACIÓN</span>
+                <span className="font-mono text-xs text-text-muted">TABORDA_SYSTEM :: SIMULACIÓN</span>
                 <span className="font-mono text-xs text-neon-primary/50">{timeStr}</span>
               </div>
 
@@ -228,7 +228,7 @@ export default function HeroSection() {
                 {/* System header */}
                 <div className="text-neon-primary mb-4">
                   <span className="text-text-dim">&gt; </span>
-                  personal_os --demo --interactive --date {dateStr}
+                  taborda_system --install --demo --date {dateStr}
                 </div>
 
                 {/* Metrics grid */}
