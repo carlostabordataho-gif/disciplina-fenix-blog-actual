@@ -3,8 +3,11 @@
 //
 // CHECKLIST DE OPERADOR (lo único que tocas entre ventas):
 //   1. Cada venta confirmada => sube cohortSpotsTaken en 1 y redeploy.
-//   2. Cuando tengas link de pago automático (Hotmart/Bold/Wompi):
-//      pega el link en checkoutUrl y cambia paymentMode a 'checkout'.
+//   2. Cuando tengas link de pago automático (Hotmart/Gumroad/Bold/Wompi):
+//      ponlo en la env var VITE_COHORTE_CHECKOUT_URL (Vercel → Settings →
+//      Environment Variables) y redeploy. TODOS los botones de compra del
+//      sitio pasan solos a la pasarela; sin la variable, siguen en WhatsApp.
+//      (Alternativa local: pegar el link en checkoutUrl + paymentMode 'checkout'.)
 //   3. Para mover fechas: edita cohortStartDate / cohortCloseDate.
 
 export const funnel = {
@@ -53,9 +56,23 @@ export const funnel = {
 
 // ── Helpers ───────────────────────────────────────────────────────────
 
+// Pasarela de pago de la Instalación Supervisada (Cohorte).
+// Prioridad: env var VITE_COHORTE_CHECKOUT_URL (Vercel) > checkoutUrl fijo.
+// Si la env var trae un link válido, el checkout se activa SOLO, sin tocar
+// paymentMode: cambiar la variable en el dashboard + redeploy es suficiente.
+const envCheckoutUrl =
+  (import.meta.env.VITE_COHORTE_CHECKOUT_URL as string | undefined) ?? ''
+
+const isValidCheckout = (url: string) =>
+  url.startsWith('http') && !url.includes('REEMPLAZAR')
+
+const effectiveCheckoutUrl = isValidCheckout(envCheckoutUrl)
+  ? envCheckoutUrl
+  : funnel.checkoutUrl
+
 const checkoutIsReady =
-  funnel.checkoutUrl.startsWith('http') &&
-  !funnel.checkoutUrl.includes('REEMPLAZAR')
+  isValidCheckout(envCheckoutUrl) ||
+  (funnel.paymentMode === 'checkout' && isValidCheckout(funnel.checkoutUrl))
 
 /** Construye un deep-link de WhatsApp con mensaje pre-escrito. */
 export function whatsappUrl(message: string): string {
@@ -64,13 +81,15 @@ export function whatsappUrl(message: string): string {
 
 /**
  * URL del botón de COMPRA.
- * - Si el pago automático está listo (paymentMode 'checkout' + link válido) => checkout.
- * - Si no => WhatsApp con un mensaje de intención de compra ya redactado.
+ * - Si hay pasarela lista (VITE_COHORTE_CHECKOUT_URL, o paymentMode 'checkout'
+ *   + checkoutUrl válido) => checkout automático.
+ * - Si no => WhatsApp con un mensaje de intención de compra ya redactado
+ *   (fallback de pruebas y de cierre 1:1).
  * @param context etiqueta corta de dónde salió el click (para saber qué CTA convierte).
  */
 export function buyUrl(context = 'web'): string {
-  if (funnel.paymentMode === 'checkout' && checkoutIsReady) {
-    return funnel.checkoutUrl
+  if (checkoutIsReady) {
+    return effectiveCheckoutUrl
   }
   const msg =
     `Hola Carlos, quiero mi plaza en la Cohorte Fénix (precio fundador $${funnel.priceUsd} USD / $${funnel.priceCop} COP). ` +
@@ -79,7 +98,7 @@ export function buyUrl(context = 'web'): string {
 }
 
 /** ¿El botón de compra abre WhatsApp (true) o un checkout automático (false)? */
-export const buyOpensWhatsApp = !(funnel.paymentMode === 'checkout' && checkoutIsReady)
+export const buyOpensWhatsApp = !checkoutIsReady
 
 /** Canal de contacto para dudas pre-compra. */
 export const contactUrl = whatsappUrl(

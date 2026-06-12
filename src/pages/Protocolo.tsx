@@ -79,7 +79,7 @@ export default function Protocolo() {
           <div className="flex items-center justify-center gap-2 mb-6">
             <div className="w-1.5 h-1.5 bg-neon-primary rounded-full animate-pulse" />
             <span className="font-mono text-xs text-neon-primary tracking-widest uppercase">
-              COHORTE FUNDADORA · {cohortSpotsLeft}/{funnel.cohortSpotsTotal} PLAZAS DISPONIBLES
+              INSTALACIÓN SUPERVISADA :: CONEXIONES: {funnel.cohortSpotsTaken}/{funnel.cohortSpotsTotal} ASIGNADAS · {cohortSpotsLeft} DISPONIBLES
             </span>
           </div>
 
@@ -95,7 +95,7 @@ export default function Protocolo() {
           </p>
 
           <a href={buyUrl('protocolo-hero')} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block">
-            RECLAMAR MI PLAZA — ${funnel.priceUsd} USD
+            [ INICIAR INSTALACIÓN SUPERVISADA — ${funnel.priceUsd} USD ]
           </a>
           <p className="font-mono text-xs text-text-dim mt-3">
             ${funnel.priceCop} COP · Precio fundador · Único pago
@@ -298,7 +298,7 @@ export default function Protocolo() {
             rel="noopener noreferrer"
             className="btn-primary inline-block mb-3"
           >
-            RECLAMAR MI PLAZA ({cohortSpotsLeft} DISPONIBLES)
+            [ ASEGURAR MI SLOT :: {cohortSpotsLeft} DISPONIBLES ]
           </a>
           <p className="font-mono text-xs text-text-dim mb-6">
             {buyOpensWhatsApp
@@ -347,10 +347,10 @@ export default function Protocolo() {
             rel="noopener noreferrer"
             className="btn-primary inline-block"
           >
-            RECLAMAR MI PLAZA — ${funnel.priceUsd} USD
+            [ INICIAR INSTALACIÓN SUPERVISADA — ${funnel.priceUsd} USD ]
           </a>
           <p className="font-mono text-xs text-text-dim mt-4">
-            Quedan {cohortSpotsLeft} plazas · Inscripciones cierran {funnel.cohortCloseDate}.
+            CONEXIONES SUPERVISADAS: {funnel.cohortSpotsTaken}/{funnel.cohortSpotsTotal} asignadas · quedan {cohortSpotsLeft} · cierre: {funnel.cohortCloseDate}.
           </p>
           <p className="font-mono text-xs text-text-muted mt-8">
             ¿Una duda concreta antes de decidir?{' '}

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { cohortSpotsLeft, funnel } from '../../data/funnel'
+import { funnel } from '../../data/funnel'
 
 export default function OfferBanner() {
   return (
@@ -16,7 +16,7 @@ export default function OfferBanner() {
           <div className="flex items-center gap-2 mb-4">
             <div className="w-1.5 h-1.5 bg-neon-primary rounded-full animate-pulse" />
             <span className="font-mono text-xs text-neon-primary tracking-widest uppercase">
-              COHORTE FUNDADORA · {cohortSpotsLeft}/{funnel.cohortSpotsTotal} PLAZAS
+              INSTALACIÓN SUPERVISADA :: CONEXIONES: {funnel.cohortSpotsTaken}/{funnel.cohortSpotsTotal} ASIGNADAS
             </span>
           </div>
 
@@ -32,7 +32,7 @@ export default function OfferBanner() {
 
           <div className="flex flex-wrap items-center gap-6">
             <Link to="/protocolo" className="btn-primary">
-              VER EL PROTOCOLO COMPLETO →
+              [ INICIAR INSTALACIÓN SUPERVISADA :: VERSIÓN PREMIUM ]
             </Link>
             <div className="font-mono text-sm">
               <span className="text-neon-primary font-bold">${funnel.priceUsd} USD</span>

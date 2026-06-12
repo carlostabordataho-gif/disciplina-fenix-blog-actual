@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { synth } from '../../lib/synth'
-import { cohortSpotsLeft, funnel } from '../../data/funnel'
+import { funnel } from '../../data/funnel'
 
 export default function HeroSection() {
   const [, setTick] = useState(0)
@@ -114,7 +114,7 @@ export default function HeroSection() {
             >
               <div className="w-1.5 h-1.5 bg-neon-primary rounded-full animate-pulse" />
               <span className="font-mono text-xs text-neon-primary tracking-widest uppercase">
-                TABORDA_SYSTEM :: ONLINE — INSTALACIÓN SUPERVISADA: {cohortSpotsLeft}/{funnel.cohortSpotsTotal} PLAZAS
+                TABORDA_SYSTEM :: ONLINE — CONEXIONES SUPERVISADAS: {funnel.cohortSpotsTaken}/{funnel.cohortSpotsTotal} ASIGNADAS
               </span>
             </motion.div>
 
@@ -180,7 +180,7 @@ export default function HeroSection() {
                 onMouseEnter={() => synth.playHover()}
                 className="btn-secondary"
               >
-                INSTALACIÓN SUPERVISADA · {cohortSpotsLeft}/{funnel.cohortSpotsTotal} PLAZAS
+                [ INICIAR INSTALACIÓN SUPERVISADA :: VERSIÓN PREMIUM ]
               </Link>
             </motion.div>
 

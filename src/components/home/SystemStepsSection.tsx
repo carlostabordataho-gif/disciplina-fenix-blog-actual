@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import SectionHeader from '../ui/SectionHeader'
-import { cohortSpotsLeft, funnel } from '../../data/funnel'
+import { funnel } from '../../data/funnel'
 
 export default function SystemStepsSection() {
   const steps = [
@@ -17,7 +17,7 @@ export default function SystemStepsSection() {
     {
       num: '02',
       name: 'COHORTE FÉNIX',
-      price: `$${funnel.priceUsd} USD · ${cohortSpotsLeft}/${funnel.cohortSpotsTotal} plazas`,
+      price: `$${funnel.priceUsd} USD · conexiones: ${funnel.cohortSpotsTaken}/${funnel.cohortSpotsTotal} asignadas`,
       desc: 'El protocolo completo de 21 días con check-in diario obligatorio, llamadas semanales y reglas de expulsión. No es un curso que ves: es un sistema que reporta.',
       to: '/protocolo',
       cta: 'Ver la cohorte',

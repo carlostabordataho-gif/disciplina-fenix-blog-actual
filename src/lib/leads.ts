@@ -93,7 +93,7 @@ export async function saveLead(email: string, source: string): Promise<SaveLeadR
     if (webhookOk) return { ok: true }
     return {
       ok: false,
-      error: 'Registro no disponible en este momento. Escríbeme por TikTok @carlostaho y te lo envío directo.',
+      error: '> ERROR DE CONEXIÓN. Reintenta en unos segundos.',
     }
   }
 
@@ -106,7 +106,7 @@ export async function saveLead(email: string, source: string): Promise<SaveLeadR
     if (await webhookPromise) return { ok: true }
     return {
       ok: false,
-      error: 'No se pudo registrar. Intenta de nuevo o escríbeme por TikTok @carlostaho.',
+      error: '> ERROR AL REGISTRAR. Reintenta en unos segundos.',
     }
   }
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import TerminalPanel from '../components/ui/TerminalPanel'
 import SectionHeader from '../components/ui/SectionHeader'
 import { saveLead } from '../lib/leads'
-import { cohortSpotsLeft, funnel } from '../data/funnel'
+import { funnel } from '../data/funnel'
 
 const rules = [
   {
@@ -59,7 +59,7 @@ const challenges = [
     id: 'CHG-002',
     name: 'Protocolo Fénix — 21 días supervisados',
     difficulty: 'ALTO',
-    reward: `Cohorte Fundadora · check-in diario · ${cohortSpotsLeft}/${funnel.cohortSpotsTotal} plazas`,
+    reward: `Instalación Supervisada · check-in diario · conexiones: ${funnel.cohortSpotsTaken}/${funnel.cohortSpotsTotal} asignadas`,
     cta: 'protocolo' as const,
   },
   {

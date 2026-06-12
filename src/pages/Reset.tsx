@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import ResetCapture from '../components/funnel/ResetCapture'
-import { cohortSpotsLeft, funnel } from '../data/funnel'
+import { funnel } from '../data/funnel'
 import usePageMeta from '../lib/usePageMeta'
 
 // Landing de captura: destino del link in bio de TikTok.
@@ -71,8 +71,8 @@ export default function Reset() {
               to="/protocolo"
               className="font-mono text-xs text-text-dim hover:text-neon-primary transition-colors"
             >
-              ¿Listo para el sistema completo? Cohorte Fundadora · {cohortSpotsLeft}/
-              {funnel.cohortSpotsTotal} plazas →
+              ¿Listo para la versión premium? Instalación Supervisada · conexiones:{' '}
+              {funnel.cohortSpotsTaken}/{funnel.cohortSpotsTotal} asignadas →
             </Link>
           </div>
         </div>
