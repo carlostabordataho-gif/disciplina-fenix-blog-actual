@@ -5,7 +5,12 @@ import { useEffect } from 'react'
  * (Sin SSR esto cubre Google/links compartidos tras hidratación; suficiente
  * para un sitio cuyo tráfico real viene de TikTok, no de búsqueda.)
  */
-export default function usePageMeta(title: string, description?: string) {
+export default function usePageMeta(
+  title: string,
+  description?: string,
+  opts?: { noindex?: boolean }
+) {
+  const noindex = opts?.noindex === true
   useEffect(() => {
     document.title = title
     if (description) {
@@ -17,5 +22,20 @@ export default function usePageMeta(title: string, description?: string) {
       }
       tag.content = description
     }
-  }, [title, description])
+    // noindex para rutas privadas (p.ej. /bienvenida, la página post-compra).
+    // En una SPA el meta es global: se retira al navegar a otra ruta para
+    // no des-indexar el resto del sitio.
+    if (noindex) {
+      let robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]')
+      if (!robots) {
+        robots = document.createElement('meta')
+        robots.name = 'robots'
+        document.head.appendChild(robots)
+      }
+      robots.content = 'noindex, nofollow'
+      return () => {
+        robots?.remove()
+      }
+    }
+  }, [title, description, noindex])
 }

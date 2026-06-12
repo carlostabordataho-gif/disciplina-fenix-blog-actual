@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion'
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import TerminalPanel from '../components/ui/TerminalPanel'
 import SectionHeader from '../components/ui/SectionHeader'
-import { saveLead } from '../lib/leads'
+import ResetCapture from '../components/funnel/ResetCapture'
 import { funnel } from '../data/funnel'
 
 const rules = [
@@ -105,10 +104,6 @@ const tiers = [
 ]
 
 export default function Community() {
-  const [email, setEmail] = useState('')
-  const [joined, setJoined] = useState(false)
-  const [error, setError] = useState('')
-
   return (
     <div className="min-h-screen pt-16 bg-bg-base">
       {/* Header */}
@@ -270,36 +265,9 @@ export default function Community() {
                 Cuando lancemos la comunidad privada, los de la lista serán los primeros. Y habrá acceso en condiciones especiales.
               </p>
             </div>
-            {joined ? (
-              <div className="border border-neon-primary/30 bg-neon-primary/5 p-4">
-                <p className="font-mono text-sm text-neon-primary">&gt; Registrado. Te avisamos.</p>
-              </div>
-            ) : (
-              <form
-                onSubmit={async (e) => {
-                  e.preventDefault()
-                  const result = await saveLead(email, 'community')
-                  if (result.ok) setJoined(true)
-                  else setError(result.error ?? 'No se pudo registrar.')
-                }}
-                className="flex flex-col gap-3"
-              >
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="tu@email.com"
-                  required
-                  className="bg-bg-base border border-bg-border text-text-primary font-mono text-sm px-4 py-3 focus:outline-none focus:border-neon-primary/50 placeholder-text-dim"
-                />
-                <button type="submit" className="btn-primary">
-                  Avisar cuando abra
-                </button>
-                {error && (
-                  <p className="font-mono text-xs text-accent-warn">{error}</p>
-                )}
-              </form>
-            )}
+            {/* Mismo pipeline blindado del funnel (honeypot + fallback
+                WhatsApp + dedupe): entras a la lista y el RESET es tuyo ya. */}
+            <ResetCapture source="community" compact />
           </div>
         </motion.div>
       </div>

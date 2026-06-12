@@ -37,7 +37,8 @@ const pasos = [
 export default function Bienvenida() {
   usePageMeta(
     'Bienvenido a la Cohorte Fénix — Tu Día 0 | Disciplina Fénix',
-    'Tu plaza está confirmada. Estos son los pasos exactos para arrancar: grupo, llamada 1:1 y tu primer check-in.'
+    'Tu plaza está confirmada. Estos son los pasos exactos para arrancar: grupo, llamada 1:1 y tu primer check-in.',
+    { noindex: true } // página post-compra: fuera de los buscadores
   )
 
   return (

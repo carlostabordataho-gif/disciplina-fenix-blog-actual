@@ -37,12 +37,13 @@ export const funnel = {
   //               (Bold / Wompi / Nequi). Cero fricción técnica, ideal
   //               para las primeras ventas y resolución de dudas en vivo.
   // 'checkout'  => los CTA van directo a checkoutUrl (pago automático).
-  paymentMode: 'whatsapp' as 'whatsapp' | 'checkout',
+  paymentMode: 'checkout' as 'whatsapp' | 'checkout',
 
-  // Pega aquí el link real cuando crees el producto (Hotmart/Bold/Wompi)
-  // y cambia paymentMode a 'checkout'. Mientras quede vacío o de ejemplo,
-  // el sistema usa WhatsApp aunque paymentMode diga 'checkout'.
-  checkoutUrl: '',
+  // Página de Pago real del producto activo en Hotmart:
+  // "TABORDA SYSTEM :: Instalación Supervisada (21 Días)" — ID 7925154.
+  // URL base tomada de los HotLinks de divulgación. buyUrl() le añade
+  // dinámicamente ?sck=<context> para la atribución de cada CTA.
+  checkoutUrl: 'https://pay.hotmart.com/J106301629M',
 
   // ── Contacto ───────────────────────────────────────────────────────
   // Número de WhatsApp en formato internacional sin signos (Colombia +57).
