@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/check-env.js",
     "build": "tsc -b && vite build",
+    "check-env": "node scripts/check-env.js",
     "preview": "vite preview"
   },
   "keywords": [],
