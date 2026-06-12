@@ -1,3 +1,9 @@
+ > **NOTA (2026-06-11):** la versión CANÓNICA del entregable es
+> `public/reset-protocolo.html` (servida en
+> https://tabordasystem.com/reset-protocolo.html), que incorpora la narrativa
+> TABORDA SYSTEM (Inicialización/diagnóstico, 3 Bloques, Módulos 0.0–7.0).
+> Este markdown es el borrador original: si editas contenido, hazlo en el HTML.
+
 # PROTOCOLO RESET
 ## 7 DÍAS PARA ROMPER EL CICLO
 

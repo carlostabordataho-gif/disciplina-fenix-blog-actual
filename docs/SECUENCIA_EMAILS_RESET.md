@@ -3,7 +3,9 @@
 Remitente: Carlos — Disciplina Fénix <carlos@tabordasystem.com>
 Formato: texto plano con mínimo HTML (mejor entregabilidad y más personal).
 Links a reemplazar antes de importar:
-- `[LINK_PDF]` → https://tabordasystem.com/reset-protocolo.pdf
+- `[LINK_PDF]` → https://tabordasystem.com/reset-protocolo.html (URL real del
+  entregable: `public/reset-protocolo.html`, versión web imprimible que sirve
+  como PDF; en el Email 1 ya está puesta la URL exacta)
 - `[LINK_PROTOCOLO]` → https://tabordasystem.com/protocolo
 - `[FECHA_INICIO]` → fecha real de inicio de la cohorte
 - `[FECHA_CIERRE]` → fecha de cierre de inscripciones (recomendado: 48h antes del inicio)
@@ -32,7 +34,7 @@ Acabas de instalar el sistema operativo que va a correr tu vida los próximos 7 
 
 Aquí está el ejecutable:
 
-**→ ABRIR PROTOCOLO RESET [LINK_PDF]**
+**→ ABRIR PROTOCOLO RESET: https://tabordasystem.com/reset-protocolo.html**
 
 Una instrucción antes de abrirlo, y es una orden, no una sugerencia:
 
@@ -61,7 +63,7 @@ El día 1 es hoy o no es nunca.
 — Carlos
 TABORDA SYSTEM // DISCIPLINA FÉNIX
 
-**CTA:** EJECUTAR MÓDULO 0.0 ESTA NOCHE → [LINK_PDF]
+**CTA:** EJECUTAR MÓDULO 0.0 ESTA NOCHE → https://tabordasystem.com/reset-protocolo.html
 
 ---
 

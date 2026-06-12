@@ -57,24 +57,42 @@ export default function ResetCapture({ source, compact = false }: ResetCapturePr
 
   if (status === 'done') {
     return (
-      <div className="border border-neon-primary/30 bg-neon-primary/5 px-6 py-5 text-center">
-        <p className="font-mono text-sm text-neon-primary font-bold mb-2">
-          &gt; Acceso concedido.
-        </p>
-        <p className="font-sans text-xs text-text-muted mb-4">
-          Tu email quedó registrado. Abre el protocolo ahora — el día 1 es hoy.
-        </p>
-        <a
-          href={funnel.resetPdfUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-primary inline-block"
-        >
-          ABRIR PROTOCOLO RESET
-        </a>
-        <p className="font-mono text-xs text-text-dim mt-3">
-          También te lo enviamos por correo. Revisa spam si no llega.
-        </p>
+      <div className="border border-neon-primary/30 bg-neon-primary/5 px-5 py-5 text-left">
+        {/* Log de instalación: el lead ve su Módulo 0.0 sin esperar el correo */}
+        <div className="font-mono text-xs leading-relaxed mb-4">
+          <p className="text-neon-primary font-bold">&gt; TABORDA SYSTEM v1.0 — acceso concedido</p>
+          <p className="text-text-muted">&gt; descargando componentes........ <span className="text-neon-primary">100%</span></p>
+          <p className="text-text-muted">&gt; Protocolo RESET inicializado.</p>
+          <p className="text-text-muted">&gt; ejecutar hoy: <span className="text-neon-primary font-bold">MÓDULO 0.0</span></p>
+        </div>
+
+        <div className="border border-bg-border bg-bg-base px-4 py-3 mb-4">
+          <p className="font-mono text-xs text-neon-primary tracking-widest uppercase mb-2">
+            Módulo 0.0 — esta noche, antes de dormir
+          </p>
+          <ul className="font-mono text-xs text-text-muted space-y-1.5">
+            <li>▸ Declarar tu vicio principal por escrito <span className="text-text-dim">[15 min]</span></li>
+            <li>▸ Purgar el entorno: el vicio fuera de alcance <span className="text-text-dim">[45 min]</span></li>
+            <li>▸ Dejar configurada la victoria de mañana <span className="text-text-dim">[10 min]</span></li>
+          </ul>
+          <p className="font-mono text-xs text-text-dim mt-2">
+            Dependencias: 1 hoja · 1 esfero · 1 bolsa de basura. Motivación requerida: 0%.
+          </p>
+        </div>
+
+        <div className="text-center">
+          <a
+            href={funnel.resetPdfUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary inline-block"
+          >
+            ABRIR PROTOCOLO RESET — MÓDULO 0.0
+          </a>
+          <p className="font-mono text-xs text-text-dim mt-3">
+            También va camino a tu correo. Revisa spam si no llega.
+          </p>
+        </div>
       </div>
     )
   }
