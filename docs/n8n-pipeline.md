@@ -153,6 +153,12 @@ Checklist de verificación:
 
 ## 7. Postback de Hotmart — compra aprobada → cliente activo
 
+> **ACTUALIZACIÓN:** la vía recomendada ya está implementada en el repo:
+> la Vercel Function `api/hotmart-webhook.ts` valida el hottok, activa al
+> alumno en Supabase y dispara el email de bienvenida vía n8n. Guía
+> completa: `docs/HOTMART_WEBHOOK.md`. Lo que sigue abajo es la
+> alternativa 100 % n8n (sin función serverless), por si se prefiere.
+
 Cuando el checkout es Hotmart (`VITE_COHORTE_CHECKOUT_URL`), Hotmart puede
 notificar a n8n cada venta aprobada para marcar al lead como cliente en
 Supabase, sin intervención manual.

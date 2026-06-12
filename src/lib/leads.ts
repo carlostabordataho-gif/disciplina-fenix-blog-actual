@@ -20,6 +20,9 @@ const webhookUrl =
 export interface SaveLeadResult {
   ok: boolean
   error?: string
+  /** true cuando falló la infraestructura (no el email del usuario):
+   *  el formulario ofrece la vía alterna por WhatsApp. */
+  offerFallback?: boolean
 }
 
 /**
@@ -94,6 +97,7 @@ export async function saveLead(email: string, source: string): Promise<SaveLeadR
     return {
       ok: false,
       error: '> ERROR DE CONEXIÓN. Reintenta en unos segundos.',
+      offerFallback: true,
     }
   }
 
@@ -107,6 +111,7 @@ export async function saveLead(email: string, source: string): Promise<SaveLeadR
     return {
       ok: false,
       error: '> ERROR AL REGISTRAR. Reintenta en unos segundos.',
+      offerFallback: true,
     }
   }
 

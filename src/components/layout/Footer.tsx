@@ -57,7 +57,7 @@ export default function Footer() {
           <div>
             <div className="hud-label mb-2">Protocolo RESET — Gratis</div>
             <p className="font-mono text-xs text-text-muted mb-4 leading-relaxed">
-              7 días para cortar el ciclo. Directo a tu correo.
+              7 días para cortar el ciclo. Acceso inmediato.
             </p>
             <ResetCapture source="footer" compact />
           </div>

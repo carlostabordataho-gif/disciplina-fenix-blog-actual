@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import TerminalPanel from '../components/ui/TerminalPanel'
-import { cohortSpotsLeft, contactUrl, funnel, buyUrl, buyCtaLabel, buyTrustLabel } from '../data/funnel'
+import { cohortSpotsLeft, contactUrl, funnel, buyUrl, buyCtaLabel, buyTrustLabel, buyOpensWhatsApp } from '../data/funnel'
 import usePageMeta from '../lib/usePageMeta'
 
 const incluye = [
@@ -54,13 +54,19 @@ const faq = [
     q: '¿Por qué tan barato?',
     a: 'Porque es la primera cohorte y estás comprando antes de que existan testimonios. Ese descuento es por el riesgo que asumes. No volverá a este precio.',
   },
+  // Las dos respuestas de pago mutan con el modo de cobro (funnel.ts):
+  // checkout Hotmart activo vs. cierre manual 1:1 por WhatsApp.
   {
     q: '¿Cómo pago? ¿Es seguro?',
-    a: 'Al reclamar tu plaza me escribes por WhatsApp y te confirmo cupo en el momento. Te envío un link de pago seguro (tarjeta, PSE o Nequi, en pesos colombianos). Tú pagas, me llega la confirmación y quedas dentro. Sin intermediarios raros: hablas directo conmigo.',
+    a: buyOpensWhatsApp
+      ? 'Al reclamar tu plaza me escribes por WhatsApp y te confirmo cupo en el momento. Te envío un link de pago seguro (tarjeta, PSE o Nequi, en pesos colombianos). Tú pagas, me llega la confirmación y quedas dentro. Sin intermediarios raros: hablas directo conmigo.'
+      : 'El botón te lleva al checkout de Hotmart, la pasarela líder de Latinoamérica: tarjeta, PSE o el método local de tu país, con confirmación inmediata. Hotmart procesa el pago — yo nunca veo los datos de tu tarjeta. Si prefieres hablar antes con un humano, el botón de WhatsApp sigue abajo a la derecha.',
   },
   {
     q: '¿Qué pasa apenas pago?',
-    a: 'Te agrego al grupo privado de la cohorte y te paso tu página de Bienvenida con el Día 0 paso a paso: cómo agendar tu llamada 1:1 de arranque, dónde reportar tu check-in y qué hacer la primera noche. Todo el mismo día, por WhatsApp. Tu plaza queda contada en el contador de la cohorte.',
+    a: buyOpensWhatsApp
+      ? 'Te agrego al grupo privado de la cohorte y te paso tu página de Bienvenida con el Día 0 paso a paso: cómo agendar tu llamada 1:1 de arranque, dónde reportar tu check-in y qué hacer la primera noche. Todo el mismo día, por WhatsApp. Tu plaza queda contada en el contador de la cohorte.'
+      : 'Hotmart confirma tu compra al instante y el sistema te activa: recibes el acceso a tu página de Bienvenida con el Día 0 paso a paso — agendar tu llamada 1:1 de arranque, entrar al grupo privado y preparar tu primer check-in. Si algo no te llega en minutos, me escribes por WhatsApp y lo resuelvo yo mismo.',
   },
 ]
 

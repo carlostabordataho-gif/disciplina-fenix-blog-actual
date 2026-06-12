@@ -6,7 +6,7 @@ import path from 'node:path'
 // El eBook (public/reset-protocolo.html) es un archivo estático: Vite lo copia
 // tal cual y NO le inyecta env vars. Este plugin lo post-procesa:
 // si VITE_COHORTE_CHECKOUT_URL trae un link válido (Hotmart), el CTA final
-// '[ ACCEDER AL PROTOCOLO RESET :: SOLICITAR ACCESO V1.0 ]' pasa de la página
+// '[ INICIAR INSTALACIÓN SUPERVISADA :: 21 DÍAS ]' pasa de la página
 // /protocolo directo al checkout, con nota de pago seguro.
 // - build: reescribe dist/reset-protocolo.html (lo que despliega Vercel).
 // - dev:   sirve el HTML ya inyectado, para que local == producción.

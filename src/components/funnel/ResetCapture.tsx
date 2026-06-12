@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { saveLead, validateEmail } from '../../lib/leads'
-import { funnel } from '../../data/funnel'
+import { funnel, whatsappUrl } from '../../data/funnel'
 
 interface ResetCaptureProps {
   /** De dónde viene el lead: 'reset' | 'home' | 'community' */
@@ -16,6 +16,9 @@ export default function ResetCapture({ source, compact = false }: ResetCapturePr
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
+  // Si la infraestructura falla (red/Supabase caídos), ofrecemos pedir
+  // el protocolo por WhatsApp para no perder el lead.
+  const [showFallback, setShowFallback] = useState(false)
   // Honeypot anti-bots: campo invisible que un humano nunca llena.
   const [trap, setTrap] = useState('')
 
@@ -43,6 +46,7 @@ export default function ResetCapture({ source, compact = false }: ResetCapturePr
       setStatus('done')
     } else {
       setErrorMsg(result.error ?? 'Error desconocido.')
+      setShowFallback(result.offerFallback === true)
       setStatus('error')
     }
   }
@@ -52,6 +56,7 @@ export default function ResetCapture({ source, compact = false }: ResetCapturePr
     if (status === 'error') {
       setStatus('idle')
       setErrorMsg('')
+      setShowFallback(false)
     }
   }
 
@@ -89,8 +94,10 @@ export default function ResetCapture({ source, compact = false }: ResetCapturePr
           >
             ABRIR PROTOCOLO RESET — MÓDULO 0.0
           </a>
+          {/* Sin promesa de email mientras n8n no esté activo: el protocolo
+              se entrega completo aquí mismo, en el momento. */}
           <p className="font-mono text-xs text-text-dim mt-3">
-            También va camino a tu correo. Revisa spam si no llega.
+            Acceso directo e inmediato. Guarda este enlace: es tuyo.
           </p>
         </div>
       </div>
@@ -134,6 +141,20 @@ export default function ResetCapture({ source, compact = false }: ResetCapturePr
       </form>
       {status === 'error' && (
         <p className="font-mono text-xs text-accent-warn mt-3 text-center">{errorMsg}</p>
+      )}
+      {status === 'error' && showFallback && (
+        <p className="font-mono text-xs text-text-muted mt-2 text-center">
+          ¿Sigue fallando?{' '}
+          <a
+            href={whatsappUrl('Hola Carlos, quiero el Protocolo RESET pero el formulario de la web me da error. Mi correo es: ')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-neon-primary hover:text-neon-primary/80 transition-colors"
+          >
+            Pídemelo directo por WhatsApp
+          </a>{' '}
+          y te lo envío a mano.
+        </p>
       )}
       <p className="font-mono text-xs text-text-dim mt-4 text-center">
         Sin spam. Sin frases bonitas. Un protocolo que se ejecuta o no se ejecuta.{' '}

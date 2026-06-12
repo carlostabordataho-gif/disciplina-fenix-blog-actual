@@ -89,7 +89,10 @@ export function whatsappUrl(message: string): string {
  */
 export function buyUrl(context = 'web'): string {
   if (checkoutIsReady) {
-    return effectiveCheckoutUrl
+    // `sck` es el parámetro de tracking nativo de Hotmart: cada venta queda
+    // etiquetada con el CTA que la originó (visible en el reporte de ventas).
+    const sep = effectiveCheckoutUrl.includes('?') ? '&' : '?'
+    return `${effectiveCheckoutUrl}${sep}sck=${encodeURIComponent(context)}`
   }
   const msg =
     `Hola Carlos, quiero mi plaza en la Cohorte Fénix (precio fundador $${funnel.priceUsd} USD / $${funnel.priceCop} COP). ` +

@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const strict = process.argv.includes('--strict')
 
-// ── Las 4 variables críticas ──────────────────────────────────────────
+// ── Variables críticas del sistema ────────────────────────────────────
 const VARS = [
   {
     name: 'VITE_SUPABASE_URL',
@@ -39,6 +39,23 @@ const VARS = [
     name: 'VITE_COHORTE_CHECKOUT_URL',
     required: false,
     why: 'Sin ella los botones de compra abren WhatsApp (modo cierre 1:1) en vez de la pasarela.',
+  },
+  // ── Variables de servidor (api/hotmart-webhook.ts) ──────────────────
+  // Sin prefijo VITE_: solo viven en Vercel Functions, nunca en el navegador.
+  {
+    name: 'HOTMART_HOTTOK',
+    required: false,
+    why: 'Sin ella /api/hotmart-webhook rechaza todo postback (las ventas no se procesan).',
+  },
+  {
+    name: 'SUPABASE_SERVICE_ROLE_KEY',
+    required: false,
+    why: 'Sin ella el webhook de ventas no puede activar alumnos en la tabla `leads`.',
+  },
+  {
+    name: 'N8N_SALE_WEBHOOK_URL',
+    required: false,
+    why: 'Sin ella no se dispara el email de bienvenida (credenciales + agendamiento 1:1).',
   },
 ]
 
@@ -97,7 +114,7 @@ for (const v of VARS) {
 
 console.log(line)
 if (warnings === 0) {
-  console.log('  ✓ Entorno completo. Las 4 variables críticas están definidas.')
+  console.log(`  ✓ Entorno completo. Las ${VARS.length} variables críticas están definidas.`)
 } else {
   console.log(`  ⚠ ${warnings} variable(s) sin configurar. El build continúa,`)
   console.log('    pero revisa Vercel → Settings → Environment Variables')
