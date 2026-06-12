@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import TerminalPanel from '../components/ui/TerminalPanel'
-import { cohortSpotsLeft, contactUrl, funnel, buyUrl, buyOpensWhatsApp } from '../data/funnel'
+import { cohortSpotsLeft, contactUrl, funnel, buyUrl, buyCtaLabel, buyTrustLabel } from '../data/funnel'
 import usePageMeta from '../lib/usePageMeta'
 
 const incluye = [
@@ -95,11 +95,12 @@ export default function Protocolo() {
           </p>
 
           <a href={buyUrl('protocolo-hero')} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block">
-            [ INICIAR INSTALACIÓN SUPERVISADA — ${funnel.priceUsd} USD ]
+            {buyCtaLabel()}
           </a>
           <p className="font-mono text-xs text-text-dim mt-3">
-            ${funnel.priceCop} COP · Precio fundador · Único pago
+            ${funnel.priceUsd} USD / ${funnel.priceCop} COP · Precio fundador · Único pago
           </p>
+          <p className="font-mono text-xs text-text-dim mt-1">{buyTrustLabel}</p>
           <p className="font-mono text-xs text-accent-warn mt-2">
             ⚠ Inscripciones cierran {funnel.cohortCloseDate} · Empezamos {funnel.cohortStartDate}
           </p>
@@ -300,11 +301,7 @@ export default function Protocolo() {
           >
             [ ASEGURAR MI SLOT :: {cohortSpotsLeft} DISPONIBLES ]
           </a>
-          <p className="font-mono text-xs text-text-dim mb-6">
-            {buyOpensWhatsApp
-              ? 'Te abre WhatsApp conmigo. Confirmas tu cupo y te paso el link de pago seguro.'
-              : 'Pago seguro · confirmación inmediata.'}
-          </p>
+          <p className="font-mono text-xs text-text-dim mb-6">{buyTrustLabel}</p>
           <p className="font-sans text-xs text-text-muted max-w-md mx-auto leading-relaxed">
             <span className="text-text-primary font-bold">Garantía Fénix:</span> completa los 21
             check-ins y si no sientes un cambio real, te devuelvo el 100%. Si abandonas, no hay
@@ -347,11 +344,12 @@ export default function Protocolo() {
             rel="noopener noreferrer"
             className="btn-primary inline-block"
           >
-            [ INICIAR INSTALACIÓN SUPERVISADA — ${funnel.priceUsd} USD ]
+            {buyCtaLabel()}
           </a>
           <p className="font-mono text-xs text-text-dim mt-4">
-            CONEXIONES SUPERVISADAS: {funnel.cohortSpotsTaken}/{funnel.cohortSpotsTotal} asignadas · quedan {cohortSpotsLeft} · cierre: {funnel.cohortCloseDate}.
+            CONEXIONES SUPERVISADAS: {funnel.cohortSpotsTaken}/{funnel.cohortSpotsTotal} ASIGNADAS · {cohortSpotsLeft} DISPONIBLES · CIERRE: {funnel.cohortCloseDate.toUpperCase()}
           </p>
+          <p className="font-mono text-xs text-text-dim mt-1">{buyTrustLabel}</p>
           <p className="font-mono text-xs text-text-muted mt-8">
             ¿Una duda concreta antes de decidir?{' '}
             <a

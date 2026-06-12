@@ -100,6 +100,21 @@ export function buyUrl(context = 'web'): string {
 /** ¿El botón de compra abre WhatsApp (true) o un checkout automático (false)? */
 export const buyOpensWhatsApp = !checkoutIsReady
 
+/**
+ * Texto del CTA de compra. Con pasarela activa (Hotmart) muta a la versión
+ * premium; en modo WhatsApp mantiene el precio a la vista para el cierre 1:1.
+ */
+export function buyCtaLabel(): string {
+  return checkoutIsReady
+    ? '[ INICIAR INSTALACIÓN SUPERVISADA :: VERSIÓN PREMIUM ]'
+    : `[ INICIAR INSTALACIÓN SUPERVISADA — $${funnel.priceUsd} USD ]`
+}
+
+/** Etiqueta de confianza bajo el CTA de compra, acorde al modo de cobro. */
+export const buyTrustLabel = checkoutIsReady
+  ? 'Pago seguro · confirmación inmediata'
+  : 'Te abre WhatsApp conmigo. Confirmas tu cupo y te paso el link de pago seguro.'
+
 /** Canal de contacto para dudas pre-compra. */
 export const contactUrl = whatsappUrl(
   'Hola Carlos, tengo una duda sobre la Cohorte Fénix antes de decidir:'

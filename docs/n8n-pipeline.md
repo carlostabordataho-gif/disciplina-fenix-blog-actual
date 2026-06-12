@@ -150,3 +150,50 @@ Checklist de verificación:
 - No exponer la service key de Supabase fuera de las credenciales de n8n.
 - Si llega spam masivo al webhook: activar rate-limit en el proxy de la
   instancia n8n (Cloudflare delante de la instancia es la vía rápida).
+
+## 7. Postback de Hotmart — compra aprobada → cliente activo
+
+Cuando el checkout es Hotmart (`VITE_COHORTE_CHECKOUT_URL`), Hotmart puede
+notificar a n8n cada venta aprobada para marcar al lead como cliente en
+Supabase, sin intervención manual.
+
+### Configuración en Hotmart
+
+1. Hotmart → **Herramientas → Webhook (API de notificaciones)** → *Configurar webhook*.
+2. **URL**: un segundo webhook de n8n, p. ej. `https://TU-INSTANCIA-N8N/webhook/hotmart-venta`
+   (NO reutilizar el de `lead-reset`: payloads distintos, flujos distintos).
+3. **Versión**: 2.0.0 (JSON).
+4. **Eventos**: marcar `PURCHASE_APPROVED` (compra aprobada). Opcionales:
+   `PURCHASE_REFUNDED` y `PURCHASE_CHARGEBACK` para revertir el estado.
+5. Guardar el **Hottok** (token que Hotmart envía en el header `X-HOTMART-HOTTOK`):
+   en n8n se valida con un nodo IF antes de procesar — todo lo que llegue sin
+   ese token se descarta (el webhook es público).
+
+### Workflow en n8n (hotmart-venta)
+
+```
+[Webhook hotmart-venta]
+   → [IF: header X-HOTMART-HOTTOK válido]            (seguridad)
+   → [IF: body.event == "PURCHASE_APPROVED"]
+   → [Set: email = body.data.buyer.email (lowercase)]
+   → [Supabase: UPDATE leads SET status='active',
+        purchased_at=now() WHERE email = {{email}}]
+   → [IF: 0 filas afectadas → INSERT lead con source='hotmart' y status='active']
+   → (opcional) [Notificación a tu WhatsApp/Telegram: "VENTA: {{email}}"]
+```
+
+Campos útiles del payload de Hotmart v2: `data.buyer.email`, `data.buyer.name`,
+`data.purchase.transaction`, `data.purchase.price.value`, `data.product.id`.
+
+### Requisito en Supabase
+
+La tabla `leads` necesita las columnas `status` (text, default `'lead'`) y
+`purchased_at` (timestamptz, nullable):
+
+```sql
+alter table public.leads add column if not exists status text not null default 'lead';
+alter table public.leads add column if not exists purchased_at timestamptz;
+```
+
+Recordatorio operativo: la venta confirmada también sube `cohortSpotsTaken`
+en `src/data/funnel.ts` (+ redeploy) — ver `docs/OPERACIONES.md`.

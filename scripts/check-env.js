@@ -57,8 +57,11 @@ function parseDotEnv(file) {
   return out
 }
 
-const dotEnv = parseDotEnv(resolve(root, '.env'))
-// Misma prioridad que Vite: process.env gana sobre el archivo .env.
+// Misma prioridad que Vite: process.env > .env.local > .env.
+const dotEnv = {
+  ...parseDotEnv(resolve(root, '.env')),
+  ...parseDotEnv(resolve(root, '.env.local')),
+}
 const valueOf = (name) => process.env[name] ?? dotEnv[name] ?? ''
 
 // ── Verificación ──────────────────────────────────────────────────────

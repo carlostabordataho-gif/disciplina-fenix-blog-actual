@@ -4,65 +4,142 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex" />
-<title>PROTOCOLO RESET — Módulo 0.0 | TABORDA SYSTEM</title>
+<title>PROTOCOLO RESET — 7 días para romper el ciclo | TABORDA SYSTEM</title>
 <style>
   :root{
-    --bg:#0a0e0a; --panel:#0f140f; --border:#1d2a1d;
-    --green:#00ff41; --green-dim:#00b32e;
-    --text:#e8f0e8; --muted:#9fb09f; --dim:#5a6b5a; --warn:#ffb000;
+    --bg:#030712; --panel:#0b1322; --panel-deep:#060c16; --border:#1f2937;
+    --neon:#10b981; --neon-dim:#059669; --neon-soft:rgba(16,185,129,.35);
+    --neon-glow:rgba(16,185,129,.12);
+    --text:#e5e7eb; --muted:#9ca3af; --dim:#64748b; --warn:#f59e0b;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--text);
+    background-image:radial-gradient(ellipse 90% 40% at 50% -5%,var(--neon-glow),transparent 70%);
+    background-repeat:no-repeat;
     font:16px/1.7 Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
   .wrap{max-width:720px;margin:0 auto;padding:32px 20px 80px}
   h1,h2,h3,.mono{font-family:'Courier New',Consolas,monospace}
-  h1{color:var(--green);font-size:1.9rem;line-height:1.2;margin:0 0 8px}
-  h2{color:var(--green);font-size:1.15rem;letter-spacing:.08em;text-transform:uppercase;
-    border-bottom:1px solid var(--border);padding-bottom:8px;margin:56px 0 20px}
+  h1{color:var(--neon);font-size:1.9rem;line-height:1.2;margin:0 0 8px;
+    text-shadow:0 0 24px var(--neon-glow)}
+  h2{color:var(--neon);font-size:1.15rem;letter-spacing:.08em;text-transform:uppercase;
+    border-bottom:1px solid var(--neon-soft);padding-bottom:8px;margin:56px 0 20px}
   h3{color:var(--text);font-size:1rem;margin:28px 0 8px}
   p{margin:0 0 14px;color:var(--muted)}
   strong{color:var(--text)}
   em{color:var(--dim)}
   ul{padding-left:22px;margin:0 0 14px}
   li{margin-bottom:6px;color:var(--muted)}
-  blockquote{border-left:3px solid var(--green);background:var(--panel);
-    margin:16px 0;padding:14px 18px;color:var(--text);font-family:'Courier New',Consolas,monospace;font-size:.92rem}
-  .panel{background:var(--panel);border:1px solid var(--border);padding:18px 20px;margin:18px 0}
-  .panel-green{border-color:rgba(0,255,65,.35)}
-  .panel-warn{border-color:rgba(255,176,0,.35)}
+  blockquote{border-left:3px solid var(--neon);background:var(--panel);
+    margin:16px 0;padding:14px 18px;color:var(--text);font-family:'Courier New',Consolas,monospace;font-size:.92rem;
+    box-shadow:inset 0 0 30px rgba(16,185,129,.04)}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:18px 20px;margin:18px 0}
+  .panel-green{border-color:var(--neon-soft);box-shadow:0 0 18px rgba(16,185,129,.08),inset 0 1px 0 rgba(16,185,129,.15)}
+  .panel-warn{border-color:rgba(245,158,11,.4);box-shadow:0 0 18px rgba(245,158,11,.06)}
   .label{font-family:'Courier New',Consolas,monospace;font-size:.72rem;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--green);display:block;margin-bottom:8px}
+    text-transform:uppercase;color:var(--neon);display:block;margin-bottom:8px}
   .check{list-style:none;padding-left:0}
   .check li{padding-left:28px;position:relative}
-  .check li::before{content:"☐";position:absolute;left:0;color:var(--green);font-size:1.05rem}
+  .check li::before{content:"☐";position:absolute;left:0;color:var(--neon);font-size:1.05rem}
   .dim{color:var(--dim);font-size:.85rem}
   .cover{text-align:center;padding:48px 0 8px}
-  .cover .brand{color:var(--green);font-family:'Courier New',Consolas,monospace;
+  .cover .brand{color:var(--neon);font-family:'Courier New',Consolas,monospace;
     letter-spacing:.25em;font-size:.8rem;text-transform:uppercase}
-  table{width:100%;border-collapse:collapse;margin:16px 0;font-family:'Courier New',Consolas,monospace;font-size:.82rem}
-  th,td{border:1px solid var(--border);padding:7px 6px;text-align:center;color:var(--muted)}
-  th{color:var(--green);text-transform:uppercase;font-size:.72rem}
-  td:first-child,th:first-child{text-align:left}
-  a{color:var(--green)}
-  .cta{display:block;text-align:center;background:var(--green);color:#031003;text-decoration:none;
+  a{color:var(--neon)}
+  .cta{display:block;text-align:center;background:var(--neon);color:#022c22;text-decoration:none;
     font-family:'Courier New',Consolas,monospace;font-weight:bold;letter-spacing:.08em;
-    padding:14px 18px;margin:20px 0;text-transform:uppercase}
-  .toolbar{position:sticky;top:0;background:rgba(10,14,10,.95);border-bottom:1px solid var(--border);
-    padding:10px 20px;text-align:right;backdrop-filter:blur(4px)}
-  .toolbar button{background:none;border:1px solid var(--green);color:var(--green);
+    padding:15px 18px;margin:20px 0;text-transform:uppercase;border-radius:6px;
+    box-shadow:0 0 28px rgba(16,185,129,.35);transition:box-shadow .2s,transform .2s}
+  .cta:hover{box-shadow:0 0 42px rgba(16,185,129,.55);transform:translateY(-1px)}
+  .toolbar{position:sticky;top:0;z-index:10;background:rgba(3,7,18,.92);border-bottom:1px solid var(--border);
+    padding:10px 20px;text-align:right;backdrop-filter:blur(6px)}
+  .toolbar button{background:none;border:1px solid var(--neon);color:var(--neon);border-radius:4px;
     font-family:'Courier New',Consolas,monospace;font-size:.72rem;letter-spacing:.1em;
-    padding:7px 14px;cursor:pointer;text-transform:uppercase}
+    padding:7px 14px;cursor:pointer;text-transform:uppercase;transition:background .2s,color .2s}
+  .toolbar button:hover{background:var(--neon);color:#022c22}
   hr{border:none;border-top:1px solid var(--border);margin:48px 0}
-  .log{background:#050805;border:1px solid var(--border);border-left:3px solid var(--green);
-    padding:14px 18px;margin:18px 0;font-family:'Courier New',Consolas,monospace;
-    font-size:.82rem;line-height:1.9;color:var(--green-dim);white-space:pre-wrap;overflow-x:auto}
-  .log b{color:var(--green);font-weight:bold}
+  .log{background:var(--panel-deep);border:1px solid var(--border);border-left:3px solid var(--neon);
+    border-radius:0 6px 6px 0;position:relative;
+    padding:34px 18px 14px;margin:18px 0;font-family:'Courier New',Consolas,monospace;
+    font-size:.82rem;line-height:1.9;color:var(--neon-dim);white-space:pre-wrap;overflow-x:auto}
+  .log::before{content:"● ● ●  taborda@system: ~/reset";position:absolute;top:0;left:0;right:0;
+    padding:5px 14px;font-size:.62rem;letter-spacing:.12em;color:var(--dim);
+    background:rgba(16,185,129,.06);border-bottom:1px solid var(--border)}
+  .log b{color:var(--neon);font-weight:bold;text-shadow:0 0 12px var(--neon-glow)}
+
+  /* ===== Bitácora de logs (anexo imprimible) ===== */
+  .bitacora{width:100%;border-collapse:collapse;margin:16px 0;
+    font-family:'Courier New',Consolas,monospace;font-size:.82rem}
+  .bitacora th,.bitacora td{border:1px solid var(--border);padding:8px 6px;text-align:center;color:var(--muted)}
+  .bitacora thead th{color:var(--neon);text-transform:uppercase;font-size:.72rem;
+    background:rgba(16,185,129,.07);letter-spacing:.06em}
+  .bitacora .metric{text-align:left;width:42%}
+  .bitacora .bit{min-width:34px;height:34px;color:var(--dim)}
+  .bitacora .sum{border-left:2px solid var(--neon-soft);color:var(--text);font-weight:bold}
+  .bitacora tfoot td{border-top:2px solid var(--neon-soft);color:var(--text);font-weight:bold;
+    background:rgba(16,185,129,.05)}
+  .bit-legend{display:flex;gap:18px;flex-wrap:wrap;margin:10px 0 18px;
+    font-family:'Courier New',Consolas,monospace;font-size:.78rem;color:var(--dim)}
+  .bit-legend b{color:var(--neon)}
+  .pacto-line{border:1px dashed var(--neon-soft);border-radius:6px;padding:12px 14px;font-size:.85rem}
+
+  /* ===== Desglose de módulos (acordeón interactivo) ===== */
+  details.module{background:var(--panel-deep);border:1px solid var(--border);border-left:3px solid var(--neon);
+    border-radius:0 6px 6px 0;margin:12px 0;overflow:hidden}
+  details.module summary{cursor:pointer;list-style:none;padding:13px 16px;
+    font-family:'Courier New',Consolas,monospace;font-size:.8rem;letter-spacing:.06em;
+    color:var(--neon);text-transform:uppercase;user-select:none;-webkit-user-select:none;
+    -webkit-tap-highlight-color:transparent;transition:background .15s}
+  details.module summary::-webkit-details-marker{display:none}
+  details.module summary::before{content:"[+] ";color:var(--neon-dim)}
+  details.module[open] summary::before{content:"[–] "}
+  details.module summary:hover{background:rgba(16,185,129,.06)}
+  details.module .module-body{padding:6px 18px 14px;border-top:1px solid var(--border)}
+  details.module .module-body p{font-size:.92rem}
+  details.module .module-body ul{font-size:.92rem}
+  details.module .tag{float:right;color:var(--dim);font-size:.66rem;letter-spacing:.12em}
+  @media(max-width:520px){
+    details.module summary{font-size:.72rem;padding:11px 12px}
+    details.module .tag{display:none}
+  }
+
+  /* ===== Interactividad: bitácora táctil y checklists ===== */
+  .bitacora tbody .bit{cursor:pointer;user-select:none;-webkit-user-select:none;
+    -webkit-tap-highlight-color:transparent;transition:background .15s}
+  .bitacora tbody .bit:hover{background:rgba(16,185,129,.1)}
+  .bitacora .bit.is1{color:var(--neon);font-weight:bold;text-shadow:0 0 10px var(--neon-glow);
+    background:rgba(16,185,129,.07)}
+  .bitacora .bit.is0{color:var(--warn);font-weight:bold}
+  .check li{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:color .15s}
+  .check li.done{color:var(--text)}
+  .check li.done::before{content:"☑";text-shadow:0 0 10px var(--neon-glow)}
+  .cta-note{text-align:center;font-family:'Courier New',Consolas,monospace;font-size:.72rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:-10px 0 24px}
+  @media(max-width:520px){
+    .bitacora{font-size:.7rem}
+    .bitacora th,.bitacora td{padding:6px 3px}
+    .bitacora .metric{width:36%}
+    .bitacora .bit{min-width:24px;height:28px}
+  }
+
   @media print{
-    :root{--bg:#fff;--panel:#f4f6f4;--border:#bbb;--green:#0a7a24;--text:#111;--muted:#333;--dim:#666}
-    body{font-size:12px}
+    :root{--bg:#fff;--panel:#f3f4f6;--panel-deep:#f9fafb;--border:#9ca3af;
+      --neon:#047857;--neon-dim:#065f46;--neon-soft:#047857;--neon-glow:transparent;
+      --text:#111;--muted:#374151;--dim:#6b7280;--warn:#b45309}
+    body{font-size:12px;background-image:none}
     .toolbar,.cta{display:none}
+    h1,.log b{text-shadow:none}
+    .panel,.panel-green,.panel-warn,blockquote{box-shadow:none}
     h2{page-break-after:avoid}
-    .panel,blockquote{page-break-inside:avoid}
+    .panel,blockquote,.log{page-break-inside:avoid}
+    .log{color:#065f46}
+    .log::before{content:"TABORDA SYSTEM // LOG";background:none}
+    .bitacora{page-break-inside:avoid;font-size:.78rem}
+    .bitacora thead th{background:#e5e7eb;color:#111}
+    .bitacora .bit{height:30px}
+    .bitacora tfoot td{background:#f3f4f6}
+    a{color:#047857;text-decoration:none}
+    details.module{page-break-inside:avoid}
+    details.module summary::before{content:"» "}
   }
 </style>
 </head>
@@ -510,11 +587,65 @@ Firmado: ________ Fecha: ________"</blockquote>
   <li><strong>3 llamadas grupales (domingos)</strong> — semana 1: ajuste. Semana 2: la crisis, donde todos abandonan — menos los que están adentro. Semana 3: consolidación y tu sistema propio.</li>
   <li><strong>Sistema de puntos y rangos</strong> — 100 puntos diarios, leaderboard semanal, rango certificado al final.</li>
 </ul>
+<h3>Desglose del sistema — módulos 0.0 → 3.0</h3>
+<div class="log">&gt; listando arquitectura de la Instalación Supervisada...
+&gt; módulos detectados: <b>4</b> · estado: <b>[+] toca cada módulo para desplegarlo</b></div>
+<details class="module">
+  <summary>Módulo 0.0 — Kernel :: Instalación base<span class="tag">[ INSTALADO :: RESET ]</span></summary>
+  <div class="module-body">
+    <p>Es el módulo que acabas de ejecutar gratis: pacto firmado, purga del entorno, hora de despertar innegociable. En la cohorte se reinstala calibrado a TU caso en la llamada 1:1 de arranque: tu vicio declarado, tu horario real, tu punto de partida medido.</p>
+    <ul>
+      <li>Auditoría inicial del entorno (la purga, pero con revisión externa)</li>
+      <li>Pacto registrado ante el grupo — desde el día 0 fallar tiene testigos</li>
+      <li>Configuración del check-in nocturno obligatorio</li>
+    </ul>
+  </div>
+</details>
+<details class="module">
+  <summary>Módulo 1.0 — Firewall :: Corte y bloqueo de virus<span class="tag">[ SEMANA 1 ]</span></summary>
+  <div class="module-body">
+    <p>La fase del RESET, pero sostenida 21 días y con vigilancia: cero vicio declarado, protocolo 10-10-10 contra cada craving, mapa de disparadores ampliado y contramedidas físicas revisadas una a una.</p>
+    <ul>
+      <li>Ingeniería de entorno auditada: yo reviso tu lista de contramedidas</li>
+      <li>Protocolo de rollback con reporte obligatorio en 24h — nunca dos días seguidos caído</li>
+      <li>Llamada grupal de ajuste (domingo, semana 1)</li>
+    </ul>
+  </div>
+</details>
+<details class="module">
+  <summary>Módulo 2.0 — Motor :: Ejecución profunda<span class="tag">[ SEMANA 2 ]</span></summary>
+  <div class="module-body">
+    <p>El espacio que liberó el vicio se ocupa o se pierde. Aquí se instala el motor: bloques de enfoque progresivos, la tríada diaria (cuerpo + mente + limpieza) y el sistema de puntos que convierte cada día en una métrica.</p>
+    <ul>
+      <li>100 puntos diarios, leaderboard semanal y rango certificado al final</li>
+      <li>La semana de la crisis: donde todos abandonan — menos los que están adentro</li>
+      <li>Llamada grupal de crisis (domingo, semana 2)</li>
+    </ul>
+  </div>
+</details>
+<details class="module">
+  <summary>Módulo 3.0 — Soberanía Relacional :: Post-ruptura<span class="tag">[ SEMANA 3 ]</span></summary>
+  <div class="module-body">
+    <p>El módulo que ningún PDF gratuito incluye. Si tu ciclo arrancó o se agravó con una ruptura, este bloque corta el último proceso malicioso: el que corre con nombre y apellido.</p>
+    <ul>
+      <li><strong>Contacto cero técnico:</strong> bloqueo total de canales — perfiles, historias, "amigos en común" como fuente de inteligencia. Stalkear es recaída, y se registra como tal.</li>
+      <li><strong>Desinstalación del fantasma:</strong> la regla anti-rumiación — cada loop mental se ficha como craving (hora / lugar / emoción) y se ejecuta 10-10-10. La ex no es una emoción: es un disparador.</li>
+      <li><strong>Reconstrucción de identidad:</strong> tu día estándar deja de orbitar a quien se fue. Entrenamiento, enfoque y registro como ejes — la versión tuya que ella no conoció.</li>
+      <li><strong>Estándar propio:</strong> defines por escrito qué tolera y qué no tolera tu sistema en la próxima relación. Sin esto, el siguiente ciclo ya tiene la puerta abierta.</li>
+    </ul>
+    <p>Cierre: llamada grupal de consolidación (domingo, semana 3) y diseño de tu sistema permanente.</p>
+  </div>
+</details>
 <p><strong>Las reglas (porque las reglas son el producto):</strong> 3 check-ins perdidos sin avisar: fuera, sin reembolso. Mentir en un check-in: fuera, inmediato. Si esto te parece excesivo, el RESET gratuito ya te dio todo lo que tenía para darte. Si esto es exactamente lo que sabes que necesitas — sigue.</p>
 <p><strong>Garantía Fénix:</strong> completa los 21 check-ins y si no sientes un cambio real, te devuelvo el 100%. Si abandonas, no hay reembolso. Los dos sabemos por qué.</p>
 <p><strong>Cohorte Fundadora: 10 plazas. $35 USD / $140.000 COP. Único pago.</strong><br/>
 ¿Por qué tan barato? Porque estás comprando antes de que existan testimonios, y ese descuento es por el riesgo que asumes. La cohorte 2 costará el doble. Esta es la única vez que entrar temprano será tan fácil.</p>
-<a class="cta" href="https://tabordasystem.com/protocolo">→ Reclamar mi plaza en la Cohorte Fénix</a>
+<!-- CTA COHORTE: el href y la nota de abajo los reemplaza el plugin
+     taborda:inject-checkout-ebook (vite.config.ts) cuando existe
+     VITE_COHORTE_CHECKOUT_URL (checkout Hotmart). No cambiar estos strings
+     sin actualizar el plugin. -->
+<a class="cta" id="cohorte-cta" href="https://tabordasystem.com/protocolo?src=reset-ebook">[ ACCEDER AL PROTOCOLO RESET :: SOLICITAR ACCESO V1.0 ]</a>
+<p class="cta-note" id="cohorte-cta-note">Cohorte Fundadora · 10 plazas · único pago</p>
 <p>¿Dudas? Escríbeme directo: <strong>@carlostaho</strong> en TikTok. Te respondo yo.</p>
 <p>Acabas de pasar 7 días demostrando que cumples cuando hay estructura.<br/>
 La única pregunta que queda es qué harías con 21 — y con testigos.</p>
@@ -522,21 +653,118 @@ La única pregunta que queda es qué harías con 21 — y con testigos.</p>
 <p class="mono dim">TABORDA SYSTEM // DISCIPLINA FÉNIX — Carlos Taborda</p>
 
 <!-- ANEXO -->
-<h2>Anexo — Checklist maestro imprimible</h2>
-<p class="dim">Imprime esta página o cópiala a mano. Una marca por casilla, cada noche, con la verdad.</p>
-<p class="mono"><strong>MI PACTO:</strong> Vicio declarado: ____________ · Hora de despertar: ______ · Firma: ____________</p>
-<table>
-  <tr><th></th><th>D1</th><th>D2</th><th>D3</th><th>D4</th><th>D5</th><th>D6</th><th>D7</th></tr>
-  <tr><td>Desperté a la hora firmada</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td></tr>
-  <tr><td>30 min de movimiento</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td></tr>
-  <tr><td>Cero vicio declarado</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td></tr>
-  <tr><td>Misión del día cumplida</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td></tr>
-  <tr><td>Check-in nocturno escrito</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td></tr>
+<h2>Anexo — Bitácora de logs: checklist maestro</h2>
+<div class="log">&gt; generando bitácora de ejecución... formato: <b>binario</b>
+&gt; regla de registro: <b>1</b> = ejecutado · <b>0</b> = no ejecutado
+&gt; decimales no soportados: <b>"casi" evalúa a 0</b></div>
+<p class="dim">La bitácora es táctil: <strong>toca cada celda</strong> para alternar <strong>1 → 0 → vacío</strong>. Las sumas (Σ y TOTAL) se calculan solas y tu progreso queda guardado en este dispositivo. ¿Prefieres papel? Imprime esta página (botón de arriba): los valores que marcaste salen en la impresión. Cada noche, con la verdad.</p>
+<p class="mono pacto-line"><strong>MI PACTO:</strong> Vicio declarado: ____________ · Hora de despertar: ______ · Firma: ____________</p>
+<table class="bitacora">
+  <thead>
+    <tr><th class="metric">Métrica binaria</th><th>D1</th><th>D2</th><th>D3</th><th>D4</th><th>D5</th><th>D6</th><th>D7</th><th class="sum">Σ/7</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="metric">Desperté a la hora firmada</td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="sum"></td></tr>
+    <tr><td class="metric">30 min de movimiento</td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="sum"></td></tr>
+    <tr><td class="metric">Cero vicio declarado</td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="sum"></td></tr>
+    <tr><td class="metric">Misión del día cumplida</td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="sum"></td></tr>
+    <tr><td class="metric">Check-in nocturno escrito</td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="sum"></td></tr>
+  </tbody>
+  <tfoot>
+    <tr><td class="metric">TOTAL DEL DÍA (máx. 5)</td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="bit"></td><td class="sum">/35</td></tr>
+  </tfoot>
 </table>
+<div class="bit-legend">
+  <span><b>5/5</b> día limpio</span>
+  <span><b>3–4</b> día operativo con fugas</span>
+  <span><b>0–2</b> activar rollback esta noche</span>
+</div>
 <p class="dim"><strong>Misiones:</strong> D1 corte y estructura · D2 mapa de disparadores · D3 contramedidas de entorno · D4 bloque de enfoque · D5 hora análoga · D6 prueba de fuego · D7 día estándar + evaluación</p>
 <p class="dim"><strong>Protocolo 10-10-10 (craving):</strong> 10 seg nómbralo → 10 respiraciones 4-4-8 → 10 min en otro lugar sin decidir nada.</p>
 <p class="dim"><strong>Regla de recaída:</strong> reporta por escrito · arregla el entorno · reinicia en 24h · nunca dos días seguidos caído.</p>
 
 </div>
+
+<script>
+(function () {
+  'use strict';
+  // Persistencia local: el protocolo es de 7 días, el log vive en el dispositivo.
+  var KEY = 'taborda_reset_log_v1';
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { state = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  // ── Checklists diarios: ☐ → ☑ con un toque ──
+  var items = document.querySelectorAll('.check li');
+  Array.prototype.forEach.call(items, function (li, i) {
+    var id = 'chk_' + i;
+    if (state[id]) li.classList.add('done');
+    li.addEventListener('click', function () {
+      li.classList.toggle('done');
+      state[id] = li.classList.contains('done') ? 1 : 0;
+      save();
+    });
+  });
+
+  // ── Módulos: imprimir siempre con el desglose abierto ──
+  var mods = document.querySelectorAll('details.module');
+  var modsOpen = [];
+  window.addEventListener('beforeprint', function () {
+    modsOpen = Array.prototype.map.call(mods, function (d) { return d.open; });
+    Array.prototype.forEach.call(mods, function (d) { d.open = true; });
+  });
+  window.addEventListener('afterprint', function () {
+    Array.prototype.forEach.call(mods, function (d, i) { d.open = modsOpen[i]; });
+  });
+
+  // ── Bitácora binaria: 1 → 0 → vacío, con autosuma ──
+  var table = document.querySelector('.bitacora');
+  if (!table) return;
+  var rows = Array.prototype.slice.call(table.querySelectorAll('tbody tr'));
+  var foot = table.querySelector('tfoot tr');
+
+  function paint(td, v) {
+    td.textContent = v;
+    td.classList.toggle('is1', v === '1');
+    td.classList.toggle('is0', v === '0');
+  }
+
+  function recalc() {
+    var dayTotals = [0, 0, 0, 0, 0, 0, 0];
+    var dayMarked = [false, false, false, false, false, false, false];
+    rows.forEach(function (tr) {
+      var sum = 0, marked = 0;
+      Array.prototype.forEach.call(tr.querySelectorAll('.bit'), function (td, d) {
+        if (td.textContent === '1') { sum++; dayTotals[d]++; }
+        if (td.textContent !== '') { marked++; dayMarked[d] = true; }
+      });
+      tr.querySelector('.sum').textContent = marked ? sum + '/7' : '';
+    });
+    var week = 0;
+    Array.prototype.forEach.call(foot.querySelectorAll('.bit'), function (td, d) {
+      td.textContent = dayMarked[d] ? String(dayTotals[d]) : '';
+      week += dayTotals[d];
+    });
+    var any = dayMarked.some(function (m) { return m; });
+    foot.querySelector('.sum').textContent = (any ? week : '··') + '/35';
+  }
+
+  Array.prototype.forEach.call(table.querySelectorAll('tbody .bit'), function (td, i) {
+    var id = 'bit_' + i;
+    if (state[id] === '1' || state[id] === '0') paint(td, state[id]);
+    td.setAttribute('role', 'button');
+    td.setAttribute('aria-label', 'Alternar métrica: 1 ejecutado, 0 no ejecutado');
+    td.addEventListener('click', function () {
+      var v = td.textContent;
+      var next = v === '' ? '1' : (v === '1' ? '0' : '');
+      paint(td, next);
+      state[id] = next;
+      save();
+      recalc();
+    });
+  });
+  recalc();
+})();
+</script>
 </body>
 </html>
