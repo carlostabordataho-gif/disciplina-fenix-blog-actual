@@ -1,0 +1,66 @@
+# AI CONTEXT
+
+IMPORTANTE
+
+No reanalizar estrategia.
+
+No proponer nuevas fases.
+
+No rediseñar el negocio.
+
+Las siguientes decisiones ya fueron aprobadas.
+
+---
+
+## Funnel
+
+TikTok
+
+↓
+
+/reset
+
+↓
+
+Lead
+
+↓
+
+Cohorte Fénix
+
+↓
+
+Escuadrón Fénix
+
+---
+
+## Decisiones de UX
+
+* Terminal fuera de Home
+* Dashboard permanece
+* Sonidos apagados por defecto
+* CTA principal apunta a /reset
+* CTA secundario apunta a /protocolo
+
+---
+
+## Prioridades
+
+1. Leads
+2. Página Reset
+3. Página Protocolo
+4. Home
+5. Funnel Email
+
+---
+
+## Congelado
+
+No trabajar en:
+
+* Zenith OS
+* Nuevas animaciones
+* Nuevos sonidos
+* Nuevas features
+
+Hasta validar ventas.

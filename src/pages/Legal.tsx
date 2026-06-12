@@ -62,7 +62,7 @@ export default function Legal() {
           <p className={P}>
             Carlos Taborda — Disciplina Fénix. Contacto: a través de TikTok{' '}
             <a href="https://www.tiktok.com/@carlostaho" target="_blank" rel="noopener noreferrer" className="text-neon-primary hover:underline">@carlostaho</a>{' '}
-            o respondiendo cualquier correo enviado desde disciplinafenix.com.
+            o respondiendo cualquier correo enviado desde tabordasystem.com.
           </p>
 
           <h3 className={H3}>2.2 Datos que se recolectan</h3>

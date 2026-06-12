@@ -8,6 +8,7 @@ import Community from './pages/Community'
 import Road2030 from './pages/Road2030'
 import Reset from './pages/Reset'
 import Protocolo from './pages/Protocolo'
+import Bienvenida from './pages/Bienvenida'
 import Legal from './pages/Legal'
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="protocolo" element={<Protocolo />} />
+          <Route path="bienvenida" element={<Bienvenida />} />
           <Route path="blog" element={<Blog />} />
           <Route path="blog/:slug" element={<BlogPost />} />
           <Route path="sistema" element={<Sistema />} />

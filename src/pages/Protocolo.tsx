@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import TerminalPanel from '../components/ui/TerminalPanel'
-import { cohortSpotsLeft, contactUrl, funnel } from '../data/funnel'
+import { cohortSpotsLeft, contactUrl, funnel, buyUrl, buyOpensWhatsApp } from '../data/funnel'
 import usePageMeta from '../lib/usePageMeta'
 
 const incluye = [
@@ -56,11 +56,11 @@ const faq = [
   },
   {
     q: '¿Cómo pago? ¿Es seguro?',
-    a: 'El pago se procesa por Hotmart, la plataforma de pagos digitales más grande de Latinoamérica: tarjeta, PSE o Nequi, en pesos colombianos. Yo nunca veo ni guardo tus datos de pago. Recibes confirmación y factura al instante.',
+    a: 'Al reclamar tu plaza me escribes por WhatsApp y te confirmo cupo en el momento. Te envío un link de pago seguro (tarjeta, PSE o Nequi, en pesos colombianos). Tú pagas, me llega la confirmación y quedas dentro. Sin intermediarios raros: hablas directo conmigo.',
   },
   {
     q: '¿Qué pasa apenas pago?',
-    a: 'Recibes un email de confirmación con el acceso al grupo privado y el link para agendar tu llamada 1:1 de arranque. Te escribo personalmente en menos de 24 horas. Tu plaza queda contada públicamente en el contador de la cohorte.',
+    a: 'Te agrego al grupo privado de la cohorte y te paso tu página de Bienvenida con el Día 0 paso a paso: cómo agendar tu llamada 1:1 de arranque, dónde reportar tu check-in y qué hacer la primera noche. Todo el mismo día, por WhatsApp. Tu plaza queda contada en el contador de la cohorte.',
   },
 ]
 
@@ -94,16 +94,70 @@ export default function Protocolo() {
             cumplas. <span className="text-text-primary font-medium">No motivación. Consecuencia.</span>
           </p>
 
-          <a href={funnel.checkoutUrl} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block">
+          <a href={buyUrl('protocolo-hero')} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block">
             RECLAMAR MI PLAZA — ${funnel.priceUsd} USD
           </a>
           <p className="font-mono text-xs text-text-dim mt-3">
-            ${funnel.priceCop} COP · Precio fundador · Único pago · Inicio: {funnel.cohortStartDate}
+            ${funnel.priceCop} COP · Precio fundador · Único pago
+          </p>
+          <p className="font-mono text-xs text-accent-warn mt-2">
+            ⚠ Inscripciones cierran {funnel.cohortCloseDate} · Empezamos {funnel.cohortStartDate}
           </p>
         </div>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+        {/* Video principal: la cara y la voz detrás del sistema */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <div className="section-label mb-6">QUIÉN TE VA A SUPERVISAR</div>
+          <div className="terminal-panel border border-neon-primary/20 overflow-hidden">
+            {/* Reemplaza el bloque de abajo por un <iframe> de YouTube/TikTok
+                cuando grabes el video de 60s presentándote y explicando la cohorte.
+                Ej: <iframe className="w-full aspect-video" src="https://www.youtube.com/embed/TU_ID" ... /> */}
+            <div className="relative w-full aspect-video bg-black/50 flex items-center justify-center grid-bg">
+              <img
+                src="/transformacion-fenix.jpg"
+                alt="Carlos Taborda — Disciplina Fénix"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover opacity-25"
+              />
+              <a
+                href={funnel.tiktokUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative z-10 flex flex-col items-center gap-3 group"
+              >
+                <span className="w-16 h-16 rounded-full border-2 border-neon-primary flex items-center justify-center text-neon-primary text-2xl group-hover:bg-neon-primary group-hover:text-black transition-all">
+                  ▶
+                </span>
+                <span className="font-mono text-xs text-neon-primary tracking-widest uppercase">
+                  Mira cómo lo documento en vivo → @carlostaho
+                </span>
+              </a>
+            </div>
+          </div>
+          {/* Indicadores de credibilidad: hechos verificables, sin inventar */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+            {[
+              { v: '420+', l: 'días sin nicotina' },
+              { v: 'Bodytech', l: 'entrenador certificado' },
+              { v: 'Dev', l: 'empleado en tech' },
+              { v: 'En vivo', l: 'documentado en TikTok' },
+            ].map((s) => (
+              <div key={s.l} className="terminal-panel border border-bg-border p-3 text-center">
+                <div className="font-mono text-lg font-bold text-neon-primary">{s.v}</div>
+                <div className="font-mono text-[10px] text-text-dim uppercase tracking-wider leading-tight mt-1">
+                  {s.l}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
         {/* Historia */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -239,13 +293,18 @@ export default function Protocolo() {
             ${funnel.priceCop} COP · único pago · la cohorte 2 costará el doble
           </div>
           <a
-            href={funnel.checkoutUrl}
+            href={buyUrl('protocolo-precio')}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary inline-block mb-6"
+            className="btn-primary inline-block mb-3"
           >
             RECLAMAR MI PLAZA ({cohortSpotsLeft} DISPONIBLES)
           </a>
+          <p className="font-mono text-xs text-text-dim mb-6">
+            {buyOpensWhatsApp
+              ? 'Te abre WhatsApp conmigo. Confirmas tu cupo y te paso el link de pago seguro.'
+              : 'Pago seguro · confirmación inmediata.'}
+          </p>
           <p className="font-sans text-xs text-text-muted max-w-md mx-auto leading-relaxed">
             <span className="text-text-primary font-bold">Garantía Fénix:</span> completa los 21
             check-ins y si no sientes un cambio real, te devuelvo el 100%. Si abandonas, no hay
@@ -283,7 +342,7 @@ export default function Protocolo() {
             El lunes perfecto no existe. <span className="text-neon-primary">El sistema sí.</span>
           </h2>
           <a
-            href={funnel.checkoutUrl}
+            href={buyUrl('protocolo-cta-final')}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary inline-block"
@@ -291,7 +350,7 @@ export default function Protocolo() {
             RECLAMAR MI PLAZA — ${funnel.priceUsd} USD
           </a>
           <p className="font-mono text-xs text-text-dim mt-4">
-            Día 1 es hoy o no es nunca.
+            Quedan {cohortSpotsLeft} plazas · Inscripciones cierran {funnel.cohortCloseDate}.
           </p>
           <p className="font-mono text-xs text-text-muted mt-8">
             ¿Una duda concreta antes de decidir?{' '}

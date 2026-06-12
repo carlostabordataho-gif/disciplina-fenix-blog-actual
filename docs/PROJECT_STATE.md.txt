@@ -1,0 +1,44 @@
+# PROJECT STATE
+
+## Última actualización
+
+[FECHA]
+
+---
+
+## Completado
+
+* Blog
+* Zenith OS
+* Landing inicial
+* Sistema visual
+
+---
+
+## En progreso
+
+* Página /reset
+* Captura de leads
+* Integración Supabase
+
+---
+
+## Pendiente
+
+* Página /protocolo
+* Funnel de emails
+* Home reconstruida
+
+---
+
+## Bloqueadores actuales
+
+* No existe captura de email funcional
+* No existe checkout visible
+* No existe página de ventas
+
+---
+
+## Próxima tarea
+
+Implementar /reset

@@ -1,0 +1,101 @@
+# DISCIPLINA FÉNIX
+
+## Misión
+
+Ayudar a hombres a salir de vicios, rupturas e inconstancia mediante sistemas, accountability y ejecución.
+
+---
+
+# Oferta Principal
+
+## RESET
+
+Lead magnet gratuito.
+
+Objetivo:
+Capturar email.
+
+Página:
+- /reset
+
+Entrega:
+- PDF Reset
+
+---
+
+## COHORTE FÉNIX
+
+21 días.
+
+Precio fundador:
+140.000 COP
+
+Incluye:
+- Check-ins diarios
+- 3 llamadas grupales
+- Sistema de puntos
+- Reglas de expulsión
+
+---
+
+## ESCUADRÓN FÉNIX
+
+Membresía mensual.
+
+Precio fundador:
+50.000 COP
+
+Incluye:
+- Check-ins
+- Retos mensuales
+- Comunidad
+
+---
+
+# Roadmap aprobado
+
+## Semana 1
+
+1. Supabase Leads
+2. ResetCapture
+3. Página /reset
+4. Página /protocolo
+5. Home reconstruida
+
+---
+
+# Decisiones tomadas
+
+- Dashboard se mantiene
+- Terminal sale del Home
+- Sonidos apagados por defecto
+- Todo CTA apunta a /reset o /protocolo
+- No construir software adicional
+- No tocar Zenith OS
+
+---
+
+# Tecnologías
+
+- React
+- TypeScript
+- Vite
+- Tailwind
+- Supabase
+- Vercel
+
+---
+
+# Estado actual
+
+Pendiente:
+
+- Leads
+- Funnel
+- Página de ventas
+
+Completado:
+
+- Blog
+- Home inicial
+- Zenith OS
