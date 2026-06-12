@@ -12,76 +12,112 @@ Links a reemplazar antes de importar:
 
 ## EMAIL 1 — Envío: inmediato tras registrarse (Día 0)
 
-**Asunto:** Tu Protocolo RESET está aquí (no lo leas completo)
+**Asunto:** [TABORDA SYSTEM] Archivos de instalación listos. Módulo 0.0
 
-**Preview text:** Hoy solo necesitas 60 minutos y una hoja de papel.
+**Preview text:** Descargando componentes... 100%. Protocolo Reset inicializado.
 
 **Cuerpo:**
 
-Aquí está tu protocolo:
+```
+> TABORDA SYSTEM v1.0 — terminal de instalación
+> autenticando usuario........... OK
+> descargando componentes........ 100%
+> verificando integridad......... OK
+> Protocolo RESET inicializado.
+> módulos en cola: 7 días.
+> ejecutar ahora: MÓDULO 0.0
+```
 
-**→ DESCARGAR PROTOCOLO RESET [LINK_PDF]**
+Acabas de instalar el sistema operativo que va a correr tu vida los próximos 7 días.
 
-Antes de que lo abras, una instrucción que va a sonar rara:
+Aquí está el ejecutable:
+
+**→ ABRIR PROTOCOLO RESET [LINK_PDF]**
+
+Una instrucción antes de abrirlo, y es una orden, no una sugerencia:
 
 **No lo leas completo.**
 
-Hoy lees dos secciones: "Cómo usar el protocolo" y "Día 0". Nada más. Cada día se abre la mañana que toca.
+Hoy solo cargas dos módulos: "Cómo usar el protocolo" y "Día 0". El resto del código se ejecuta el día que toca. ¿Por qué? Porque leerlo entero produce la misma descarga de dopamina que ejecutarlo — y cero resultados. Es el mismo bug que te trajo aquí: consumir información como sustituto de la acción. Ese proceso queda terminado hoy.
 
-Te explico por qué soy tan insistente con esto. Hay un patrón que he visto mil veces (y que viví yo): descargas el PDF, lo lees entero en una sentada, sientes que ya hiciste algo… y no ejecutas nada. Leer produce la misma sensación de progreso que ejecutar, pero gratis. Es la versión elegante del mismo ciclo del que vienes escapando.
+**MÓDULO 0.0 — se ejecuta esta noche, antes de dormir:**
 
-Así que el trato es este:
+```
+> tarea 1: declarar el vicio principal por escrito....... [15 min]
+> tarea 2: purgar el entorno (acceso al vicio = costo).... [45 min]
+> tarea 3: dejar configurada la victoria de mañana........ [10 min]
+> dependencias: 1 hoja, 1 esfero, 1 bolsa de basura.
+> motivación requerida: 0%.
+```
 
-**Hoy, antes de dormir, ejecutas el Día 0.** Son 60-90 minutos: declaras tu vicio principal por escrito, saboteas tu entorno a tu favor y dejas lista la victoria de mañana. No necesitas motivación ni que sea lunes. Necesitas una hoja, un esfero y una bolsa de basura.
+No necesitas que sea lunes. No necesitas sentirte listo. El sistema no pregunta cómo te sientes — verifica si ejecutaste o no.
 
-Mañana empieza el Día 1. Yo te escribo en un par de días para algo importante: el Día 2 es el más difícil del protocolo, y quiero que llegues avisado.
+Mañana corre el Día 1. En 24 horas te escribo de nuevo: el escáner va a detectar un error que tienes corriendo en segundo plano desde hace años, y quiero que lo veas con nombre y apellido.
 
-Una cosa más: este email lo escribo yo y las respuestas las leo yo. Si en algún momento del protocolo te atascas, responde este correo. Sin bots, sin asistentes.
+Última línea del log: este correo lo escribo yo y las respuestas las leo yo. Si el sistema se traba en cualquier módulo, responde este email. Sin bots. Sin asistentes.
 
 El día 1 es hoy o no es nunca.
 
 — Carlos
-DISCIPLINA FÉNIX
+TABORDA SYSTEM // DISCIPLINA FÉNIX
 
-**CTA:** DESCARGAR EL PROTOCOLO Y EJECUTAR EL DÍA 0 HOY → [LINK_PDF]
+**CTA:** EJECUTAR MÓDULO 0.0 ESTA NOCHE → [LINK_PDF]
 
 ---
 
-## EMAIL 2 — Envío: Día 2 (por la mañana)
+## EMAIL 2 — Envío: a las 24 horas del registro
 
-**Asunto:** Hoy es el día en que casi todos abandonan
+**Asunto:** [TABORDA SYSTEM] Error en el sistema detectado (Dopamina barata)
 
-**Preview text:** No es falta de fuerza de voluntad. Es esto otro.
+**Preview text:** El escáner terminó. Tienes malware corriendo en segundo plano.
 
 **Cuerpo:**
 
-Si empezaste el protocolo cuando lo recibiste, hoy estás en el Día 2.
+```
+> TABORDA SYSTEM — escáner de procesos
+> analizando procesos en segundo plano......... OK
+> [ALERTA] proceso malicioso detectado: dopamina_barata.exe
+> tipo: malware mental
+> activo desde: años
+> consumo de recursos: enfoque 80% · tiempo 4h/día · autoestima en caída
+> acción recomendada: LEER ESTE INFORME COMPLETO
+```
 
-El pico. El día en que el craving llega con abogado: "esto no está funcionando", "no es el momento", "empiezo mejor el lunes". Si todavía no empezaste, guarda este correo, porque te va a tocar igual.
+Te lo dije ayer: el escáner iba a encontrar algo. Aquí está el informe.
 
-Quiero contarte algo que me tomó años entender, y que explica todas mis recaídas — y probablemente las tuyas.
+Tienes un malware instalado. Se llama **dopamina barata**, y como todo malware bien diseñado, no se presenta como amenaza — se presenta como recompensa. El scroll a las 2 a.m. El porno. El cigarrillo. La comida basura. El "un capítulo más". Cada uno es la misma pieza de código con distinta máscara: placer inmediato a cambio de tus recursos del sistema.
 
-**La gente no recae por débil. Recae porque fallar no le cuesta nada.**
+Y aquí está la parte que casi nadie entiende:
 
-Piénsalo con tu historial en la mano. Cada vez que rompiste una promesa que te hiciste — el gym, dejar de fumar, dejar el teléfono, acostarte temprano — ¿qué pasó después?
+**No puedes desinstalar un malware pidiéndole por favor que se vaya.**
 
-Nada. Eso pasó. Nadie se enteró. Nadie te preguntó. No hubo consecuencia, ni registro, ni testigo. Solo tú y una vergüenza chiquita que se anestesia fácil… con el mismo vicio que la causó. El ciclo se cierra solito y mañana es otro día.
+Eso es la fuerza de voluntad: negociar con el virus. Por eso llevas años perdiendo. Cada lunes reinstalas tus buenas intenciones, y cada viernes el malware las sobreescribe, porque él corre a nivel de sistema y tus intenciones corren a nivel de usuario.
 
-Fallar en privado es gratis. Y todo lo que es gratis, se repite.
+¿Sabes qué sí funciona contra el malware? Lo mismo que en cualquier computador:
 
-Ahora mira la diferencia con cualquier área de tu vida donde SÍ cumples. El trabajo: llegas, porque no llegar tiene costo. Tus deudas: pagas, porque no pagar tiene costo. No eres indisciplinado — eres perfectamente disciplinado en cada lugar donde fallar cuesta algo. El problema es que contigo mismo, nunca cuesta.
+**1. Un firewall.** No bloqueas el vicio cuando llega la tentación — bloqueas el puerto por donde entra. Eso fue tu Módulo 0.0: teléfono fuera del cuarto, vicio fuera de la casa, rutas nuevas. Si ejecutaste, el firewall ya está activo. Si no, esta noche es la ventana de instalación.
 
-Por eso el protocolo te pide el check-in nocturno por escrito. Es la versión mínima de un testigo: tú, con evidencia, sin la neblina del "más o menos lo intenté". No lo saltes. Es la pieza que más importa y la primera que todo el mundo descarta.
+**2. Un registro del sistema.** El check-in nocturno por escrito de tu protocolo. El malware vive de la neblina del "más o menos lo intenté". El log no tiene neblina: ejecutado o no ejecutado. Binario.
 
-Y si hoy aparece el craving con su abogado: 10-10-10. Está en tu PDF. Nómbralo, respira, cambia de lugar. No discutas con él — los cravings no se ganan debatiendo, se ganan dejándolos pasar de largo mientras estás en otra parte.
+**3. Y esto es lo crítico: un administrador externo.**
 
-Mañana baja la intensidad. Te lo digo para que no te sorprenda hoy: la mayoría abandona en el pico porque cree que el pico es para siempre. No lo es. Es agudo y corto, y se pasa de pie.
+Porque hay un límite técnico que ningún PDF puede saltarse: **un sistema infectado no puede auditarse a sí mismo.** El malware tiene acceso a tu consola interna — y la usa: "esto no está funcionando", "no es el momento", "empiezo el lunes". Cada recaída que has tenido pasó exactamente ahí: tú solo, de noche, debatiendo contra un proceso que controla el debate.
+
+Los próximos días del RESET te van a dar el firewall y el log. Eso es real y funciona. Pero la auditoría externa — alguien con permisos de administrador revisando tu registro cada noche, con consecuencias si desapareces — eso no se puede empaquetar en un archivo.
+
+Para eso existe la **Instalación Supervisada**. Te hablo de ella cuando termines tu semana. Hoy no — hoy tu único trabajo es mantener el firewall arriba.
+
+```
+> fin del informe.
+> siguiente acción: ejecutar el módulo del día. nada más.
+```
 
 — Carlos
+TABORDA SYSTEM // DISCIPLINA FÉNIX
 
-P.D. Pregunta honesta, y de verdad leo las respuestas: ¿cuál es tu vicio declarado? Responde este correo con una línea. Escribírselo a otra persona es la primera vez que muchos lo sacan de su cabeza — y ya sabes lo que pasa con lo que se queda en privado.
+P.D. Responde este correo con una línea: ¿cómo se llama tu dopamina_barata.exe? Nómbralo. Un proceso sin nombre no se puede matar — y de verdad leo cada respuesta.
 
-**CTA:** Responde este email con tu vicio declarado (una línea basta).
+**CTA:** Responde con el nombre de tu malware (una línea basta).
 
 ---
 
@@ -235,7 +271,7 @@ P.D. Si tienes una duda concreta antes de decidir — del horario, del pago, de 
 
 ## NOTAS DE IMPLEMENTACIÓN (no son parte de los emails)
 
-- Disparador de la secuencia: inserción en la tabla `leads` (Supabase) o importación manual del CSV mientras el volumen sea bajo.
-- Cadencia: Email 1 inmediato · Email 2 a las 48h · Email 3 al día 4 · Email 4 al día 6 · Email 5 al día 8.
+- Disparador de la secuencia: webhook de n8n al enviar el formulario (ver `docs/n8n-pipeline.md`) o inserción en la tabla `leads` (Supabase) / importación manual del CSV mientras el volumen sea bajo.
+- Cadencia: Email 1 inmediato · Email 2 a las 24h · Email 3 al día 4 · Email 4 al día 6 · Email 5 al día 8.
 - Configurar SPF, DKIM y DMARC del dominio antes del primer envío; sin eso la secuencia muere en spam.
 - Cuando la cohorte se llene o cierre, pausar la automatización del Email 5 y reemplazarlo por una variante de lista de espera.

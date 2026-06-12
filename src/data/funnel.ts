@@ -8,6 +8,18 @@
 //   3. Para mover fechas: edita cohortStartDate / cohortCloseDate.
 
 export const funnel = {
+  // ── Dominio y automatización ───────────────────────────────────────
+  // Dominio canónico de producción (se envía en el payload del webhook
+  // y sirve para construir links absolutos).
+  siteUrl: 'https://tabordasystem.com',
+
+  // Webhook de n8n que recibe cada lead del formulario RESET.
+  // Configuración completa del pipeline: docs/n8n-pipeline.md.
+  // En producción se recomienda usar la env var VITE_LEAD_WEBHOOK_URL
+  // (tiene prioridad sobre este valor). Mientras ambos estén vacíos,
+  // el formulario solo guarda en Supabase.
+  leadWebhookUrl: '',
+
   // ── Cohorte Fundadora ──────────────────────────────────────────────
   cohortSpotsTotal: 10,
   cohortSpotsTaken: 0, // ACTUALIZAR A MANO con cada venta confirmada

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { saveLead } from '../../lib/leads'
+import { saveLead, validateEmail } from '../../lib/leads'
 import { funnel } from '../../data/funnel'
 
 interface ResetCaptureProps {
@@ -16,10 +16,27 @@ export default function ResetCapture({ source, compact = false }: ResetCapturePr
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
+  // Honeypot anti-bots: campo invisible que un humano nunca llena.
+  const [trap, setTrap] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (status === 'sending') return
+
+    // Bot detectado: fingimos éxito sin tocar la base de datos.
+    if (trap) {
+      setStatus('done')
+      return
+    }
+
+    // Validación estricta en frontend antes de tocar la red.
+    const validationError = validateEmail(email)
+    if (validationError) {
+      setErrorMsg(validationError)
+      setStatus('error')
+      return
+    }
+
     setStatus('sending')
     const result = await saveLead(email, source)
     if (result.ok) {
@@ -27,6 +44,14 @@ export default function ResetCapture({ source, compact = false }: ResetCapturePr
     } else {
       setErrorMsg(result.error ?? 'Error desconocido.')
       setStatus('error')
+    }
+  }
+
+  const handleChange = (value: string) => {
+    setEmail(value)
+    if (status === 'error') {
+      setStatus('idle')
+      setErrorMsg('')
     }
   }
 
@@ -56,15 +81,28 @@ export default function ResetCapture({ source, compact = false }: ResetCapturePr
 
   const form = (
     <>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+      <form onSubmit={handleSubmit} noValidate className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        {/* Honeypot: oculto para humanos, irresistible para bots */}
+        <input
+          type="text"
+          value={trap}
+          onChange={(e) => setTrap(e.target.value)}
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="absolute -left-[9999px] h-0 w-0 opacity-0"
+        />
         <input
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
           placeholder="tu@email.com"
           aria-label="Tu correo electrónico"
+          aria-invalid={status === 'error'}
           autoComplete="email"
           required
+          maxLength={254}
           disabled={status === 'sending'}
           className="flex-1 bg-bg-base border border-bg-border text-text-primary font-mono text-sm px-4 py-3 focus:outline-none focus:border-neon-primary/50 placeholder-text-dim transition-colors disabled:opacity-50"
         />
