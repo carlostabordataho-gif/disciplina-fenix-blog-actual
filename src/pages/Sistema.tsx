@@ -85,7 +85,7 @@ const antiVicios = [
 ]
 
 export default function Sistema() {
-  const urlSistemaReal = "https://carlostahosystem.lovable.app/";
+  const urlSistemaReal = "https://sistema.tabordasystem.com";
 
   return (
     <div className="min-h-screen pt-16 bg-bg-base">
@@ -276,7 +276,7 @@ export default function Sistema() {
             Accede de forma segura a tu base de datos de rendimiento. Registra no negociables, interactúa en la comunidad y compite contra las rachas de otros operadores.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            {/* Cambiados de <Link> a <a> externos limpios apuntando a tu Lovable */}
+            {/* Cambiados de <Link> a <a> externos limpios apuntando al sistema en producción */}
             <a 
               href={urlSistemaReal}
               target="_blank"
