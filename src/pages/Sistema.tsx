@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion'
 import TerminalPanel from '../components/ui/TerminalPanel'
 import SectionHeader from '../components/ui/SectionHeader'
+import SystemStatusWidget from '../components/system/SystemStatusWidget'
+import usePageMeta from '../lib/usePageMeta'
+import { track } from '../lib/track'
 
 const layers = [
   {
@@ -85,6 +88,11 @@ const antiVicios = [
 ]
 
 export default function Sistema() {
+  usePageMeta(
+    'El Sistema — Arquitectura de conducta y disciplina extrema | TABORDA SYSTEM',
+    'La arquitectura de conducta detrás de la disciplina extrema: identidad, protocolos y ejecución real. Las 3 capas del ecosistema y el acceso al sistema operativo personal.'
+  )
+
   const urlSistemaReal = "https://sistema.tabordasystem.com";
 
   return (
@@ -108,10 +116,11 @@ export default function Sistema() {
             </div>
             {/* Botón de acceso rápido en el Header */}
             <div>
-              <a 
+              <a
                 href={urlSistemaReal}
-                target="_blank" 
+                target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => track('operativo_enter', { cta: 'sistema_header' })}
                 className="btn-primary inline-block text-center font-mono text-xs tracking-widest uppercase py-3 px-6 shadow-[0_0_15px_rgba(0,255,65,0.2)]"
               >
                 [ INGRESAR AL OPERATIVO ]
@@ -151,10 +160,11 @@ export default function Sistema() {
                     </div>
                     {/* Botón táctico dentro de la capa L3 que es la del software */}
                     {layer.id === 'L3' && (
-                      <a 
+                      <a
                         href={urlSistemaReal}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => track('operativo_enter', { cta: 'sistema_layer_l3' })}
                         className="text-xs font-mono text-neon-primary hover:underline block mt-2"
                       >
                         &gt; EJECUTAR INFRAESTRUCTURA_
@@ -275,20 +285,26 @@ export default function Sistema() {
           <p className="font-sans text-text-muted text-sm mb-6 max-w-md mx-auto">
             Accede de forma segura a tu base de datos de rendimiento. Registra no negociables, interactúa en la comunidad y compite contra las rachas de otros operadores.
           </p>
+          {/* Prueba social en vivo del ecosistema (degrada a STANDBY si la API no responde) */}
+          <div className="flex justify-center mb-8">
+            <SystemStatusWidget />
+          </div>
           <div className="flex flex-wrap gap-4 justify-center">
             {/* Cambiados de <Link> a <a> externos limpios apuntando al sistema en producción */}
-            <a 
+            <a
               href={urlSistemaReal}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track('operativo_enter', { cta: 'sistema_login' })}
               className="btn-primary"
             >
               Iniciar Sesión / Registrarme
             </a>
-            <a 
+            <a
               href={urlSistemaReal}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track('operativo_enter', { cta: 'sistema_community' })}
               className="btn-secondary"
             >
               Entrar a la Comunidad Táctica

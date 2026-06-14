@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import TerminalPanel from '../components/ui/TerminalPanel'
 import SectionHeader from '../components/ui/SectionHeader'
 import ResetCapture from '../components/funnel/ResetCapture'
+import usePageMeta from '../lib/usePageMeta'
 import { funnel } from '../data/funnel'
 
 const rules = [
@@ -104,6 +105,10 @@ const tiers = [
 ]
 
 export default function Community() {
+  usePageMeta(
+    'Comunidad Táctica — Accountability y disciplina en grupo | TABORDA SYSTEM',
+    'El escuadrón de operadores: accountability honesta, ejecución documentada y rachas que se sostienen en grupo. Productividad extrema con reglas claras, sin victimismo ni ego.'
+  )
   return (
     <div className="min-h-screen pt-16 bg-bg-base">
       {/* Header */}

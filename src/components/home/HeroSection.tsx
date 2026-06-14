@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { synth } from '../../lib/synth'
+import { track } from '../../lib/track'
 import { funnel } from '../../data/funnel'
 
 export default function HeroSection() {
@@ -168,7 +169,7 @@ export default function HeroSection() {
             >
               <Link
                 to="/reset"
-                onClick={() => synth.playClick()}
+                onClick={() => { synth.playClick(); track('cta_click', { cta: 'hero_reset', to: '/reset' }) }}
                 onMouseEnter={() => synth.playHover()}
                 className="btn-primary"
               >
@@ -176,7 +177,7 @@ export default function HeroSection() {
               </Link>
               <Link
                 to="/protocolo"
-                onClick={() => synth.playClick()}
+                onClick={() => { synth.playClick(); track('cta_click', { cta: 'hero_premium', to: '/protocolo' }) }}
                 onMouseEnter={() => synth.playHover()}
                 className="btn-secondary"
               >
