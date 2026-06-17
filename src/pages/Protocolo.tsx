@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import TerminalPanel from '../components/ui/TerminalPanel'
 import { cohortSpotsLeft, contactUrl, funnel, buyUrl, buyCtaLabel, buyTrustLabel, buyOpensWhatsApp } from '../data/funnel'
 import usePageMeta from '../lib/usePageMeta'
+import { track } from '../lib/track'
 
 const incluye = [
   {
@@ -100,7 +100,13 @@ export default function Protocolo() {
             cumplas. <span className="text-text-primary font-medium">No motivación. Consecuencia.</span>
           </p>
 
-          <a href={buyUrl('protocolo-hero')} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block">
+          <a
+            href={buyUrl('protocolo-hero')}
+            onClick={() => track('checkout_click', { cta: 'protocolo-hero' })}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary inline-block"
+          >
             {buyCtaLabel()}
           </a>
           <p className="font-mono text-xs text-text-dim mt-3">
@@ -115,11 +121,7 @@ export default function Protocolo() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
         {/* Video principal: la cara y la voz detrás del sistema */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+        <div>
           <div className="section-label mb-6">QUIÉN TE VA A SUPERVISAR</div>
           <div className="terminal-panel border border-neon-primary/20 overflow-hidden">
             {/* Reemplaza el bloque de abajo por un <iframe> de YouTube/TikTok
@@ -163,14 +165,10 @@ export default function Protocolo() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Historia */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+        <div>
           <TerminalPanel title="EXPEDIENTE :: CARLOS TABORDA">
             <div className="p-6">
               <p className="font-sans text-sm text-text-muted leading-relaxed mb-4">
@@ -196,19 +194,15 @@ export default function Protocolo() {
               </p>
             </div>
           </TerminalPanel>
-        </motion.div>
+        </div>
 
         {/* Qué incluye */}
         <div>
           <div className="section-label mb-6">QUÉ INCLUYE</div>
           <div className="space-y-3">
             {incluye.map((item, i) => (
-              <motion.div
+              <div
                 key={item.title}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
                 className="terminal-panel border border-bg-border p-5 hover:border-neon-primary/20 transition-colors"
               >
                 <div className="flex items-start gap-4">
@@ -222,7 +216,7 @@ export default function Protocolo() {
                     <p className="font-sans text-xs text-text-muted leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -285,10 +279,7 @@ export default function Protocolo() {
         </div>
 
         {/* Precio + garantía */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+        <div
           className="terminal-panel border border-neon-primary/30 p-8 text-center"
           style={{ boxShadow: '0 0 30px rgba(0,255,65,0.06)' }}
         >
@@ -301,6 +292,7 @@ export default function Protocolo() {
           </div>
           <a
             href={buyUrl('protocolo-precio')}
+            onClick={() => track('checkout_click', { cta: 'protocolo-precio' })}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary inline-block mb-3"
@@ -317,7 +309,7 @@ export default function Protocolo() {
             </Link>
             .
           </p>
-        </motion.div>
+        </div>
 
         {/* FAQ */}
         <div>
@@ -346,6 +338,7 @@ export default function Protocolo() {
           </h2>
           <a
             href={buyUrl('protocolo-cta-final')}
+            onClick={() => track('checkout_click', { cta: 'protocolo-cta-final' })}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary inline-block"

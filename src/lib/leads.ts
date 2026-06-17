@@ -1,14 +1,55 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { funnel } from '../data/funnel'
 
-// Cliente con guardas: si faltan las env vars el sitio NO se cae,
-// el formulario reporta el fallo y ofrece la vía alterna (DM).
+// Captura de leads SIN el SDK de Supabase: un POST directo a la API REST
+// (PostgREST) mantiene el chunk de la ruta /reset en ~3 kB en vez de los
+// ~55 kB gzip que pesaba `@supabase/supabase-js`. El comportamiento es
+// idéntico al del SDK: mismo endpoint, mismo payload, misma seguridad
+// (anon key + RLS), y el 23505 (duplicado) que el SDK trataba como éxito
+// aquí llega como HTTP 409 y se mapea igual.
+//
+// Guardas: si faltan las env vars el sitio NO se cae, el formulario reporta
+// el fallo y ofrece la vía alterna (DM por WhatsApp).
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
 
-let client: SupabaseClient | null = null
-if (supabaseUrl && supabaseKey) {
-  client = createClient(supabaseUrl, supabaseKey)
+const supabaseReady = !!(supabaseUrl && supabaseKey)
+
+// Endpoint REST de la tabla `leads` (sin barra final duplicada).
+const leadsRestUrl = supabaseUrl
+  ? `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/leads`
+  : ''
+
+type InsertOutcome = 'ok' | 'duplicate' | 'fail'
+
+/**
+ * Inserta el lead vía API REST de Supabase (PostgREST).
+ * - 200/201        => 'ok' (fila creada).
+ * - 409 (23505)    => 'duplicate' (ya estaba registrado; el SDK lo daba por éxito).
+ * - otro / throw   => 'fail' (la red o Supabase fallaron; el caller usa el webhook/DM).
+ * Mismo payload que el SDK: { email, source }; la RLS aplica status='lead'/score 0.
+ */
+async function insertLeadRest(email: string, source: string): Promise<InsertOutcome> {
+  try {
+    const res = await fetch(leadsRestUrl, {
+      method: 'POST',
+      headers: {
+        apikey: supabaseKey as string,
+        Authorization: `Bearer ${supabaseKey as string}`,
+        'Content-Type': 'application/json',
+        // return=minimal: PostgREST no devuelve la fila => menos ancho de banda,
+        // emula el insert estándar del SDK (que tampoco hace select por defecto).
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({ email, source }),
+    })
+    if (res.ok) return 'ok'
+    // 409 Conflict = unique_violation (23505): email ya registrado => éxito idempotente.
+    if (res.status === 409) return 'duplicate'
+    return 'fail'
+  } catch {
+    // Red caída / CORS / DNS: nunca lanzamos, el caller decide el fallback.
+    return 'fail'
+  }
 }
 
 // Webhook de automatización (n8n). Ver docs/n8n-pipeline.md.
@@ -90,7 +131,7 @@ export async function saveLead(email: string, source: string): Promise<SaveLeadR
   // igual entra al pipeline de emails (n8n deduplica por email).
   const webhookPromise = sendLeadToWebhook(clean, source)
 
-  if (!client) {
+  if (!supabaseReady) {
     // Sin Supabase, el webhook es la única vía: aquí sí lo esperamos.
     const webhookOk = await webhookPromise
     if (webhookOk) return { ok: true }
@@ -101,19 +142,16 @@ export async function saveLead(email: string, source: string): Promise<SaveLeadR
     }
   }
 
-  const { error } = await client.from('leads').insert({ email: clean, source })
+  const outcome = await insertLeadRest(clean, source)
 
-  if (error) {
-    // 23505 = unique_violation: ya estaba registrado => lo tratamos como éxito
-    if (error.code === '23505') return { ok: true }
-    // Supabase falló: si el webhook entró, el lead no se pierde.
-    if (await webhookPromise) return { ok: true }
-    return {
-      ok: false,
-      error: '> ERROR AL REGISTRAR. Reintenta en unos segundos.',
-      offerFallback: true,
-    }
+  // 'ok' (fila nueva) y 'duplicate' (23505 → ya registrado) son éxito, igual que el SDK.
+  if (outcome === 'ok' || outcome === 'duplicate') return { ok: true }
+
+  // Supabase falló: si el webhook entró, el lead no se pierde.
+  if (await webhookPromise) return { ok: true }
+  return {
+    ok: false,
+    error: '> ERROR AL REGISTRAR. Reintenta en unos segundos.',
+    offerFallback: true,
   }
-
-  return { ok: true }
 }

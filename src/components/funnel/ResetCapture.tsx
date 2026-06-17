@@ -2,17 +2,23 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { saveLead, validateEmail } from '../../lib/leads'
 import { funnel, whatsappUrl } from '../../data/funnel'
+import { track } from '../../lib/track'
+import ContratoSoberano from './ContratoSoberano'
 
 interface ResetCaptureProps {
   /** De dónde viene el lead: 'reset' | 'home' | 'community' */
   source: string
   /** Versión compacta (solo formulario, sin panel envolvente) */
   compact?: boolean
+  /** Mostrar el Contrato Soberano al convertir. Por defecto: !compact.
+   *  Se fuerza en /reset (form minimalista pero con puente post-registro). */
+  showContrato?: boolean
 }
 
 type Status = 'idle' | 'sending' | 'done' | 'error'
 
-export default function ResetCapture({ source, compact = false }: ResetCaptureProps) {
+export default function ResetCapture({ source, compact = false, showContrato }: ResetCaptureProps) {
+  const contratoEnabled = showContrato ?? !compact
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
@@ -43,6 +49,7 @@ export default function ResetCapture({ source, compact = false }: ResetCapturePr
     setStatus('sending')
     const result = await saveLead(email, source)
     if (result.ok) {
+      track('lead_submit', { source })
       setStatus('done')
     } else {
       setErrorMsg(result.error ?? 'Error desconocido.')
@@ -100,6 +107,15 @@ export default function ResetCapture({ source, compact = false }: ResetCapturePr
             Acceso directo e inmediato. Guarda este enlace: es tuyo.
           </p>
         </div>
+
+        {/* PASO 2 — Contrato Soberano: convierte el lead en compromiso firmado
+            y abre el puente a la Cohorte. En /reset y en las capturas completas;
+            se omite en el footer para no recargarlo. */}
+        {contratoEnabled && (
+          <div className="mt-5">
+            <ContratoSoberano source={source} />
+          </div>
+        )}
       </div>
     )
   }

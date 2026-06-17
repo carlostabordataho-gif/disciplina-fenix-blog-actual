@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      BLOQUE SEO POR RUTA: el plugin de prerender (vite.config.ts -> taborda:prerender-seo)
+      reemplaza TODO lo que hay entre SEO:START / SEO:END en el build, generando un HTML
+      estatico por ruta (dist/blog/<slug>/index.html, etc.). Asi los crawlers que NO
+      ejecutan JS (Facebook, WhatsApp, LinkedIn, X) reciben meta + OG + JSON-LD correctos.
+    -->
+    <!--SEO:START-->
     <title>TABORDA SYSTEM — El Sistema Operativo de Disciplina | Carlos Taborda</title>
     <meta name="description" content="TABORDA SYSTEM es el sistema operativo de disciplina que instalas en tu vida: protocolos ejecutables, métricas diarias y consecuencias reales. La motivación se agota. El sistema se ejecuta. Construido públicamente por Carlos Taborda." />
     <meta name="keywords" content="disciplina, disciplina extrema, productividad extrema, arquitectura de conducta, hábitos, dejar adicciones, productividad, desarrollo personal masculino, gym, dopamina, deep work, hábitos atómicos, sistema operativo personal, mejorar tu vida, mentalidad, transformación personal" />
@@ -33,9 +40,18 @@
       "knowsAbout": ["disciplina", "hábitos", "accountability"]
     }
     </script>
+    <!--SEO:END-->
+    <link rel="alternate" type="application/rss+xml" title="Blog - TABORDA SYSTEM" href="/rss.xml" />
+    <!-- Fuentes: resolución DNS temprana + conexión anticipada al CDN de Google.
+         dns-prefetch para navegadores viejos; preconnect para abrir el socket TLS
+         antes de pedir el CSS. gstatic sirve los .woff2 con CORS => crossorigin.
+         Pesos recortados a los que usa el diseño (400/500/700, sin itálicas) y
+         display=swap para eliminar el flash de texto invisible (FOIT). -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
