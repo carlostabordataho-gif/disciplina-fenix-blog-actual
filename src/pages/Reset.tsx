@@ -62,7 +62,7 @@ export default function Reset() {
             className="terminal-panel border border-neon-primary/20 p-6"
             style={{ boxShadow: '0 0 40px rgba(0,255,65,0.05)' }}
           >
-            <ResetCapture source="reset" compact />
+            <ResetCapture source="reset" compact showContrato />
           </div>
 
           {/* Única salida secundaria: la cohorte */}

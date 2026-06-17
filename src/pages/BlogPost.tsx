@@ -1,6 +1,11 @@
+import { useMemo, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { blogPosts } from '../data/blogPosts'
+import { funnel } from '../data/funnel'
+import usePageMeta from '../lib/usePageMeta'
+import { track } from '../lib/track'
+import ResetCapture from '../components/funnel/ResetCapture'
 
 function renderContent(content: string) {
   const lines = content.trim().split('\n')
@@ -41,9 +46,52 @@ function renderContent(content: string) {
   return elements
 }
 
+const SITE = funnel.siteUrl.replace(/\/$/, '')
+
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>()
   const post = blogPosts.find((p) => p.slug === slug)
+  const [copied, setCopied] = useState(false)
+
+  const url = `${SITE}/blog/${slug}`
+
+  // Datos estructurados Article: Google entiende autor, fecha y tema.
+  // useMemo evita reinyectar el <script> en cada render.
+  const jsonLd = useMemo(
+    () =>
+      post
+        ? {
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: post.title,
+            description: post.excerpt,
+            datePublished: post.date,
+            dateModified: post.date,
+            url,
+            mainEntityOfPage: url,
+            articleSection: post.category,
+            keywords: post.tags.join(', '),
+            inLanguage: 'es',
+            author: {
+              '@type': 'Person',
+              name: 'Carlos Taborda',
+              url: SITE,
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: 'TABORDA SYSTEM',
+              url: SITE,
+            },
+          }
+        : null,
+    [post, url]
+  )
+
+  usePageMeta(
+    post ? `${post.title} — TABORDA SYSTEM` : 'Artículo no encontrado — TABORDA SYSTEM',
+    post?.excerpt,
+    post ? { type: 'article', canonical: `/blog/${post.slug}`, jsonLd } : { noindex: true }
+  )
 
   if (!post) {
     return (
@@ -57,6 +105,24 @@ export default function BlogPost() {
   }
 
   const related = blogPosts.filter((p) => p.slug !== slug && p.category === post.category).slice(0, 2)
+
+  const shareText = `${post.title} — por Carlos Taborda`
+  const shares = [
+    { label: 'X', href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}` },
+    { label: 'WhatsApp', href: `https://wa.me/?text=${encodeURIComponent(`${shareText} ${url}`)}` },
+    { label: 'LinkedIn', href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}` },
+  ]
+
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      track('blog_share', { method: 'copy', slug: post.slug })
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      /* clipboard bloqueado: el usuario aún tiene los botones de redes */
+    }
+  }
 
   return (
     <div className="min-h-screen pt-16 bg-bg-base">
@@ -75,7 +141,17 @@ export default function BlogPost() {
           <h1 className="font-mono text-2xl md:text-3xl font-bold text-text-primary leading-tight mb-4">
             {post.title}
           </h1>
-          <p className="font-sans text-text-muted text-sm leading-relaxed max-w-2xl">{post.excerpt}</p>
+          <p className="font-sans text-text-muted text-sm leading-relaxed max-w-2xl mb-5">{post.excerpt}</p>
+          {/* Byline: señal de autoría (E-E-A-T) y marca personal */}
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full border border-neon-primary/40 bg-neon-primary/10 flex items-center justify-center font-mono text-xs text-neon-primary font-bold shrink-0">
+              CT
+            </div>
+            <div className="font-mono text-xs leading-tight">
+              <div className="text-text-primary">Carlos Taborda</div>
+              <div className="text-text-dim">Fundador · TABORDA SYSTEM</div>
+            </div>
+          </div>
           <div className="glow-line w-32 mt-6" />
         </div>
       </div>
@@ -94,15 +170,38 @@ export default function BlogPost() {
         </motion.div>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2 mb-10">
+        <div className="flex flex-wrap gap-2 mb-8">
           {post.tags.map((tag) => (
             <span key={tag} className="tag">#{tag}</span>
           ))}
         </div>
 
+        {/* Compartir */}
+        <div className="flex flex-wrap items-center gap-3 mb-10 border-y border-bg-border py-4">
+          <span className="hud-label">Compartir</span>
+          {shares.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track('blog_share', { method: s.label.toLowerCase(), slug: post.slug })}
+              className="font-mono text-xs px-3 py-1.5 border border-bg-border text-text-muted hover:border-neon-primary/40 hover:text-neon-primary transition-colors uppercase tracking-wider"
+            >
+              {s.label}
+            </a>
+          ))}
+          <button
+            onClick={copyLink}
+            className="font-mono text-xs px-3 py-1.5 border border-bg-border text-text-muted hover:border-neon-primary/40 hover:text-neon-primary transition-colors uppercase tracking-wider"
+          >
+            {copied ? '✓ Copiado' : 'Copiar link'}
+          </button>
+        </div>
+
         {/* Related */}
         {related.length > 0 && (
-          <div>
+          <div className="mb-12">
             <div className="hud-label mb-4">Artículos relacionados</div>
             <div className="grid sm:grid-cols-2 gap-4">
               {related.map((r) => (
@@ -120,6 +219,18 @@ export default function BlogPost() {
             </div>
           </div>
         )}
+
+        {/* CTA de captura: el lector terminó el artículo → ofrécele el RESET */}
+        <div className="terminal-panel border border-neon-primary/20 p-6 md:p-8 text-center" style={{ boxShadow: '0 0 30px rgba(0,255,65,0.04)' }}>
+          <div className="section-label mb-3 block">¿Listo para ejecutar?</div>
+          <h2 className="font-mono text-xl md:text-2xl font-bold text-text-primary mb-2">
+            Deja de leer sobre disciplina. Instálala.
+          </h2>
+          <p className="font-sans text-text-muted text-sm leading-relaxed mb-6 max-w-md mx-auto">
+            El Protocolo RESET de 7 días, gratis. El mismo sistema que documento aquí, listo para ejecutar hoy.
+          </p>
+          <ResetCapture source={`blog:${post.slug}`} compact />
+        </div>
       </div>
     </div>
   )

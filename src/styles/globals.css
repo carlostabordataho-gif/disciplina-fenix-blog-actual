@@ -171,3 +171,33 @@
   background: linear-gradient(90deg, transparent, #FF5E00, transparent);
   opacity: 0.4;
 }
+
+/* Accesibilidad: foco visible en navegación por teclado (antes invisible). */
+:focus-visible {
+  outline: 2px solid #00FF41;
+  outline-offset: 2px;
+}
+
+/* Respeta a quien pide menos movimiento: apagamos las animaciones
+   decorativas (scanline, flicker, blink, pulse) y dejamos la UI quieta.
+   El contenido sigue 100% funcional; solo se retira el movimiento. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scanline-overlay,
+  .flicker {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  .scanline-overlay {
+    display: none;
+  }
+}
