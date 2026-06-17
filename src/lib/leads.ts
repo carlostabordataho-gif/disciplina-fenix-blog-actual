@@ -22,6 +22,21 @@ const leadsRestUrl = supabaseUrl
 type InsertOutcome = 'ok' | 'duplicate' | 'fail'
 
 /**
+ * fetch con timeout duro vía AbortController. Blindaje contra adblockers
+ * agresivos (uBlock/Brave/Pi-hole): si bloquean el endpoint COLGANDO la
+ * petición en vez de rechazarla, abortamos a los `ms` para que el caller
+ * dispare su fallback (webhook/WhatsApp) en vez de dejar al usuario clavado
+ * en "REGISTRANDO…". Si no hay AbortController (navegador muy viejo), hace
+ * un fetch normal: nunca rompe.
+ */
+function fetchWithTimeout(url: string, init: RequestInit, ms = 8000): Promise<Response> {
+  if (typeof AbortController === 'undefined') return fetch(url, init)
+  const ctrl = new AbortController()
+  const timer = setTimeout(() => ctrl.abort(), ms)
+  return fetch(url, { ...init, signal: ctrl.signal }).finally(() => clearTimeout(timer))
+}
+
+/**
  * Inserta el lead vía API REST de Supabase (PostgREST).
  * - 200/201        => 'ok' (fila creada).
  * - 409 (23505)    => 'duplicate' (ya estaba registrado; el SDK lo daba por éxito).
@@ -30,7 +45,7 @@ type InsertOutcome = 'ok' | 'duplicate' | 'fail'
  */
 async function insertLeadRest(email: string, source: string): Promise<InsertOutcome> {
   try {
-    const res = await fetch(leadsRestUrl, {
+    const res = await fetchWithTimeout(leadsRestUrl, {
       method: 'POST',
       headers: {
         apikey: supabaseKey as string,
@@ -98,7 +113,9 @@ export function validateEmail(raw: string): string | null {
  */
 function sendLeadToWebhook(email: string, source: string): Promise<boolean> {
   if (!webhookUrl.startsWith('http')) return Promise.resolve(false)
-  return fetch(webhookUrl, {
+  // fetchWithTimeout: si un adblocker cuelga el webhook, no dejamos colgado
+  // el await del caller cuando este es la única vía (Supabase ausente/caído).
+  return fetchWithTimeout(webhookUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

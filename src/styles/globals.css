@@ -172,6 +172,71 @@
   opacity: 0.4;
 }
 
+/* ─────────────────────────────────────────────────────────────────────
+   CTA DE COMPRA (Hotmart) — Glow Táctico + barrido láser. 0 KB de JS.
+   Se añade como `btn-buy` junto a `btn-primary`: hereda tipografía/tamaño
+   y lo sobrescribe para dominar la jerarquía visual (relleno neón sólido,
+   resplandor pulsante y una franja de luz que cruza el botón en bucle).
+   Va fuera de @layer => gana en la cascada a .btn-primary sin !important.
+   ───────────────────────────────────────────────────────────────────── */
+.btn-buy {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-color: #00FF41;
+  background-color: #00FF41;
+  color: #050505;
+  box-shadow: 0 0 16px rgba(0, 255, 65, 0.45);
+  animation: buy-pulse 2.2s ease-in-out infinite;
+}
+
+/* Barrido láser diagonal recurrente sobre el relleno, bajo el texto. */
+.btn-buy::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  animation: buy-laser 2.8s ease-in-out infinite;
+}
+
+.btn-buy:hover {
+  background-color: #00FF41;
+  color: #050505;
+  box-shadow: 0 0 28px rgba(0, 255, 65, 0.75), 0 0 60px rgba(0, 255, 65, 0.35);
+}
+
+@keyframes buy-pulse {
+  0%, 100% { box-shadow: 0 0 14px rgba(0, 255, 65, 0.4); }
+  50%      { box-shadow: 0 0 26px rgba(0, 255, 65, 0.7), 0 0 50px rgba(0, 255, 65, 0.3); }
+}
+
+@keyframes buy-laser {
+  0%        { transform: translateX(-120%); }
+  60%, 100% { transform: translateX(120%); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   SECURE TERMINAL TYPING — revela el header de captura como si se tecleara
+   en una terminal. clip-path en steps() => funciona en cualquier ancho y
+   en texto multilínea, sin romper el layout. Combínalo con `cursor-blink`
+   para dejar el cursor parpadeante al final.
+   ───────────────────────────────────────────────────────────────────── */
+.terminal-type {
+  animation: terminal-reveal 1.4s steps(24, end) 0.15s both;
+}
+
+@keyframes terminal-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
 /* Accesibilidad: foco visible en navegación por teclado (antes invisible). */
 :focus-visible {
   outline: 2px solid #00FF41;
@@ -199,5 +264,21 @@
 
   .scanline-overlay {
     display: none;
+  }
+
+  /* El CTA de compra conserva su relleno neón y glow estático (sigue
+     destacando), pero sin pulso ni barrido láser. El header se muestra
+     completo de inmediato, sin el efecto de tecleo. */
+  .btn-buy {
+    animation: none !important;
+  }
+
+  .btn-buy::before {
+    display: none !important;
+  }
+
+  .terminal-type {
+    animation: none !important;
+    clip-path: none !important;
   }
 }

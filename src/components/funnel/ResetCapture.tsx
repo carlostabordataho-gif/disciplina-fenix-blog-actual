@@ -201,7 +201,7 @@ export default function ResetCapture({ source, compact = false, showContrato }: 
             </div>
           </div>
 
-          <h2 className="font-mono text-2xl md:text-3xl font-bold text-text-primary mb-2">
+          <h2 className="terminal-type font-mono text-2xl md:text-3xl font-bold text-text-primary mb-2">
             7 días para cortar el ciclo.
           </h2>
           <p className="font-sans text-text-muted text-sm leading-relaxed mb-8 max-w-md mx-auto">

@@ -34,7 +34,7 @@ export default function Reset() {
             </span>
           </div>
 
-          <h1 className="font-mono text-3xl md:text-4xl font-bold leading-tight mb-4">
+          <h1 className="terminal-type cursor-blink font-mono text-3xl md:text-4xl font-bold leading-tight mb-4">
             7 días para cortar el ciclo y{' '}
             <span className="text-neon-primary">recuperar el control.</span>
           </h1>

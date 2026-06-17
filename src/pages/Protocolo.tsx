@@ -105,7 +105,7 @@ export default function Protocolo() {
             onClick={() => track('checkout_click', { cta: 'protocolo-hero' })}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary inline-block"
+            className="btn-primary btn-buy inline-block"
           >
             {buyCtaLabel()}
           </a>
@@ -295,7 +295,7 @@ export default function Protocolo() {
             onClick={() => track('checkout_click', { cta: 'protocolo-precio' })}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary inline-block mb-3"
+            className="btn-primary btn-buy inline-block mb-3"
           >
             [ ASEGURAR MI SLOT :: {cohortSpotsLeft} DISPONIBLES ]
           </a>
@@ -341,7 +341,7 @@ export default function Protocolo() {
             onClick={() => track('checkout_click', { cta: 'protocolo-cta-final' })}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary inline-block"
+            className="btn-primary btn-buy inline-block"
           >
             {buyCtaLabel()}
           </a>
