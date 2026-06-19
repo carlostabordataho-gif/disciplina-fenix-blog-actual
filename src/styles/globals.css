@@ -237,6 +237,27 @@
   to   { clip-path: inset(0 0 0 0); }
 }
 
+/* ─────────────────────────────────────────────────────────────────────
+   DECRYPT TEXT — el titular del Hero entra como ruido de glifos y se
+   resuelve carácter por carácter. Mientras descifra lleva un leve halo
+   neón (se siente "energizado"); al fijarse, un pulso de glow que se
+   apaga y deja el texto limpio. La animación de movimiento la maneja el
+   componente vía rAF; aquí solo va el tratamiento de luz.
+   ───────────────────────────────────────────────────────────────────── */
+.decrypt-active {
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.35);
+  will-change: text-shadow;
+}
+
+.decrypt-done {
+  animation: decrypt-settle 0.6s ease-out both;
+}
+
+@keyframes decrypt-settle {
+  0%   { text-shadow: 0 0 24px rgba(0, 255, 65, 0.75); }
+  100% { text-shadow: 0 0 0 rgba(0, 255, 65, 0); }
+}
+
 /* Accesibilidad: foco visible en navegación por teclado (antes invisible). */
 :focus-visible {
   outline: 2px solid #00FF41;
@@ -280,5 +301,13 @@
   .terminal-type {
     animation: none !important;
     clip-path: none !important;
+  }
+
+  /* El titular se muestra ya resuelto (el componente no anima bajo
+     reduced-motion); retiramos también el pulso de glow de asentamiento. */
+  .decrypt-active,
+  .decrypt-done {
+    animation: none !important;
+    text-shadow: none !important;
   }
 }
