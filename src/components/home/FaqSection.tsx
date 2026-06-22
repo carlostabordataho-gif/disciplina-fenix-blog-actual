@@ -20,7 +20,7 @@ const faq = [
   },
   {
     q: '¿Por qué tan barato?',
-    a: 'Porque es la primera cohorte y estás comprando antes de que existan testimonios. Ese descuento es por el riesgo que asumes. No volverá a este precio.',
+    a: 'Es precio fundador: entras antes de que existan decenas de testimonios. Ese descuento premia el riesgo que asumes hoy, y sube a medida que entran más operadores. El que llega primero, paga menos.',
   },
 ]
 

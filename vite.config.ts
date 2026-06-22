@@ -14,7 +14,7 @@ import { blogPosts } from './src/data/blogPosts'
 // Los strings de abajo deben coincidir con los del HTML (están comentados allí).
 const EBOOK_FILE = 'reset-protocolo.html'
 const EBOOK_FALLBACK_HREF = 'https://tabordasystem.com/protocolo?src=reset-ebook'
-const EBOOK_FALLBACK_NOTE = 'Cohorte Fundadora · 10 plazas · único pago'
+const EBOOK_FALLBACK_NOTE = 'Instalación Supervisada · acceso inmediato · único pago'
 const EBOOK_PREMIUM_NOTE = 'Pago seguro vía Hotmart · confirmación inmediata'
 
 const isValidCheckout = (url: string | undefined): url is string =>
@@ -87,9 +87,22 @@ const personLd = {
   '@type': 'Person',
   name: 'Carlos Taborda',
   url: SITE,
+  image: `${SITE}/transformacion-fenix.jpg`,
+  description:
+    'Carlos Taborda, fundador de TABORDA SYSTEM. Ayuda a personas atrapadas en la procrastinación, las adicciones y la falta de propósito a reconstruirse desde cero con disciplina, hábitos, mentalidad y ejecución supervisada.',
   sameAs: ['https://www.tiktok.com/@carlostaho'],
   jobTitle: 'Fundador de TABORDA SYSTEM (Disciplina Fénix)',
-  knowsAbout: ['disciplina', 'hábitos', 'accountability', 'productividad', 'IA'],
+  worksFor: { '@type': 'Organization', name: 'TABORDA SYSTEM' },
+  knowsAbout: [
+    'disciplina',
+    'hábitos',
+    'procrastinación',
+    'dejar adicciones',
+    'accountability',
+    'productividad',
+    'desarrollo personal',
+    'deep work',
+  ],
 }
 
 const organizationLd = {
@@ -99,6 +112,9 @@ const organizationLd = {
   alternateName: 'Disciplina Fénix',
   url: SITE,
   logo: `${SITE}/favicon.svg`,
+  image: `${SITE}/og-cover.png`,
+  description:
+    'Sistema operativo de disciplina: protocolos ejecutables, métricas diarias y ejecución supervisada para reconstruirte desde cero.',
   founder: { '@type': 'Person', name: 'Carlos Taborda' },
   sameAs: ['https://www.tiktok.com/@carlostaho'],
 }
@@ -126,7 +142,7 @@ const faqLd = {
     ['¿Y si trabajo o estudio todo el día?', 'El protocolo se calibra contigo en la llamada 1:1 del día 0. No necesitas 5 horas libres: necesitas cumplir lo pactado.'],
     ['¿Necesito gym?', 'No. Hay versión de entrenamiento en casa. Lo no negociable es moverte 30 minutos, no el lugar.'],
     ['¿Qué pasa si recaigo en mi vicio?', 'Sigues dentro — si lo reportas. Hay un protocolo de 24 horas para las caídas. Lo único que te saca es esconderlo o desaparecer.'],
-    ['¿Por qué tan barato?', 'Porque es la primera cohorte y estás comprando antes de que existan testimonios. Ese descuento es por el riesgo que asumes. No volverá a este precio.'],
+    ['¿Por qué tan barato?', 'Es precio fundador: entras antes de que existan decenas de testimonios. Ese descuento premia el riesgo que asumes hoy, y sube a medida que entran más operadores. El que llega primero, paga menos.'],
   ].map(([q, a]) => ({
     '@type': 'Question',
     name: q,
@@ -188,11 +204,11 @@ const staticRoutes: SeoRoute[] = [
   },
   {
     path: '/protocolo',
-    title: 'Cohorte Fénix — 21 días de ejecución supervisada | Disciplina Fénix',
+    title: 'Protocolo Fénix — 21 días de ejecución supervisada | Disciplina Fénix',
     description:
-      'Protocolo de 21 días con check-in diario revisado, llamada 1:1 y llamadas grupales. 10 plazas. Precio fundador $35 USD / $140.000 COP.',
+      'Instalación Supervisada de 21 días con check-in diario revisado, llamada 1:1 y llamadas grupales. Acceso inmediato: empiezas el día que entras. Precio fundador $35 USD / $140.000 COP.',
     type: 'website',
-    jsonLd: [breadcrumbLd([{ name: 'Inicio', path: '/' }, { name: 'Cohorte Fénix', path: '/protocolo' }])],
+    jsonLd: [breadcrumbLd([{ name: 'Inicio', path: '/' }, { name: 'Protocolo Fénix', path: '/protocolo' }])],
   },
   {
     path: '/sistema',

@@ -5,7 +5,7 @@ import { synth } from '../../lib/synth'
 
 const navLinks = [
   { label: 'Inicio', to: '/' },
-  { label: 'Cohorte', to: '/protocolo' },
+  { label: 'Protocolo', to: '/protocolo' },
   { label: 'Sistema', to: '/sistema' },
   { label: 'Blog', to: '/blog' },
   { label: 'Comunidad', to: '/comunidad' },
@@ -40,7 +40,7 @@ export default function Navbar() {
         scrolled ? 'bg-bg-base/95 border-b border-bg-border backdrop-blur-sm' : 'bg-transparent'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav aria-label="Navegación principal" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
@@ -106,7 +106,9 @@ export default function Navbar() {
             }}
             onMouseEnter={() => synth.playHover()}
             className="md:hidden font-mono text-xs text-text-muted hover:text-neon-primary transition-colors"
-            aria-label="Menu"
+            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
           >
             {mobileOpen ? '[ CERRAR ]' : '[ MENU ]'}
           </button>
@@ -117,6 +119,7 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}

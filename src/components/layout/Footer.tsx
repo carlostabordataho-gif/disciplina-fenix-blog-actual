@@ -36,7 +36,7 @@ export default function Footer() {
             <div className="flex flex-col gap-3">
               {[
                 { label: 'Inicio', to: '/' },
-                { label: 'Cohorte Fénix', to: '/protocolo' },
+                { label: 'Protocolo Fénix', to: '/protocolo' },
                 { label: 'El Sistema', to: '/sistema' },
                 { label: 'Blog', to: '/blog' },
                 { label: 'Comunidad', to: '/comunidad' },

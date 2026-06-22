@@ -95,10 +95,10 @@ const tiers = [
   {
     name: 'ESCUADRÓN',
     level: '02',
-    desc: 'Membresía para quienes completan la cohorte: retos mensuales, comunidad y la racha viva.',
-    features: ['Comunidad permanente', 'Reto mensual con puntos', 'Llamada grupal mensual', 'Prioridad en cohortes'],
-    price: 'Vía cohorte',
-    ctaLabel: 'Acceso vía cohorte',
+    desc: 'Membresía para quienes completan el Protocolo: retos mensuales, comunidad y la racha viva.',
+    features: ['Comunidad permanente', 'Reto mensual con puntos', 'Llamada grupal mensual', 'Prioridad en lanzamientos'],
+    price: 'Incluido al terminar',
+    ctaLabel: 'Empezar por el Protocolo',
     ctaTo: '/protocolo',
     disabled: false,
   },
@@ -195,7 +195,7 @@ export default function Community() {
                     {c.difficulty}
                   </span>
                   <Link to={c.cta === 'reset' ? '/reset' : '/protocolo'} className="btn-primary text-xs py-1 px-3">
-                    {c.cta === 'reset' ? 'Empezar gratis' : 'Ver cohorte'}
+                    {c.cta === 'reset' ? 'Empezar gratis' : 'Ver el protocolo'}
                   </Link>
                 </div>
               </motion.div>

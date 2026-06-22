@@ -38,7 +38,7 @@ export default function NotFound() {
           <div className="border-t border-bg-border mt-8 pt-6 flex flex-wrap gap-x-6 gap-y-2">
             {[
               { label: 'Inicio', to: '/' },
-              { label: 'Cohorte Fénix', to: '/protocolo' },
+              { label: 'Protocolo Fénix', to: '/protocolo' },
               { label: 'Blog', to: '/blog' },
             ].map((link) => (
               <Link

@@ -122,7 +122,7 @@ export const buyTrustLabel = checkoutIsReady
 
 /** Canal de contacto para dudas pre-compra. */
 export const contactUrl = whatsappUrl(
-  'Hola Carlos, tengo una duda sobre la Cohorte Fénix antes de decidir:'
+  'Hola Carlos, tengo una duda sobre el Protocolo Fénix antes de decidir:'
 )
 
 /** Urgencia honesta basada en PRECIO (no en cupo ni fecha). */
