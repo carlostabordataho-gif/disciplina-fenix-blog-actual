@@ -2,13 +2,13 @@
 // ÚNICO archivo que se edita a mano durante el experimento de validación.
 //
 // CHECKLIST DE OPERADOR (lo único que tocas entre ventas):
-//   1. Cada venta confirmada => sube cohortSpotsTaken en 1 y redeploy.
+//   1. Para subir el precio fundador: edita priceUsd / priceCop y redeploy.
 //   2. Cuando tengas link de pago automático (Hotmart/Gumroad/Bold/Wompi):
 //      ponlo en la env var VITE_COHORTE_CHECKOUT_URL (Vercel → Settings →
 //      Environment Variables) y redeploy. TODOS los botones de compra del
 //      sitio pasan solos a la pasarela; sin la variable, siguen en WhatsApp.
 //      (Alternativa local: pegar el link en checkoutUrl + paymentMode 'checkout'.)
-//   3. Para mover fechas: edita cohortStartDate / cohortCloseDate.
+//   3. Oferta evergreen: sin fechas ni plazas. Acceso inmediato, siempre.
 
 export const funnel = {
   // ── Dominio y automatización ───────────────────────────────────────
@@ -23,13 +23,14 @@ export const funnel = {
   // el formulario solo guarda en Supabase.
   leadWebhookUrl: '',
 
-  // ── Cohorte Fundadora ──────────────────────────────────────────────
-  cohortSpotsTotal: 10,
-  cohortSpotsTaken: 0, // ACTUALIZAR A MANO con cada venta confirmada
-  cohortStartDate: 'Lunes 23 de junio', // día 0 (llamada 1:1)
-  cohortCloseDate: 'Domingo 22 de junio', // cierre de inscripciones
-  priceUsd: 35,
+  // ── Oferta evergreen: Protocolo Fénix (Instalación Supervisada · 21 días) ──
+  // Antes era una cohorte con plazas y fecha de cierre. Ahora es EVERGREEN:
+  // acceso inmediato, cualquiera entra cuando quiera. La urgencia honesta es
+  // el PRECIO FUNDADOR (sube con el tiempo), no el cupo ni una fecha.
+  priceUsd: 35, // precio fundador actual
+  priceUsdRegular: 59, // precio regular al que subirá
   priceCop: '140.000',
+  priceCopRegular: '240.000',
 
   // ── Cómo se cobra ──────────────────────────────────────────────────
   // 'whatsapp' => los CTA de compra abren WhatsApp con un mensaje listo;
@@ -96,8 +97,8 @@ export function buyUrl(context = 'web'): string {
     return `${effectiveCheckoutUrl}${sep}sck=${encodeURIComponent(context)}`
   }
   const msg =
-    `Hola Carlos, quiero mi plaza en la Cohorte Fénix (precio fundador $${funnel.priceUsd} USD / $${funnel.priceCop} COP). ` +
-    `¿Cómo hago el pago para asegurar mi cupo? [${context}]`
+    `Hola Carlos, quiero entrar al Protocolo Fénix (Instalación Supervisada, precio fundador $${funnel.priceUsd} USD / $${funnel.priceCop} COP). ` +
+    `¿Cómo hago el pago? [${context}]`
   return whatsappUrl(msg)
 }
 
@@ -124,7 +125,5 @@ export const contactUrl = whatsappUrl(
   'Hola Carlos, tengo una duda sobre la Cohorte Fénix antes de decidir:'
 )
 
-export const cohortSpotsLeft = Math.max(
-  0,
-  funnel.cohortSpotsTotal - funnel.cohortSpotsTaken
-)
+/** Urgencia honesta basada en PRECIO (no en cupo ni fecha). */
+export const founderPriceNote = `Precio fundador · sube a $${funnel.priceUsdRegular} USD`

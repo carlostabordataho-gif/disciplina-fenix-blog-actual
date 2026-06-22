@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import TerminalPanel from '../components/ui/TerminalPanel'
-import { cohortSpotsLeft, contactUrl, funnel, buyUrl, buyCtaLabel, buyTrustLabel, buyOpensWhatsApp } from '../data/funnel'
+import { contactUrl, funnel, buyUrl, buyCtaLabel, buyTrustLabel, buyOpensWhatsApp } from '../data/funnel'
 import usePageMeta from '../lib/usePageMeta'
 import { track } from '../lib/track'
 
@@ -52,28 +52,28 @@ const faq = [
   },
   {
     q: '¿Por qué tan barato?',
-    a: 'Porque es la primera cohorte y estás comprando antes de que existan testimonios. Ese descuento es por el riesgo que asumes. No volverá a este precio.',
+    a: 'Es precio fundador: entras antes de que existan decenas de testimonios. Ese descuento premia el riesgo que asumes hoy, y sube a medida que entran más operadores. El que llega primero, paga menos.',
   },
   // Las dos respuestas de pago mutan con el modo de cobro (funnel.ts):
   // checkout Hotmart activo vs. cierre manual 1:1 por WhatsApp.
   {
     q: '¿Cómo pago? ¿Es seguro?',
     a: buyOpensWhatsApp
-      ? 'Al reclamar tu plaza me escribes por WhatsApp y te confirmo cupo en el momento. Te envío un link de pago seguro (tarjeta, PSE o Nequi, en pesos colombianos). Tú pagas, me llega la confirmación y quedas dentro. Sin intermediarios raros: hablas directo conmigo.'
+      ? 'Me escribes por WhatsApp y te confirmo en el momento. Te envío un link de pago seguro (tarjeta, PSE o Nequi, en pesos colombianos). Tú pagas, me llega la confirmación y quedas dentro. Sin intermediarios raros: hablas directo conmigo.'
       : 'El botón te lleva al checkout de Hotmart, la pasarela líder de Latinoamérica: tarjeta, PSE o el método local de tu país, con confirmación inmediata. Hotmart procesa el pago — yo nunca veo los datos de tu tarjeta. Si prefieres hablar antes con un humano, el botón de WhatsApp sigue abajo a la derecha.',
   },
   {
     q: '¿Qué pasa apenas pago?',
     a: buyOpensWhatsApp
-      ? 'Te agrego al grupo privado de la cohorte y te paso tu página de Bienvenida con el Día 0 paso a paso: cómo agendar tu llamada 1:1 de arranque, dónde reportar tu check-in y qué hacer la primera noche. Todo el mismo día, por WhatsApp. Tu plaza queda contada en el contador de la cohorte.'
+      ? 'Te agrego al grupo privado y te paso tu página de Bienvenida con el Día 0 paso a paso: cómo agendar tu llamada 1:1 de arranque, dónde reportar tu check-in y qué hacer la primera noche. Todo el mismo día, por WhatsApp.'
       : 'Hotmart confirma tu compra al instante y el sistema te activa: recibes el acceso a tu página de Bienvenida con el Día 0 paso a paso — agendar tu llamada 1:1 de arranque, entrar al grupo privado y preparar tu primer check-in. Si algo no te llega en minutos, me escribes por WhatsApp y lo resuelvo yo mismo.',
   },
 ]
 
 export default function Protocolo() {
   usePageMeta(
-    'Cohorte Fénix — 21 días de ejecución supervisada | Disciplina Fénix',
-    'Protocolo de 21 días con check-in diario revisado, llamada 1:1 y llamadas grupales. 10 plazas. Precio fundador $35 USD / $140.000 COP.'
+    'Protocolo Fénix — 21 días de ejecución supervisada | Disciplina Fénix',
+    'Instalación Supervisada de 21 días con check-in diario revisado, llamada 1:1 y llamadas grupales. Acceso inmediato: empiezas el día que entras. Precio fundador $35 USD / $140.000 COP.'
   )
 
   return (
@@ -85,7 +85,7 @@ export default function Protocolo() {
           <div className="flex items-center justify-center gap-2 mb-6">
             <div className="w-1.5 h-1.5 bg-neon-primary rounded-full animate-pulse" />
             <span className="font-mono text-xs text-neon-primary tracking-widest uppercase">
-              INSTALACIÓN SUPERVISADA :: CONEXIONES: {funnel.cohortSpotsTaken}/{funnel.cohortSpotsTotal} ASIGNADAS · {cohortSpotsLeft} DISPONIBLES
+              INSTALACIÓN SUPERVISADA :: ACCESO INMEDIATO · EMPIEZA HOY
             </span>
           </div>
 
@@ -114,7 +114,7 @@ export default function Protocolo() {
           </p>
           <p className="font-mono text-xs text-text-dim mt-1">{buyTrustLabel}</p>
           <p className="font-mono text-xs text-accent-warn mt-2">
-            ⚠ Inscripciones cierran {funnel.cohortCloseDate} · Empezamos {funnel.cohortStartDate}
+            ⚡ Acceso inmediato · empiezas el mismo día · el precio fundador sube a ${funnel.priceUsdRegular} USD
           </p>
         </div>
       </div>
@@ -250,8 +250,8 @@ export default function Protocolo() {
               ✕ No es para ti si
             </div>
             <p className="font-sans text-sm text-text-muted leading-relaxed">
-              Quieres "ver de qué se trata". Las plazas son 10 y cada una le quita el lugar a
-              alguien dispuesto a ejecutar.
+              Quieres "ver de qué se trata" sin ejecutar. Esto es supervisión real: si no vas a
+              cumplir el check-in cada noche, este sistema no es para ti.
             </p>
           </div>
         </div>
@@ -285,10 +285,13 @@ export default function Protocolo() {
         >
           <div className="section-label mb-4 block">PRECIO FUNDADOR</div>
           <div className="font-mono text-4xl font-bold text-neon-primary mb-1">
-            ${funnel.priceUsd} USD
+            ${funnel.priceUsd} USD{' '}
+            <span className="text-xl text-text-dim line-through align-middle font-normal">
+              ${funnel.priceUsdRegular}
+            </span>
           </div>
           <div className="font-mono text-sm text-text-muted mb-6">
-            ${funnel.priceCop} COP · único pago · la cohorte 2 costará el doble
+            ${funnel.priceCop} COP · único pago · acceso inmediato · el precio sube a ${funnel.priceUsdRegular} USD
           </div>
           <a
             href={buyUrl('protocolo-precio')}
@@ -297,7 +300,7 @@ export default function Protocolo() {
             rel="noopener noreferrer"
             className="btn-primary btn-buy inline-block mb-3"
           >
-            [ ASEGURAR MI SLOT :: {cohortSpotsLeft} DISPONIBLES ]
+            [ EMPEZAR AHORA — ACCESO INMEDIATO ]
           </a>
           <p className="font-mono text-xs text-text-dim mb-6">{buyTrustLabel}</p>
           <p className="font-sans text-xs text-text-muted max-w-md mx-auto leading-relaxed">
@@ -346,7 +349,7 @@ export default function Protocolo() {
             {buyCtaLabel()}
           </a>
           <p className="font-mono text-xs text-text-dim mt-4">
-            CONEXIONES SUPERVISADAS: {funnel.cohortSpotsTaken}/{funnel.cohortSpotsTotal} ASIGNADAS · {cohortSpotsLeft} DISPONIBLES · CIERRE: {funnel.cohortCloseDate.toUpperCase()}
+            ACCESO INMEDIATO · EMPIEZAS EL MISMO DÍA · PRECIO FUNDADOR ${funnel.priceUsd} USD (SUBE A ${funnel.priceUsdRegular})
           </p>
           <p className="font-mono text-xs text-text-dim mt-1">{buyTrustLabel}</p>
           <p className="font-mono text-xs text-text-muted mt-8">

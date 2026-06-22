@@ -12,24 +12,27 @@ export default function SystemStepsSection() {
       desc: 'El protocolo de 7 días para cortar el ciclo: vicios, teléfono, caos. Empieza hoy, sin pagar nada.',
       to: '/reset',
       cta: 'Descargar RESET',
+      badge: 'Empieza gratis',
       highlight: false,
     },
     {
       num: '02',
-      name: 'COHORTE FÉNIX',
-      price: `$${funnel.priceUsd} USD · conexiones: ${funnel.cohortSpotsTaken}/${funnel.cohortSpotsTotal} asignadas`,
-      desc: 'El protocolo completo de 21 días con check-in diario obligatorio, llamadas semanales y reglas de expulsión. No es un curso que ves: es un sistema que reporta.',
+      name: 'PROTOCOLO FÉNIX',
+      price: `$${funnel.priceUsd} USD · pago único · acceso inmediato`,
+      desc: 'La Instalación Supervisada de 21 días: protocolo día por día, check-in diario revisado y llamada 1:1 de arranque. No es un curso que ves: es un sistema que te reporta. Entras cuando quieras y arrancas el mismo día.',
       to: '/protocolo',
-      cta: 'Ver la cohorte',
+      cta: 'Empezar ahora',
+      badge: 'Más elegido',
       highlight: true,
     },
     {
       num: '03',
-      name: 'ESCUADRÓN',
-      price: 'Solo desde la cohorte',
-      desc: 'Para los que completan los 21 días: retos mensuales, comunidad de operadores y la racha viva.',
-      to: '/protocolo',
-      cta: 'Acceso vía cohorte',
+      name: 'COMUNIDAD',
+      price: 'Membresía · retos mensuales',
+      desc: 'El escuadrón permanente para los que ya ejecutan: retos mensuales con puntos, accountability en grupo y la racha viva entre operadores.',
+      to: '/comunidad',
+      cta: 'Ver la comunidad',
+      badge: '',
       highlight: false,
     },
   ]
@@ -65,9 +68,15 @@ export default function SystemStepsSection() {
                 <span className="font-mono text-3xl font-bold text-neon-primary/25">
                   {step.num}
                 </span>
-                {step.highlight && (
-                  <span className="font-mono text-[10px] px-2 py-0.5 border border-neon-primary/40 text-neon-primary uppercase tracking-widest">
-                    Abierta
+                {step.badge && (
+                  <span
+                    className={`font-mono text-[10px] px-2 py-0.5 border uppercase tracking-widest ${
+                      step.highlight
+                        ? 'border-neon-primary/40 text-neon-primary'
+                        : 'border-bg-border text-text-dim'
+                    }`}
+                  >
+                    {step.badge}
                   </span>
                 )}
               </div>

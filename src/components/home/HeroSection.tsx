@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { synth } from '../../lib/synth'
 import { track } from '../../lib/track'
-import { funnel } from '../../data/funnel'
 import DecryptText from '../ui/DecryptText'
 import HeroTerminal from './HeroTerminal'
 
@@ -42,7 +41,7 @@ export default function HeroSection() {
             >
               <div className="w-1.5 h-1.5 bg-neon-primary rounded-full animate-pulse" />
               <span className="font-mono text-xs text-neon-primary tracking-widest uppercase">
-                TABORDA_SYSTEM :: ONLINE — CONEXIONES SUPERVISADAS: {funnel.cohortSpotsTaken}/{funnel.cohortSpotsTotal} ASIGNADAS
+                TABORDA_SYSTEM :: ONLINE — EJECUCIÓN DOCUMENTADA EN VIVO · v2.0.26
               </span>
             </motion.div>
 

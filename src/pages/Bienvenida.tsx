@@ -50,7 +50,7 @@ export default function Bienvenida() {
           <div className="flex items-center justify-center gap-2 mb-6">
             <div className="w-1.5 h-1.5 bg-neon-primary rounded-full animate-pulse" />
             <span className="font-mono text-xs text-neon-primary tracking-widest uppercase">
-              PLAZA CONFIRMADA · ACCESO CONCEDIDO
+              ACCESO CONCEDIDO · INSTALACIÓN ACTIVA
             </span>
           </div>
           <h1 className="font-mono text-3xl md:text-4xl font-bold text-text-primary leading-tight mb-4">
@@ -58,7 +58,7 @@ export default function Bienvenida() {
           </h1>
           <p className="font-sans text-text-muted text-sm md:text-base leading-relaxed max-w-xl mx-auto">
             No es una compra: es un compromiso con testigos. Haz estos 4 pasos hoy mismo —
-            sin saltarte ninguno. <span className="text-text-primary font-medium">Arrancamos {funnel.cohortStartDate}.</span>
+            sin saltarte ninguno. <span className="text-text-primary font-medium">Arrancas hoy mismo.</span>
           </p>
         </div>
       </div>
